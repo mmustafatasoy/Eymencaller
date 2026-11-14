@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Açılış (splash): karar verilene kadar tutulur, bkz. docs/04_IZINLER.md §2 -->
+    <style name="Theme.EymenTelefon.Acilis" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/arka_plan_koyu</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.EymenTelefon</item>
+    </style>
+
+    <style name="Theme.EymenTelefon" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/arka_plan_koyu</item>
+        <item name="android:colorAccent">@color/vurgu</item>
+    </style>
+
+    <style name="Theme.EymenTelefon.Arama" parent="Theme.EymenTelefon">
+        <item name="android:windowBackground">@color/arama_zemini</item>
+    </style>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Simge ön yüzü — ahize + sinyal dalgaları. DEĞİŞTİRME. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <group android:translateX="18" android:translateY="18"
+        android:scaleX="0.140625" android:scaleY="0.140625">
+        <group android:translateX="118" android:translateY="132"
+            android:scaleX="11" android:scaleY="11">
+            <path android:fillColor="#FFFFFFFF"
+                android:pathData="M6.62,10.79c1.44,2.83 3.76,5.14 6.59,6.59l2.2,-2.2c0.27,-0.27 0.67,-0.36 1.02,-0.24 1.12,0.37 2.33,0.57 3.57,0.57 0.55,0 1,0.45 1,1V20c0,0.55 -0.45,1 -1,1 -9.39,0 -17,-7.61 -17,-17 0,-0.55 0.45,-1 1,-1h3.5c0.55,0 1,0.45 1,1 0,1.25 0.2,2.45 0.57,3.57 0.11,0.35 0.03,0.74 -0.25,1.02l-2.2,2.2z"/>
+        </group>
+        <path android:pathData="M300,112 a104,104 0 0,1 100,100"
+            android:fillColor="#00000000" android:strokeColor="#FFFFFFFF"
+            android:strokeWidth="26" android:strokeLineCap="round"/>
+        <path android:pathData="M296,170 a46,46 0 0,1 46,46"
+            android:fillColor="#00000000" android:strokeColor="#CCFFFFFF"
+            android:strokeWidth="26" android:strokeLineCap="round"/>
+    </group>
+</vector>
