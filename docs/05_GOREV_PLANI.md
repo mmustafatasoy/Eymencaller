@@ -5,7 +5,7 @@
 
 ---
 
-### [ ] GOREV-01 · İskeleti derle
+### [x] GOREV-01 · İskeleti derle
 - Projeyi olduğu gibi derle: `./gradlew assembleDebug`.
 - Hazır (✅) dosyalara dokunma. Derleme hatası varsa HATA_GUNLUGU'na yaz, en küçük değişiklikle düzelt.
 - **Kabul:** APK oluşuyor, uygulama açılıyor, karşılama yerine geçici metin görünüyor.
