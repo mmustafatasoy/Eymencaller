@@ -36,6 +36,13 @@ app/src/main/java/com/atasoy/eymentelefon/
 │       ├── TurkceMetin.kt               Türkçe sıralama / gruplama / aksan-duyarsız arama
 │       └── DisIslemler.kt               Sistem intent'leri (mesaj, kişi ekle/düzenle, paylaş, kopyala)
 │
+├── (v1.2 eklenen dosyalar — docs/07_V12_PLANI.md)
+│   ├── veri/poster/PosterDeposu.kt          Kişi Posteri (filesDir/posterler)
+│   ├── veri/rehber/KisiYazici.kt            uygulama içi kişi ekle/düzenle (ContactsContract toplu işlem)
+│   ├── gorusme/ui/KisiPosteri.kt            PosterFotografi · PosterKucukResim · CanliAd
+│   ├── ui/ekranlar/poster/PosterEkrani.kt   poster düzenleyici (rota poster/{lookupKey})
+│   ├── ui/ekranlar/kisiduzenle/KisiDuzenleEkrani.kt  Yeni Kişi / Düzenle (rota kisi-duzenle/{kisiId})
+│   └── ui/ekranlar/rehber/KisiOnizleme.kt   uzun basma önizlemesi
 ├── veri/
 │   ├── IcerikGozlemci.kt                ContentObserver → Flow
 │   ├── model/Kisi.kt · AramaKaydi.kt

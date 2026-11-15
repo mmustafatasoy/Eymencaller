@@ -1,8 +1,17 @@
 # DEVAM NOTLARI — Claude'dan Codex'e devir (15 Kasım 2026)
 
-> **GÜNCEL (v1.2):** Kullanıcı iOS tarzı v1.2 tasarımını onayladı. Sıradaki iş **`docs/07_V12_PLANI.md`** görevleri
-> (V12-01 … V12-13). Claude'un yaptıkları `[x]`. Codex ilk `[ ]` görevden devam eder; her görev sonrası Actions yeşil olmalı,
-> commit `V12-NN: …`. Aşağıdaki v1.1 bölümü (GOREV-02/03/04) v1.2 bitince yapılır.
+> **GÜNCEL (v1.2 — 15 Kasım 2026):** `docs/07_V12_PLANI.md` içindeki **V12-01 … V12-13 hepsini Claude yazdı** (`[x]`).
+> Son yeşil derleme: V12-09 (run 43699479656). V12-07 commit'i sonrası Actions'a bak; kırmızıysa ilk iş o hatayı
+> HATA_GUNLUGU kuralıyla düzelt. Sıradaki numara **HATA-022**.
+>
+> **Codex'in v1.2 işi (yeni özellik YOK, sadece doğrulama/düzeltme):**
+> 1. Actions yeşil mi? Değilse derleme hatalarını düzelt (sadece hatalı satır).
+> 2. Cihazda `docs/mockups/v12/` görselleriyle karşılaştır: gelen arama (canlı ad + poster), görüşme (bulanık poster),
+>    arama bitince "Arama bitti · süre", Kişiler (avatar + "N Kişi"), uzun basma önizleme, Yeni Kişi formu, Poster düzenleyici,
+>    Ayarlar "Telefon", Engellenen Kişiler, izinler "Devam (x/n)". Fark → HATA kaydı.
+> 3. Bilinen sınırlar (hata değil): Android 12 altında bulanıklık yok (sadece karartma); sistemin kendi Telefon/Rehber simgesi
+>    Android tarafından yönlendirilmez (kullanıcı "Her zaman Eymen" seçerse kişi aç/ekle/düzenle bize gelir).
+> 4. Bunlar bitince aşağıdaki v1.1 bölümü (GOREV-02/03/04).
 
 > Claude'un günlük kullanım sınırı dolmak üzere. Bundan sonra işi **Codex** sürdürecek.
 > Bu dosya **AGENTS.md ile birlikte** her oturumun başında okunur. Buradaki sıra ve sınırlar dışına çıkılmaz.

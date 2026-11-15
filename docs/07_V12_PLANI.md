@@ -35,7 +35,7 @@ Durum: `[x]` = Claude yaptı · `[ ]` = sırada. Sırayla, tek tek; her biri son
 - Gelen aramada ad: 64sp ExtraBold, iki satır (ad / soyad), her harf 70ms arayla aşağıdan yukarı + saydamdan belirir (600ms), sonra 3.2 sn'lik %3.5 "nefes" ölçeği. Üstünde küçük "mobil".
 - Cevaplanınca (görsel 3): fotoğraf 18dp bulanık + %35 karartma (Android 12+ `Modifier.blur`, altında sadece karartma); ad 34sp'ye küçülüp yukarı kayar (`AnimatedContent`/`animateDpAsState`), üstte 72dp yuvarlak poster küçük resmi.
 
-### [ ] V12-07 · Kişi kartı posterli başlık (görsel 7)
+### [x] V12-07 · Kişi kartı posterli başlık (görsel 7)
 - Kartın üst 330dp'si poster (yoksa avatar rengi gradyan); ad posterin üstünde beyaz; 4 eylem kutusu buzlu cam (%22 beyaz). Gruplarda yeni satır: **Kişi Posteri ve Fotoğraf** → V12-08.
 
 ### [x] V12-08 · Kişi posteri düzenleyici (görsel 9)

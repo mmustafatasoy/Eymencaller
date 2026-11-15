@@ -15,6 +15,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.atasoy.eymentelefon.konteyner
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -82,6 +86,19 @@ fun KisiDetayEkrani(onGeri: () -> Unit, onPoster: (String, String) -> Unit = { _
     val kisi = durum.kisi
     val ad = kisi?.ad ?: NumaraBicimleyici.bicimle(durum.numara)
 
+    // V12-07: kişi posteri varsa kartın üstü poster
+    val posterDeposu = remember { context.konteyner().posterDeposu }
+    val posterSurumu by posterDeposu.degisim.collectAsStateWithLifecycle()
+    val poster by produceState<androidx.compose.ui.graphics.ImageBitmap?>(null, kisi?.lookupKey, posterSurumu) {
+        value = kisi?.lookupKey?.let { anahtar ->
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                runCatching { posterDeposu.oku(anahtar)?.dosya?.let { android.graphics.BitmapFactory.decodeFile(it.path)?.asImageBitmap() } }
+                    .onFailure { com.atasoy.eymentelefon.cekirdek.hata.HataKaydedici.kaydet("KisiDetay.poster", it) }
+                    .getOrNull()
+            }
+        }
+    }
+
     IosSayfa(zemin = r.grupluArkaPlan) {
         IosNavCubugu(
             zemin = r.grupluArkaPlan,
@@ -91,7 +108,23 @@ fun KisiDetayEkrani(onGeri: () -> Unit, onPoster: (String, String) -> Unit = { _
             },
         )
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            val p = poster
+            if (p != null) {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(EymenBoyut.kartPoster)
+                        .clip(EymenSekil.sayfa)
+                        .sessizTiklama { kisi?.let { onPoster(it.lookupKey, it.ad) } },
+                    contentAlignment = Alignment.BottomCenter,
+                ) {
+                    com.atasoy.eymentelefon.gorusme.ui.PosterFotografi(p, canli = false, bulanik = false)
+                    Column(Modifier.padding(EymenBosluk.l), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(ad, style = EymenYazi.baslik1, color = com.atasoy.eymentelefon.ui.theme.AramaEkraniRenk.beyaz, textAlign = TextAlign.Center)
+                        kisi?.sirket?.let { Text(it, style = EymenYazi.dipnot, color = com.atasoy.eymentelefon.ui.theme.AramaEkraniRenk.ikincil) }
+                    }
+                }
+            } else Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 IosAvatar(kisi?.basHarfler ?: "#", EymenBoyut.avatarKart, fotoUri = kisi?.fotoUri)
                 Text(ad, style = EymenYazi.baslik1, color = r.etiket, textAlign = TextAlign.Center, modifier = Modifier.padding(top = EymenBosluk.m, start = EymenBosluk.kenar, end = EymenBosluk.kenar))
                 kisi?.sirket?.let { Text(it, style = EymenYazi.dipnot, color = r.ikincilEtiket) }
