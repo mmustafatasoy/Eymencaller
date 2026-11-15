@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.atasoy.eymentelefon.R
 import com.atasoy.eymentelefon.cekirdek.ayar.TemaSecimi
 import com.atasoy.eymentelefon.ui.theme.EymenBosluk
+import com.atasoy.eymentelefon.ui.theme.EymenBoyut
 import com.atasoy.eymentelefon.ui.theme.EymenRenk
 import com.atasoy.eymentelefon.ui.theme.EymenSekil
 import com.atasoy.eymentelefon.ui.theme.EymenTelefonTemasi
@@ -47,13 +49,21 @@ fun EymenCip(
         else -> renk.metin2
     }
     val bicim = if (tur == EymenCipTuru.ETIKET) EymenSekil.etiket else EymenSekil.cip
+    // Dokunma alanı 48dp, çipin görünen ölçüleri ise tasarım token'larına bağlı kalır.
     Box(
-        modifier = modifier.clip(bicim).background(zemin)
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
-            .padding(horizontal = EymenBosluk.m, vertical = EymenBosluk.s),
+        modifier = modifier.then(
+            if (onClick != null) Modifier.heightIn(min = EymenBoyut.dokunmaMin).clickable(onClick = onClick)
+            else Modifier,
+        ),
         contentAlignment = Alignment.Center,
     ) {
-        Text(metin, color = metinRengi, style = if (tur == EymenCipTuru.ETIKET) EymenYazi.etiket else EymenYazi.cip)
+        Box(
+            modifier = Modifier.clip(bicim).background(zemin)
+                .padding(horizontal = EymenBosluk.m, vertical = EymenBosluk.s),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(metin, color = metinRengi, style = if (tur == EymenCipTuru.ETIKET) EymenYazi.etiket else EymenYazi.cip)
+        }
     }
 }
 
