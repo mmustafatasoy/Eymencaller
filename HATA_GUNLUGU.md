@@ -1,11 +1,19 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-008**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-009**
 
 ---
 
 ## 🔴 AÇIK HATALAR
+
+### HATA-009 · AÇIK
+- Tarih: 2026-11-15
+- Görev: Derleme doğrulaması (GOREV-02/03, tüm geliştirme dalı)
+- Yer: `ui/bilesenler/AltSayfa.kt:29`, `ui/ekranlar/izinler/IzinlerEkrani.kt:189`
+- Belirti: `compileDebugKotlin` — "This material API is experimental and is likely to change or to be removed in the future." (GitHub Actions #43688684802)
+- Neden: `ModalBottomSheet` kullanılan Compose fonksiyonlarında `ExperimentalMaterial3Api` kabul işaretlemesi eksik.
+- Durum: En küçük `@OptIn(ExperimentalMaterial3Api::class)` düzeltmesi hazırlanıyor; yeniden derleme bekliyor.
 
 ### HATA-008 · AÇIK
 - Tarih: 2026-11-15
