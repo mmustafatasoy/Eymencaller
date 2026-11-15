@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,6 +27,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.atasoy.eymentelefon.R
+import com.atasoy.eymentelefon.konteyner
+import com.atasoy.eymentelefon.ui.ekranlar.izineksik.IzinEksikAltSayfa
 import com.atasoy.eymentelefon.ui.ekranlar.anaekran.AnaEkran
 import com.atasoy.eymentelefon.ui.ekranlar.arama.AramaEkrani
 import com.atasoy.eymentelefon.ui.ekranlar.kisidetay.KisiDetayEkrani
@@ -42,6 +47,8 @@ fun EymenNavHost(
     baslangicNumara: String,
     modifier: Modifier = Modifier,
 ) {
+    val uygulama = LocalContext.current.konteyner()
+    val istek by uygulama.aramaBaslatici.izinEksik.collectAsStateWithLifecycle()
     NavHost(
         navController = nav,
         startDestination = baslangic,
@@ -128,9 +135,14 @@ fun EymenNavHost(
         composable(Rotalar.HIZLI_YANITLAR) { GeciciEkran("Hızlı yanıt mesajları", "GOREV-13") }
     }
 
-    // GOREV-10: 12 numaralı alt sayfa her ekranın üstünde açılır:
-    // val istek by konteyner.aramaBaslatici.izinEksik.collectAsStateWithLifecycle()
-    // istek?.let { IzinEksikAltSayfa(istek = it, onTamam = ..., onVazgec = ...) }
+    // Mevcut bütün ekranların üzerinde görünür; numara AramaBaslatici'da saklanır.
+    istek?.let { bekleyen ->
+        IzinEksikAltSayfa(
+            istek = bekleyen,
+            onTamam = { uygulama.aramaBaslatici.izinlerTamamlandi() },
+            onVazgec = { uygulama.aramaBaslatici.vazgec() },
+        )
+    }
 }
 
 /** Görevler tamamlandıkça kullanımı kalkar; GOREV-14'te SİLİNİR. */
