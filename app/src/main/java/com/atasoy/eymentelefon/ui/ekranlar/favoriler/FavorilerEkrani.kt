@@ -12,6 +12,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,6 +51,10 @@ fun FavorilerEkrani(
     val liste = rememberLazyListState()
     val kucuk by rememberKucukBaslikGorunur(liste)
     val baslik = stringResource(R.string.favoriler)
+    var onizleme by remember { mutableStateOf<com.atasoy.eymentelefon.veri.model.Kisi?>(null) }
+    onizleme?.let { k ->
+        com.atasoy.eymentelefon.ui.ekranlar.rehber.KisiOnizleme(k, onKapat = { onizleme = null }, onKart = { onKisiDetay(k.id, null) })
+    }
     Column(Modifier.fillMaxSize()) {
         IosNavCubugu(
             kucukBaslik = baslik,
@@ -90,7 +97,7 @@ fun FavorilerEkrani(
                     },
                     sag = { IosBilgiButonu(stringResource(R.string.ae_bilgi)) { onKisiDetay(k.id, null) } },
                     onTikla = { vm.ara(k) },
-                    onUzunBas = { vm.favoridenCikar(k) },
+                    onUzunBas = { onizleme = k },
                 )
             }
             item { Box(Modifier.padding(bottom = EymenBosluk.xl)) }

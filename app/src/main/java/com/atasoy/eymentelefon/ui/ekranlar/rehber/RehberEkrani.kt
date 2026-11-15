@@ -158,21 +158,8 @@ fun RehberEkrani(
         }
     }
 
-    secili?.let { k ->
-        val numara = k.varsayilanNumara?.numara
-        IosEylemSayfasi(
-            baslik = k.ad,
-            secenekler = buildList {
-                if (numara != null) {
-                    add(SayfaSecenegi(stringResource(R.string.ara), { vm.ara(k); secili = null }))
-                    add(SayfaSecenegi(stringResource(R.string.kayit_mesaj), { DisIslemler.mesajGonder(context, numara); secili = null }))
-                }
-                add(SayfaSecenegi(stringResource(if (k.favori) R.string.favorilerden_cikar else R.string.favorilere_ekle), { vm.favoriDegistir(k); secili = null }))
-            },
-            vazgecMetni = stringResource(R.string.vazgec),
-            onKapat = { secili = null },
-        )
-    }
+    // V12-09: iOS gibi uzun basma önizlemesi
+    secili?.let { k -> KisiOnizleme(k, onKapat = { secili = null }, onKart = { onKisiDetay(k.id, null) }) }
 }
 
 /** iOS harf dizini: mavi küçük harfler; dokun ya da sürükle → o harfe atla. */

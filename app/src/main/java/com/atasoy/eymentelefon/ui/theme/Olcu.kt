@@ -42,6 +42,9 @@ object EymenBoyut {
     val posterOnizlemeBoy = 400.dp
     val cerceve = 3.dp
     val duzenleIsaret = 22.dp
+    val onizlemeKart = 270.dp
+    val onizlemeKartBoy = 300.dp
+    val onizlemeMenu = 250.dp
     val satirKisi = 52.dp
     val avatarKart = 112.dp
     val aramaAlani = 36.dp
