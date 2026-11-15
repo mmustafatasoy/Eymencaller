@@ -1,0 +1,10 @@
+name: Surum Sorgu
+on:
+  push:
+    branches: [ surum-sorgu ]
+jobs:
+  sorgu:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for u in https://repo1.maven.org/maven2/dev/chrisbanes/haze/haze/maven-metadata.xml https://dl.google.com/android/maven2/androidx/glance/glance-appwidget/maven-metadata.xml https://dl.google.com/android/maven2/androidx/palette/palette-ktx/maven-metadata.xml; do echo "== $u"; curl -s "$u" | grep -oE "<version>[^<]+" | tail -12; done
