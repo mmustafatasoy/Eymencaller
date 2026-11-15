@@ -25,7 +25,8 @@
 
 ## Codex görevleri
 
-### [ ] GOREV-01 · v1.1'i derle ve lint'i temizle
+### [x] GOREV-01 · v1.1'i derle ve lint'i temizle
+- ✅ 15 Kasım 2026: 3 derleme hatası düzeltildi (HATA-018…020), `assembleDebug` + `lintDebug` başarılı — [Actions](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43692314487), commit `cd8783d`. APK: Actions › bu çalıştırma › **EymenTelefon-debug**.
 - v1.0 iskeleti 14 Kasım'da GitHub Actions'ta derlendi (HATA-001). **v1.1 yeni koddur, yeniden derlenmeli.**
 - Yerel ortamda Gradle indirilemiyorsa (HATA-001) derlemeyi **GitHub Actions › APK Derle** ile yap; her `main` push'unda otomatik çalışır.
 - `./gradlew assembleDebug lintDebug`
