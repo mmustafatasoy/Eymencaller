@@ -1,11 +1,19 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-007**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-008**
 
 ---
 
 ## 🔴 AÇIK HATALAR
+
+### HATA-008 · AÇIK
+- Tarih: 2026-11-15
+- Görev: GOREV-11
+- Yer: `gorusme/ui/GidenAramaEkrani.kt`, `GelenAramaEkrani.kt`, `GorusmeEkrani.kt`
+- Belirti: İlk Compose sürümünde arka plan yalnızca tek renk; mockup 08/09/10'da radyal renk ışıkları bulunuyor.
+- Neden: Görsel karşılaştırma öncesinde yalnızca düz `aramaZemini` çizilmiş.
+- Durum: Mevcut `AramaEkraniRenk` renk tokenlarıyla katmanlı gradyan uygulanacak; cihaz/derleme doğrulaması bekliyor.
 
 ### HATA-007 · AÇIK
 - Tarih: 2026-11-15
