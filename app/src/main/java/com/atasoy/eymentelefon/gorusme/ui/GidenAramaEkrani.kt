@@ -33,6 +33,9 @@ import com.atasoy.eymentelefon.gorusme.GorusmeAsamasi
 import com.atasoy.eymentelefon.gorusme.GorusmeDurumu
 import com.atasoy.eymentelefon.gorusme.SesYolu
 import com.atasoy.eymentelefon.ui.bilesenler.AramaKontrolButonu
+import com.atasoy.eymentelefon.ui.bilesenler.EymenButon
+import com.atasoy.eymentelefon.ui.bilesenler.EymenButonTuru
+import com.atasoy.eymentelefon.ui.bilesenler.TusTakimi
 import com.atasoy.eymentelefon.ui.bilesenler.KapatButonu
 import com.atasoy.eymentelefon.ui.bilesenler.KisiAvatari
 import com.atasoy.eymentelefon.ui.ikon.EymenIkon
@@ -127,24 +130,36 @@ private fun GidenAramaIcerik(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(EymenBosluk.xxl),
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                AramaKontrolButonu(
-                    EymenIkon.Sessiz, stringResource(R.string.kontrol_sessiz),
-                    durum.ses.sessiz, { onOlay(GorusmeOlay.SessizDegistir) },
+            if (durum.tuslarAcik) {
+                TusTakimi(
+                    onTus = { onOlay(GorusmeOlay.Dtmf(it)) },
+                    onUzunBas = { onOlay(GorusmeOlay.Dtmf(it)) },
                 )
-                AramaKontrolButonu(
-                    EymenIkon.Tuslar, stringResource(R.string.kontrol_tuslar),
-                    durum.tuslarAcik, { onOlay(GorusmeOlay.TuslariDegistir) },
+                EymenButon(
+                    metin = stringResource(R.string.kontrol_tuslar),
+                    onClick = { onOlay(GorusmeOlay.TuslariDegistir) },
+                    tur = EymenButonTuru.IKINCIL,
                 )
-                AramaKontrolButonu(
-                    EymenIkon.Hoparlor, stringResource(R.string.kontrol_hoparlor),
-                    durum.ses.yol == SesYolu.HOPARLOR,
-                    { onOlay(GorusmeOlay.HoparlorDegistir) },
-                )
+            } else {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    AramaKontrolButonu(
+                        EymenIkon.Sessiz, stringResource(R.string.kontrol_sessiz),
+                        durum.ses.sessiz, { onOlay(GorusmeOlay.SessizDegistir) },
+                    )
+                    AramaKontrolButonu(
+                        EymenIkon.Tuslar, stringResource(R.string.kontrol_tuslar),
+                        false, { onOlay(GorusmeOlay.TuslariDegistir) },
+                    )
+                    AramaKontrolButonu(
+                        EymenIkon.Hoparlor, stringResource(R.string.kontrol_hoparlor),
+                        durum.ses.yol == SesYolu.HOPARLOR,
+                        { onOlay(GorusmeOlay.HoparlorDegistir) },
+                    )
+                }
             }
             KapatButonu(onClick = { onOlay(GorusmeOlay.Kapat) })
         }
