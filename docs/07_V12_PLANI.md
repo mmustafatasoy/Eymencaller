@@ -59,5 +59,5 @@ Durum: `[x]` = Claude yaptı · `[ ]` = sırada. Sırayla, tek tek; her biri son
 - `MainActivity.onNewIntent/onCreate`: kişi URI'si → `kisi/{id}`; INSERT → `kisi-duzenle/-1` (+`phone` ekstrası); EDIT → `kisi-duzenle/{id}`; CALL_BUTTON → Tuşlar.
 - Not (kullanıcıya): sistemin kendi Telefon/Rehber simgesi doğrudan açılırsa Android yönlendirmez; ana ekranda Eymen simgesi kullanılmalı.
 
-### [ ] V12-13 · İzinler sadece girişte (görsel 12)
+### [x] V12-13 · İzinler sadece girişte (görsel 12)
 - İzinler ekranı: tek "Devam (x/5)" butonu sırayla eksik olanı ister (rol → telefon → kişiler → geçmiş → bildirim). Reddedilen için "Ayarlar'da izin ver". Hepsi tamam olmadan ana ekrana geçilemez (zaten `MainActivity` kontrol ediyor). `ayarModu` kaldırılır.

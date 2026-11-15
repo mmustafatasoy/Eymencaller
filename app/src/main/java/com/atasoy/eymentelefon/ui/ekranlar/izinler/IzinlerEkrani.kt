@@ -110,11 +110,19 @@ fun IzinlerEkrani(
                 modifier = Modifier.fillMaxWidth().padding(EymenBosluk.l).sessizTiklama { vm.nedenGoster(true) },
             )
         }
+        // V12-13: tek buton sırayla eksik izni ister (rol → telefon → kişiler → geçmiş → bildirim);
+        // zorunlular tamam olmadan uygulamaya geçilmez. İsteğe bağlı bildirim bir kez sorulur.
+        val siradaki = zorunlu.firstOrNull { it.durum != IzinDurumu.VERILDI }
+            ?: istege.firstOrNull { it.durum == IzinDurumu.ISTENMEDI }
+        val verilen = durum.kartlar.count { it.durum == IzinDurumu.VERILDI }
         IosButon(
-            stringResource(if (ayarModu) R.string.tamam else R.string.devam),
-            onDevam,
+            when {
+                ayarModu -> stringResource(R.string.tamam)
+                siradaki != null -> stringResource(R.string.izin_devam_sayac, verilen, durum.kartlar.size)
+                else -> stringResource(R.string.devam)
+            },
+            { if (siradaki != null && !ayarModu) izinIste(siradaki) else onDevam() },
             Modifier.padding(EymenBosluk.kenar),
-            etkin = durum.devamAktif || ayarModu,
         )
     }
 
