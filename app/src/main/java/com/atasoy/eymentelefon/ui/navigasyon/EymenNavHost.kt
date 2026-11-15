@@ -24,6 +24,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.atasoy.eymentelefon.R
+import com.atasoy.eymentelefon.ui.ekranlar.karsilama.KarsilamaEkrani
+import com.atasoy.eymentelefon.ui.ekranlar.izinler.IzinlerEkrani
 import com.atasoy.eymentelefon.ui.theme.EymenRenk
 import com.atasoy.eymentelefon.ui.theme.EymenYazi
 
@@ -51,16 +53,23 @@ fun EymenNavHost(
         },
     ) {
         composable(Rotalar.KARSILAMA) {
-            GeciciEkran("01 Karşılama", "GOREV-03")
-            // GOREV-03: KarsilamaEkrani(onBasla = { nav.navigate(Rotalar.izinler()) })
+            KarsilamaEkrani(onBasla = { nav.navigate(Rotalar.izinler()) })
         }
 
         composable(
             Rotalar.IZINLER,
             arguments = listOf(navArgument(Rotalar.Arguman.AYAR_MODU) { type = NavType.BoolType; defaultValue = false }),
-        ) {
-            GeciciEkran("02 İzinler", "GOREV-03")
-            // GOREV-03: IzinlerEkrani(ayarModu = ..., onDevam = { nav.navigate(Rotalar.ana()) { popUpTo(0) { inclusive = true } } }, onGeri = nav::popBackStack)
+        ) { giris ->
+            val ayarModu = giris.arguments?.getBoolean(Rotalar.Arguman.AYAR_MODU) ?: false
+            IzinlerEkrani(
+                ayarModu = ayarModu,
+                onDevam = {
+                    nav.navigate(Rotalar.ana()) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                },
+                onGeri = { nav.popBackStack() },
+            )
         }
 
         composable(
