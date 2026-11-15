@@ -61,3 +61,5 @@ _(En yeni en üstte.)_
 ## ❓ SORULAR (Claude'a)
 
 _(Belgede cevabı olmayan kararlar buraya: `S-01: ... (GOREV-NN)`)_
+
+S-01: GOREV-04 — `docs/02_EKRANLAR.md` uzun 1 basmayı `voicemail:` URI ile ister; ancak değiştirilemez `AramaBaslatici.temizle()` harfli URI'yi çıkarır. Şimdilik cihazın `TelephonyManager.voiceMailNumber` değeri varsa bu numara `AramaBaslatici.ara()` ile aranıyor, yoksa tuşa 1 ekleniyor. Tam `voicemail:` davranışı için hazır `AramaBaslatici` içinde istisna tanımlanmasına izin var mı? (GOREV-04)
