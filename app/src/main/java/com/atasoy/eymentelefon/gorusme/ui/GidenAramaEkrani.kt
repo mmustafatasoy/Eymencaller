@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
@@ -81,6 +82,10 @@ private fun GidenAramaIcerik(
 
     Column(
         modifier = Modifier.fillMaxSize().background(r.aramaZemini)
+            .background(Brush.verticalGradient(listOf(
+                AramaEkraniRenk.isikMor, r.aramaZemini, r.aramaZemini,
+                AramaEkraniRenk.isikMavi.copy(alpha = .20f),
+            )))
             .padding(horizontal = EymenBosluk.kenar, vertical = EymenBosluk.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
