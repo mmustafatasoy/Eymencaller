@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import com.atasoy.eymentelefon.cekirdek.yardimci.TurkceMetin
 import com.atasoy.eymentelefon.ui.theme.AramaEkraniRenk
 import com.atasoy.eymentelefon.ui.theme.EymenBoyut
 import com.atasoy.eymentelefon.ui.theme.EymenYazi
@@ -103,12 +104,14 @@ fun PosterKucukResim(resim: ImageBitmap, modifier: Modifier = Modifier) {
  */
 @Composable
 fun CanliAd(ad: String, modifier: Modifier = Modifier) {
-    val satirlar = remember(ad) {
-        // Numara (harf yok) tek satır kalır; ad soyad iki satır
+    val satirlar: List<List<String>> = remember(ad) {
+        // Numara (harf yok) tek satır kalır; ad soyad iki satır.
+        // HATA-024: harfler grafem (görünen karakter) olarak bölünür → ❤️ 😍 👨‍👩‍👧 gibi emojiler bozulmaz
         val p = ad.trim().split(Regex("\\s+"), limit = 2)
-        if (p.size == 2 && ad.any { it.isLetter() }) p else listOf(ad.trim())
+        val s = if (p.size == 2 && ad.any { it.isLetter() }) p else listOf(ad.trim())
+        s.map(TurkceMetin::grafemler)
     }
-    val enUzun = satirlar.maxOf { it.length }.coerceAtLeast(1)
+    val enUzun = satirlar.maxOf { it.size }.coerceAtLeast(1)
     val stil = if (enUzun > SIGAN_HARF) {
         EymenYazi.posterIsim.copy(fontSize = EymenYazi.posterIsim.fontSize * (SIGAN_HARF.toFloat() / enUzun))
     } else {
@@ -126,7 +129,7 @@ fun CanliAd(ad: String, modifier: Modifier = Modifier) {
         infiniteRepeatable(tween(PARILTI_SURE_MS, easing = LinearEasing), RepeatMode.Restart),
         label = "parilti",
     )
-    val toplam = satirlar.sumOf { it.length }.coerceAtLeast(1)
+    val toplam = satirlar.sumOf { it.size }.coerceAtLeast(1)
     Column(
         modifier.graphicsLayer {
             scaleX = nefes
@@ -148,14 +151,14 @@ fun CanliAd(ad: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun BelirenHarf(harf: Char, sira: Int, stil: androidx.compose.ui.text.TextStyle, anahtar: String, isik: Float) {
+private fun BelirenHarf(harf: String, sira: Int, stil: androidx.compose.ui.text.TextStyle, anahtar: String, isik: Float) {
     val a = remember(anahtar) { Animatable(0f) }
     LaunchedEffect(anahtar) {
         delay(sira * HARF_ARALIK_MS)
         a.animateTo(1f, tween(HARF_SURE_MS, easing = FastOutSlowInEasing))
     }
     Text(
-        harf.toString(),
+        harf,
         style = stil,
         color = AramaEkraniRenk.beyaz.copy(alpha = SONUK + (1f - SONUK) * isik),
         maxLines = 1,

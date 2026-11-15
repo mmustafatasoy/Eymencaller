@@ -1,7 +1,7 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-023**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-024**
 
 ---
 
@@ -21,6 +21,16 @@ _(Şu an açık hata yok.)_
 ---
 
 ## ✅ DÜZELTİLEN HATALAR
+
+### HATA-024 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 13:16 → Düzeltme: 2026-11-15 13:25
+- Görev: V12-06 / V12-11 (kullanıcı cihaz testi)
+- Yer: gorusme/ui/KisiPosteri.kt (CanliAd), cekirdek/yardimci/TurkceMetin.kt, ui/theme/Olcu.kt
+- Belirti: "Hayatım❤️" gibi simgeli adlarda simge bozuluyor/algılanmıyor; arama ekranı butonları küçük.
+- Gerçek neden: Canlı ad metni `Char` tek tek bölünüyordu (❤️ = 2 karakter, 😍 = vekil çift) → simge parçalanıyordu. Baş harf/grup harfi simgeyle başlayan adda "#" veriyordu.
+- Yapılan düzeltme: `TurkceMetin.grafemler()` (ICU BreakIterator) ile görünen karakter bazında bölme; baş harf ve grup harfi simgeleri atlıyor (sadece simgeden oluşan adda simge avatar olur); `cagriButonu` 76→86dp, `cagriIkonu` 30→34dp, `cevapButonu` 78→88dp (kullanıcı onaylı).
+- Doğrulama: CI derlemesi; cihazda kullanıcı tekrar deneyecek
+- Commit: HATA-024: emoji destekli ad + büyük arama butonları
 
 ### HATA-023 · ✅ DÜZELTİLDİ
 - Tarih: 2026-11-15 12:54 → Düzeltme: 2026-11-15 13:05

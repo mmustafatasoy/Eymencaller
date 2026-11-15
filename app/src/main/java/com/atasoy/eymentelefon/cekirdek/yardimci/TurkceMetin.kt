@@ -34,19 +34,42 @@ object TurkceMetin {
         else -> c.uppercaseChar()
     }
 
+    /**
+     * HATA-024: metni görünen karakterlere böler (emoji, bayrak, ❤️ gibi birleşik simgeler tek parça kalır).
+     * "Hayatım❤️" → [H, a, y, a, t, ı, m, ❤️]
+     */
+    fun grafemler(metin: String): List<String> {
+        val b = android.icu.text.BreakIterator.getCharacterInstance(TR)
+        b.setText(metin)
+        val sonuc = ArrayList<String>(metin.length)
+        var bas = b.first()
+        var son = b.next()
+        while (son != android.icu.text.BreakIterator.DONE) {
+            sonuc += metin.substring(bas, son)
+            bas = son
+            son = b.next()
+        }
+        return sonuc
+    }
+
     /** Kişinin rehber grubu: HARFLER içinden biri ya da "#". */
     fun grupHarfi(ad: String): String {
-        val ilk = ad.trimStart().firstOrNull() ?: return "#"
+        // HATA-024: baştaki simgeler atlanır ("❤️ Hayatım" → H grubu)
+        val ilk = ad.firstOrNull { it.isLetterOrDigit() } ?: return "#"
         val h = buyukHarf(ilk).toString()
         return if (h in HARFLER) h else "#"
     }
 
     /** "Ayşe Demir" → "AD", "Annem" → "A", "+90 532..." → "#" */
     fun basHarfler(ad: String): String {
-        val kelimeler = ad.trim().split(Regex("\\s+")).filter { it.isNotEmpty() }
-        val ilk = kelimeler.firstOrNull()?.first() ?: return "#"
-        if (!ilk.isLetter()) return "#"
-        val son = kelimeler.drop(1).lastOrNull()?.firstOrNull()?.takeIf { it.isLetter() }
+        // HATA-024: simgeler (❤️, 😍…) baş harf sayılmaz; "Hayatım❤️" → "H", "❤️ Hayatım" → "H", "❤️" → "❤️"
+        val kelimeler = ad.trim().split(Regex("\\s+")).filter { k -> k.any { it.isLetter() } }
+        if (kelimeler.isEmpty()) {
+            if (ad.any { it.isDigit() } || ad.isBlank()) return "#"
+            return grafemler(ad.trim()).firstOrNull() ?: "#"
+        }
+        val ilk = kelimeler.first().first { it.isLetter() }
+        val son = kelimeler.drop(1).lastOrNull()?.firstOrNull { it.isLetter() }
         return buildString {
             append(buyukHarf(ilk))
             if (son != null) append(buyukHarf(son))

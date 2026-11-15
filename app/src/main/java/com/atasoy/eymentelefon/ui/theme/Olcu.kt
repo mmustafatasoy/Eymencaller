@@ -60,9 +60,9 @@ object EymenBoyut {
     val ikonKucuk = 17.dp
     val ikonMini = 12.dp
     val tus = 78.dp
-    val cagriButonu = 76.dp
-    val cagriIkonu = 30.dp
-    val cevapButonu = 78.dp
+    val cagriButonu = 86.dp
+    val cagriIkonu = 34.dp
+    val cevapButonu = 88.dp
     val kaydirY = 80.dp
     val kaydirTutamac = 68.dp
     val eylemKutusuY = 62.dp

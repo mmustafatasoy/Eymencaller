@@ -2,7 +2,7 @@
 
 > **GÜNCEL (v1.2 — 15 Kasım 2026):** `docs/07_V12_PLANI.md` içindeki **V12-01 … V12-13 hepsini Claude yazdı** (`[x]`).
 > Son yeşil derleme: V12-09 (run 43699479656). V12-07 commit'i sonrası Actions'a bak; kırmızıysa ilk iş o hatayı
-> HATA_GUNLUGU kuralıyla düzelt. Sıradaki numara **HATA-024**.
+> HATA_GUNLUGU kuralıyla düzelt. Sıradaki numara **HATA-025**.
 >
 > **Codex'in v1.2 işi (yeni özellik YOK, sadece doğrulama/düzeltme):**
 > 1. Actions yeşil mi? Değilse derleme hatalarını düzelt (sadece hatalı satır).
