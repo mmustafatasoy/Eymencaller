@@ -135,6 +135,22 @@ object AvatarRenk {
     val alt = Color(0xFF858994)
     val metin = Color(0xFFFFFFFF)
     val firca: Brush = Brush.verticalGradient(listOf(ust, alt))
+
+    /** V13-03: ada göre canlı gradyan (iOS renkli kişi kartları gibi). */
+    private val renkliler = listOf(
+        Color(0xFFFF8A65) to Color(0xFFFF4E50),
+        Color(0xFFFFC371) to Color(0xFFFF8F3F),
+        Color(0xFF7BE495) to Color(0xFF2EB872),
+        Color(0xFF56CCF2) to Color(0xFF2F80ED),
+        Color(0xFFB79CFF) to Color(0xFF7B5CFA),
+        Color(0xFFFF9AC8) to Color(0xFFE5508C),
+        Color(0xFF5EE7DF) to Color(0xFF1FA2B4),
+        Color(0xFFF6D365) to Color(0xFFE0A21B),
+    )
+
+    fun renkliCift(anahtar: String): Pair<Color, Color> = renkliler[Math.floorMod(anahtar.hashCode(), renkliler.size)]
+
+    fun renkli(anahtar: String): Brush = renkliCift(anahtar).let { (u, a) -> Brush.linearGradient(listOf(u, a)) }
 }
 
 internal val LocalEymenRenk = staticCompositionLocalOf { AcikRenkler }

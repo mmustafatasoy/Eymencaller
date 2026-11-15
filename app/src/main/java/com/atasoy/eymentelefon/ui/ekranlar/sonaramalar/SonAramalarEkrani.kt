@@ -20,6 +20,8 @@ import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import com.atasoy.eymentelefon.ui.bilesenler.LocalAltCamBoslugu
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -105,7 +107,7 @@ fun SonAramalarEkrani(
                 )
             },
         )
-        LazyColumn(state = liste, modifier = Modifier.fillMaxSize()) {
+        LazyColumn(state = liste, modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = LocalAltCamBoslugu.current)) {
             item { IosBuyukBaslik(stringResource(R.string.son_aramalar)) }
             if (!durum.yukleniyor && durum.bolumler.isEmpty()) {
                 item {

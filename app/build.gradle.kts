@@ -13,12 +13,30 @@ android {
         applicationId = "com.atasoy.eymentelefon"
         minSdk = 29
         targetSdk = 35
-        versionCode = 3
-        versionName = "1.2.0"
+        versionCode = 4
+        versionName = "1.3.0"
+    }
+
+    // V13-01: kalıcı imza. CI, GitHub secret EYMEN_IMZA'dan anahtarı EYMEN_KEYSTORE yoluna açar.
+    // Anahtar yoksa (yerel derleme / secret eklenmemiş) debug anahtarı kullanılır.
+    val imzaYolu = System.getenv("EYMEN_KEYSTORE")?.takeIf { file(it).exists() }
+    signingConfigs {
+        if (imzaYolu != null) {
+            create("eymen") {
+                storeFile = file(imzaYolu)
+                storePassword = System.getenv("EYMEN_KEYSTORE_SIFRE")
+                keyAlias = "eymen"
+                keyPassword = System.getenv("EYMEN_KEYSTORE_SIFRE")
+            }
+        }
     }
 
     buildTypes {
+        debug {
+            if (imzaYolu != null) signingConfig = signingConfigs.getByName("eymen")
+        }
         release {
+            signingConfig = signingConfigs.getByName(if (imzaYolu != null) "eymen" else "debug")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -55,6 +73,10 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.kotlinx.coroutines.android)
+    // v1.3 (kullanıcı onaylı)
+    implementation(libs.haze)
+    implementation(libs.androidx.palette)
+    implementation(libs.androidx.glance.appwidget)
     debugImplementation(libs.androidx.compose.ui.tooling)
     testImplementation(libs.junit)
 }

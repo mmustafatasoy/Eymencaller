@@ -12,6 +12,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.atasoy.eymentelefon.ui.bilesenler.LocalAltCamBoslugu
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,7 +64,7 @@ fun FavorilerEkrani(
             sol = { IosNavIkonu(EymenIkon.Disli, stringResource(R.string.ae_ayarlar), onAyarlar) },
             sag = { IosNavIkonu(EymenIkon.Arti, stringResource(R.string.ae_ekle), onKisiler) },
         )
-        LazyColumn(state = liste, modifier = Modifier.fillMaxSize()) {
+        LazyColumn(state = liste, modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = LocalAltCamBoslugu.current)) {
             item { IosBuyukBaslik(baslik) }
             if (!durum.yukleniyor && durum.kisiler.isEmpty()) {
                 item {

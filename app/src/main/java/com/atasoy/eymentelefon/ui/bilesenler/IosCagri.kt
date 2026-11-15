@@ -79,9 +79,10 @@ fun IosCagriButonu(
     ) {
         Box(
             Modifier
+                .yayliBasma(etkilesim)
                 .size(EymenBoyut.cagriButonu)
-                .clip(CircleShape)
-                .background(zemin)
+                // V13-05: aktif değilken buzlu cam (arkadaki poster bulanık + ışık kenarı)
+                .then(if (aktif) Modifier.clip(CircleShape).background(zemin) else Modifier.camYuzey(CircleShape, zemin))
                 .clickable(interactionSource = etkilesim, indication = null, enabled = etkin, role = Role.Switch, onClick = onTikla),
             contentAlignment = Alignment.Center,
         ) {
@@ -102,9 +103,15 @@ fun IosRenkliCagriButonu(
     etiket: String? = null,
     boyut: androidx.compose.ui.unit.Dp = EymenBoyut.cagriButonu,
 ) {
+    val etkilesim = remember { MutableInteractionSource() }
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(EymenBosluk.s)) {
         Box(
-            Modifier.size(boyut).clip(CircleShape).background(renk).clickable(role = Role.Button, onClick = onTikla),
+            Modifier
+                .yayliBasma(etkilesim)
+                .size(boyut)
+                .clip(CircleShape)
+                .background(renk)
+                .clickable(interactionSource = etkilesim, indication = null, role = Role.Button, onClick = onTikla),
             contentAlignment = Alignment.Center,
         ) {
             EymenIkonu(EymenIkon.Telefon, aciklama, AramaEkraniRenk.beyaz, boyut = EymenBoyut.cagriIkonu + EymenBosluk.xs, kapatma = kapatma)

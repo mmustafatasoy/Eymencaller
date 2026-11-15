@@ -60,6 +60,7 @@ private fun Tus(rakam: Char, harfler: String, zemin: Color, basiliRenk: Color, y
     val renk by animateColorAsState(if (basili) basiliRenk else zemin, tween(BASMA_MS), label = "tus")
     Column(
         modifier = Modifier
+            .yayliBasma(etkilesim, titresim = false)
             .size(EymenBoyut.tus)
             .clip(CircleShape)
             .background(renk)

@@ -200,7 +200,10 @@ fun IosAvatar(basHarfler: String, boyut: Dp, modifier: Modifier = Modifier, foto
     }
     val yazi = with(LocalDensity.current) { (boyut * HARF_ORANI).toSp() }
     Box(
-        modifier.size(boyut).clip(CircleShape).background(AvatarRenk.firca),
+        // V13-03: monogram ada göre renkli; "#" ve simge gri kalır
+        modifier.size(boyut).clip(CircleShape).background(
+            if (basHarfler.any { it.isLetter() }) AvatarRenk.renkli(basHarfler) else AvatarRenk.firca,
+        ),
         contentAlignment = Alignment.Center,
     ) {
         val f = foto

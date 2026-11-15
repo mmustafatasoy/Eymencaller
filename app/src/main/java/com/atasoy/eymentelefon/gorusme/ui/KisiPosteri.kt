@@ -45,6 +45,8 @@ data class PosterGorunumu(
     /** AramaEkraniRenk palet sırası; null → ada göre */
     val renkIndex: Int?,
     val canli: Boolean,
+    /** V13-05: fotoğrafın baskın canlı rengi (Palette); cam düğmeler bu renge bürünür */
+    val ton: androidx.compose.ui.graphics.Color? = null,
 )
 
 /** Tam ekran poster fotoğrafı: canlıysa yavaş Ken Burns, görüşmede bulanık + karartma. */

@@ -45,8 +45,10 @@ fun IosUyari(
 ) {
     val r = EymenRenk
     Dialog(onDismissRequest = onKapat, properties = DialogProperties(usePlatformDefaultWidth = false)) {
+        PencereBulanikligi()
         Column(
-            Modifier.width(EymenBoyut.uyariGenislik).clip(EymenSekil.uyari).background(r.yuzey),
+            // V13-06: cam uyarı kutusu
+            Modifier.width(EymenBoyut.uyariGenislik).clip(EymenSekil.uyari).background(r.yuzey.copy(alpha = CAM_YUZEY)),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(Modifier.padding(EymenDolgu.uyariMetni), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -100,12 +102,13 @@ fun IosEylemSayfasi(
 ) {
     val r = EymenRenk
     Dialog(onDismissRequest = onKapat, properties = DialogProperties(usePlatformDefaultWidth = false)) {
+        PencereBulanikligi()
         Box(Modifier.fillMaxSize().sessizTiklama(onTikla = onKapat), contentAlignment = Alignment.BottomCenter) {
             Column(
                 Modifier.fillMaxWidth().padding(EymenBosluk.s).sessizTiklama { },
                 verticalArrangement = Arrangement.spacedBy(EymenBosluk.s),
             ) {
-                Column(Modifier.fillMaxWidth().clip(EymenSekil.sayfa).background(r.yuzey)) {
+                Column(Modifier.fillMaxWidth().clip(EymenSekil.sayfa).background(r.yuzey.copy(alpha = CAM_YUZEY))) {
                     if (baslik != null) {
                         Text(
                             baslik,
@@ -139,3 +142,5 @@ fun IosEylemSayfasi(
         }
     }
 }
+
+private const val CAM_YUZEY = 0.86f

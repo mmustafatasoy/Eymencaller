@@ -4,6 +4,13 @@ package com.atasoy.eymentelefon.gorusme.ui
 // Giden arama ve görüşme AYNI düzendir (iOS gibi): üstte ad + durum, altta 3×2 buton.
 
 import androidx.compose.animation.AnimatedContent
+import com.atasoy.eymentelefon.ui.bilesenler.camKaynak
+import com.atasoy.eymentelefon.ui.bilesenler.LocalCamTonu
+import com.atasoy.eymentelefon.ui.bilesenler.LocalCamDurumu
+import dev.chrisbanes.haze.HazeState
+import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -82,7 +89,10 @@ fun AramaZemini(ad: String, poster: PosterGorunumu? = null, bulanik: Boolean = f
         infiniteRepeatable(tween(ZEMIN_SURE_MS / 2, easing = FastOutSlowInEasing), RepeatMode.Reverse),
         label = "isikYaricap",
     )
+    // V13-05: zemin (fotoğraf/gradyan) cam kaynağıdır; düğmeler onu bulanık görür
+    val cam = remember { HazeState() }
     Box(Modifier.fillMaxSize()) {
+        Box(Modifier.fillMaxSize().camKaynak(cam)) {
         // V12-06: kişi posteri varsa tam ekran fotoğraf
         if (resim != null && poster != null) PosterFotografi(resim, poster.canli, bulanik)
         Box(
@@ -106,11 +116,15 @@ fun AramaZemini(ad: String, poster: PosterGorunumu? = null, bulanik: Boolean = f
                         radius = size.height * ISIK_YARICAP,
                     ),
                 )
-            }
-            .ustGuvenli()
-            .altGuvenli(),
-        content = icerik,
+            },
         )
+        }
+        CompositionLocalProvider(
+            LocalCamDurumu provides cam,
+            LocalCamTonu provides (poster?.ton ?: Color.Unspecified),
+        ) {
+            Box(Modifier.fillMaxSize().ustGuvenli().altGuvenli(), content = icerik)
+        }
     }
 }
 

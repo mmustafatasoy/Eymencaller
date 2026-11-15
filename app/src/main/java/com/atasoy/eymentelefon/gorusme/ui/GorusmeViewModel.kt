@@ -8,6 +8,7 @@ import com.atasoy.eymentelefon.cekirdek.ayar.AyarDeposu
 import com.atasoy.eymentelefon.gorusme.GorusmeAsamasi
 import android.graphics.BitmapFactory
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import com.atasoy.eymentelefon.cekirdek.hata.HataKaydedici
 import com.atasoy.eymentelefon.veri.poster.PosterDeposu
 import kotlinx.coroutines.Dispatchers
@@ -102,9 +103,18 @@ class GorusmeViewModel(
                 }
                 val resim = posterResmi
                     ?: k?.fotoUri?.takeIf { p?.renkIndex == null }?.let { posterDeposu.rehberFotosu(it)?.asImageBitmap() }
-                PosterGorunumu(resim, p?.renkIndex, p?.canli ?: true)
+                PosterGorunumu(resim, p?.renkIndex, p?.canli ?: true, ton = resim?.let { baskinRenk(it) })
             }
             .stateIn(viewModelScope, SharingStarted.Eagerly, null)
+
+    /** V13-05: fotoğrafın canlı/baskın rengi */
+    private suspend fun baskinRenk(resim: androidx.compose.ui.graphics.ImageBitmap): androidx.compose.ui.graphics.Color? =
+        withContext(Dispatchers.Default) {
+            runCatching {
+                val p = androidx.palette.graphics.Palette.from(resim.asAndroidBitmap()).maximumColorCount(PALET_RENK).generate()
+                (p.vibrantSwatch ?: p.dominantSwatch)?.rgb?.let { androidx.compose.ui.graphics.Color(it) }
+            }.onFailure { HataKaydedici.kaydet("GorusmeViewModel.baskinRenk", it) }.getOrNull()
+        }
 
     val durum: StateFlow<GorusmeUiState> =
         combine(
@@ -188,3 +198,5 @@ class GorusmeViewModel(
         }
     }
 }
+
+private const val PALET_RENK = 16

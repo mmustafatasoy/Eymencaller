@@ -4,7 +4,7 @@
 > Tasarım, mimari **ve kodun tamamı** Claude tarafından yazılmıştır (15 Kasım 2026).
 > Senin görevin: **derlemek, test etmek, çıkan hataları kayıt kurallarıyla düzeltmek.**
 > Yeni özellik, yeni ekran, yeni dosya, yeniden yazma (refactor) **YOK.** Böyle bir ihtiyaç → `HATA_GUNLUGU.md › SORULAR`.
-> **Tek istisna:** `docs/07_V12_PLANI.md` içindeki V12-xx görevleri (kullanıcı onaylı, Claude tanımlı). Sadece orada yazanlar, orada yazdığı gibi.
+> **Tek istisna:** `docs/07_V12_PLANI.md` (V12-xx) ve `docs/08_V13_PLANI.md` (V13-xx) görevleri (kullanıcı onaylı, Claude tanımlı). Sadece orada yazanlar, orada yazdığı gibi. V13 kütüphaneleri (Haze, palette, glance) onaylıdır.
 
 ---
 

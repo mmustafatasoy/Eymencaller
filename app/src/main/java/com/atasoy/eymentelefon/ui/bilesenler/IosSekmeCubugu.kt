@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -38,7 +39,8 @@ private val sekmeler = listOf(
 @Composable
 fun IosSekmeCubugu(secili: AnaSekme, onSec: (AnaSekme) -> Unit, modifier: Modifier = Modifier) {
     val r = EymenRenk
-    Column(modifier.fillMaxWidth().background(r.sekmeCubugu)) {
+    // V13-04: buzlu cam (Android 12+), altında yarı saydam ton
+    Column(modifier.fillMaxWidth().camYuzey(RectangleShape, r.sekmeCubugu.copy(alpha = CAM_SAYDAMLIK), kenar = false)) {
         HorizontalDivider(thickness = EymenBoyut.hairline, color = r.ayirici)
         Row(
             modifier = Modifier
@@ -68,3 +70,5 @@ fun IosSekmeCubugu(secili: AnaSekme, onSec: (AnaSekme) -> Unit, modifier: Modifi
         }
     }
 }
+
+private const val CAM_SAYDAMLIK = 0.72f

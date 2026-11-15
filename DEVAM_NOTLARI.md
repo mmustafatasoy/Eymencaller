@@ -1,5 +1,10 @@
 # DEVAM NOTLARI — Claude'dan Codex'e devir (15 Kasım 2026)
 
+> **EN GÜNCEL (v1.3 — 15 Kasım 14:30):** Sıradaki iş **`docs/08_V13_PLANI.md`** (V13-01 … V13-10). `[x]` = Claude yaptı.
+> Codex ilk `[ ]` görevden devam eder, sadece orada yazanı yapar. Yeni kütüphaneler (Haze 1.6.10, palette 1.0.0, glance 1.1.1)
+> kullanıcı onaylıdır; sürümlerini DEĞİŞTİRME (Haze 1.7+/2.x daha yeni Compose ister). CI artık release APK üretir.
+> Sıradaki hata numarası **HATA-025**.
+
 > **GÜNCEL (v1.2 — 15 Kasım 2026):** `docs/07_V12_PLANI.md` içindeki **V12-01 … V12-13 hepsini Claude yazdı** (`[x]`).
 > Son yeşil derleme: V12-09 (run 43699479656). V12-07 commit'i sonrası Actions'a bak; kırmızıysa ilk iş o hatayı
 > HATA_GUNLUGU kuralıyla düzelt. Sıradaki numara **HATA-025**.

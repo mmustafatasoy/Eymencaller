@@ -23,8 +23,8 @@ object EymenYazi {
     val etiket2 = TextStyle(fontSize = 11.sp, fontWeight = FontWeight.Normal)
     val sekme = TextStyle(fontSize = 10.sp, fontWeight = FontWeight.Medium)
     val numaraEkrani = TextStyle(fontSize = 38.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.5.sp)
-    val tusRakam = TextStyle(fontSize = 34.sp, fontWeight = FontWeight.Normal)
-    val tusHarf = TextStyle(fontSize = 9.5.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+    val tusRakam = TextStyle(fontSize = 38.sp, fontWeight = FontWeight.Normal)
+    val tusHarf = TextStyle(fontSize = 10.5.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
     /** V12-06: gelen aramada dev canlı ad */
     val posterIsim = TextStyle(
         fontSize = 64.sp,
