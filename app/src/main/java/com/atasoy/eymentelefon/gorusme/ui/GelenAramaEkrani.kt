@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -69,6 +70,10 @@ private fun GelenAramaIcerik(
     }
     Column(
         modifier = Modifier.fillMaxSize().background(renk.aramaZemini)
+            .background(Brush.verticalGradient(listOf(
+                AramaEkraniRenk.isikPembe, renk.aramaZemini,
+                AramaEkraniRenk.isikYesil.copy(alpha = .35f),
+            )))
             .padding(horizontal = EymenBosluk.kenar, vertical = EymenBosluk.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
