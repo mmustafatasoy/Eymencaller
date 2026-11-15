@@ -128,7 +128,8 @@ fun GorusmeEkrani(durum: GorusmeUiState, onOlay: (GorusmeOlay) -> Unit, onEkle: 
             g?.simSirasi?.let { stringResource(R.string.gorusme_sim, it) },
         ).joinToString(" · ")
     }
-    AramaZemini(ad, poster, bulanik = true) {
+    // Poster net kalır (iOS); sadece tuş takımı açılınca arkası bulanıklaşır
+    AramaZemini(ad, poster, bulanik = durum.tusTakimiAcik) {
         AnimatedContent(durum.tusTakimiAcik, transitionSpec = { fadeIn() togetherWith fadeOut() }, label = "tuslar") { tuslar ->
             if (tuslar) {
                 Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -159,15 +160,21 @@ fun GorusmeEkrani(durum: GorusmeUiState, onOlay: (GorusmeOlay) -> Unit, onEkle: 
                 }
             } else {
                 Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    val kucuk = poster?.resim
-                    if (kucuk != null) {
-                        // V12-06: cevaplanınca poster küçük yuvarlak resme iner (görsel v12_03)
+                    if (poster?.resim != null) {
+                        // HATA-022: posterli kişide arama boyunca dev canlı ad + net poster (iOS)
                         Spacer(Modifier.height(EymenBosluk.xl))
-                        PosterKucukResim(kucuk, Modifier.padding(bottom = EymenBosluk.m))
+                        CanliAd(ad, Modifier.padding(horizontal = EymenBosluk.l))
+                        Text(
+                            durumMetni,
+                            style = EymenYazi.aramaDurum,
+                            color = AramaEkraniRenk.beyaz,
+                            maxLines = 1,
+                            modifier = Modifier.padding(top = EymenBosluk.s),
+                        )
                     } else {
                         Spacer(Modifier.height(EymenBosluk.dev + EymenBosluk.xl))
+                        UstBilgi(ad, durumMetni)
                     }
-                    UstBilgi(ad, durumMetni)
                     Spacer(Modifier.weight(1f))
                     KontrolIzgarasi(durum, onOlay, onEkle)
                     Spacer(Modifier.height(EymenBosluk.dev + EymenBosluk.s))

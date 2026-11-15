@@ -1,7 +1,7 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-021**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-022**
 
 ---
 
@@ -21,6 +21,16 @@ _(Şu an açık hata yok.)_
 ---
 
 ## ✅ DÜZELTİLEN HATALAR
+
+### HATA-022 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 12:44 → Düzeltme: 2026-11-15 12:55
+- Görev: V12-06 (kullanıcı cihaz testi, Tecno, giden arama ekran görüntüsü)
+- Yer: gorusme/ui/AramaEkranlari.kt (GorusmeEkrani), gorusme/ui/KisiPosteri.kt
+- Belirti: Posterli kişi aranınca arka plan çok bulanık/çirkin, ad normal yazı, efekt görünmüyor.
+- Gerçek neden: Görüşme/giden ekranında poster 18dp bulanıklaştırılıyordu; canlı ad sadece gelen aramadaydı; Ken Burns çok yavaştı (bulanıkken hiç fark edilmiyordu).
+- Yapılan düzeltme: poster net (sadece tuş takımı açıkken bulanık); posterli kişide giden/görüşme ekranında da dev `CanliAd` + durum metni, küçük yuvarlak resim kaldırıldı; ada soldan sağa parıltı + harf büyümesi ve gölge; Ken Burns 12 sn, %6→%16 + yatay kayma.
+- Doğrulama: CI derlemesi; cihazda kullanıcı tekrar deneyecek
+- Commit: HATA-022: arama ekranında net poster + canlı parıltılı ad
 
 ### HATA-021 · ✅ DÜZELTİLDİ
 - Tarih: 2026-11-15 09:13 → Düzeltme: 2026-11-15 09:25

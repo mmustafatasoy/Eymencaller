@@ -49,17 +49,20 @@ data class PosterGorunumu(
 /** Tam ekran poster fotoğrafı: canlıysa yavaş Ken Burns, görüşmede bulanık + karartma. */
 @Composable
 fun PosterFotografi(resim: ImageBitmap, canli: Boolean, bulanik: Boolean) {
-    val olcek = if (canli) {
+    // Ken Burns: yavaş yakınlaşma + hafif yatay kayma
+    val ilerleme = if (canli) {
         val t = rememberInfiniteTransition(label = "poster")
         val o by t.animateFloat(
-            1f, POSTER_OLCEK,
-            infiniteRepeatable(tween(POSTER_SURE_MS, easing = LinearEasing), RepeatMode.Reverse),
-            label = "posterOlcek",
+            0f, 1f,
+            infiniteRepeatable(tween(POSTER_SURE_MS, easing = FastOutSlowInEasing), RepeatMode.Reverse),
+            label = "posterIlerleme",
         )
         o
     } else {
-        1f
+        0f
     }
+    // taban büyütme kaymada kenar boşluğu açılmasın diye
+    val olcek = if (canli) POSTER_TABAN + (POSTER_OLCEK - POSTER_TABAN) * ilerleme else 1f
     val b by animateFloatAsState(if (bulanik) 1f else 0f, tween(GECIS_MS), label = "bulaniklik")
     Image(
         resim,
@@ -70,6 +73,7 @@ fun PosterFotografi(resim: ImageBitmap, canli: Boolean, bulanik: Boolean) {
             .graphicsLayer {
                 scaleX = olcek
                 scaleY = olcek
+                translationX = (ilerleme - YARIM) * size.width * POSTER_KAYMA
             }
             .then(if (b > ESIK) Modifier.blur(EymenBoyut.posterBulanik * b) else Modifier),
     )
@@ -115,6 +119,13 @@ fun CanliAd(ad: String, modifier: Modifier = Modifier) {
         infiniteRepeatable(tween(NEFES_SURE_MS, easing = FastOutSlowInEasing), RepeatMode.Reverse),
         label = "nefesOlcek",
     )
+    // Harflerin üzerinden soldan sağa geçen ışık (iOS canlı poster parıltısı)
+    val parilti by t.animateFloat(
+        PARILTI_BAS, PARILTI_SON,
+        infiniteRepeatable(tween(PARILTI_SURE_MS, easing = LinearEasing), RepeatMode.Restart),
+        label = "parilti",
+    )
+    val toplam = satirlar.sumOf { it.length }.coerceAtLeast(1)
     Column(
         modifier.graphicsLayer {
             scaleX = nefes
@@ -126,7 +137,9 @@ fun CanliAd(ad: String, modifier: Modifier = Modifier) {
         satirlar.forEach { satir ->
             Row {
                 satir.forEach { harf ->
-                    BelirenHarf(harf, sira++, stil, ad)
+                    val konum = sira.toFloat() / toplam
+                    val isik = (1f - kotlin.math.abs(parilti - konum) * PARILTI_GENISLIK).coerceIn(0f, 1f)
+                    BelirenHarf(harf, sira++, stil, ad, isik)
                 }
             }
         }
@@ -134,7 +147,7 @@ fun CanliAd(ad: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun BelirenHarf(harf: Char, sira: Int, stil: androidx.compose.ui.text.TextStyle, anahtar: String) {
+private fun BelirenHarf(harf: Char, sira: Int, stil: androidx.compose.ui.text.TextStyle, anahtar: String, isik: Float) {
     val a = remember(anahtar) { Animatable(0f) }
     LaunchedEffect(anahtar) {
         delay(sira * HARF_ARALIK_MS)
@@ -143,17 +156,24 @@ private fun BelirenHarf(harf: Char, sira: Int, stil: androidx.compose.ui.text.Te
     Text(
         harf.toString(),
         style = stil,
-        color = AramaEkraniRenk.beyaz,
+        color = AramaEkraniRenk.beyaz.copy(alpha = SONUK + (1f - SONUK) * isik),
         maxLines = 1,
         modifier = Modifier.graphicsLayer {
             alpha = a.value
             translationY = (1f - a.value) * size.height * HARF_KAYMA
+            // ışık geçerken harf hafifçe büyür
+            val b = 1f + isik * PARILTI_BUYUME
+            scaleX = b
+            scaleY = b
         },
     )
 }
 
-private const val POSTER_OLCEK = 1.12f
-private const val POSTER_SURE_MS = 18_000
+private const val POSTER_OLCEK = 1.16f
+private const val POSTER_TABAN = 1.06f
+private const val POSTER_SURE_MS = 12_000
+private const val POSTER_KAYMA = 0.05f
+private const val YARIM = 0.5f
 private const val GECIS_MS = 450
 private const val ESIK = 0.01f
 private const val UST_KARARTMA = 0.45f
@@ -167,3 +187,9 @@ private const val HARF_ARALIK_MS = 70L
 private const val HARF_SURE_MS = 600
 private const val HARF_KAYMA = 0.6f
 private const val SIGAN_HARF = 9
+private const val PARILTI_BAS = -0.4f
+private const val PARILTI_SON = 1.4f
+private const val PARILTI_SURE_MS = 2_800
+private const val PARILTI_GENISLIK = 3.5f
+private const val PARILTI_BUYUME = 0.06f
+private const val SONUK = 0.82f
