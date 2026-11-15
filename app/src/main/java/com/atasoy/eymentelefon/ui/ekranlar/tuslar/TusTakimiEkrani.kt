@@ -171,7 +171,7 @@ fun TusTakimiIcerik(
     ) {
         Spacer(Modifier.height(EymenBosluk.l))
         Box(Modifier.fillMaxWidth()) {
-            EymenAramaCubugu(deger = "", onDegerDegisti = {}, profilAdi = null)
+            EymenAramaCubugu(deger = "", onDegerDegisti = { onAramaAc() }, profilAdi = null)
             Box(
                 Modifier.matchParentSize().clickable(onClickLabel = araAciklama, onClick = onAramaAc)
             )
