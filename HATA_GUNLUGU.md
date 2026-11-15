@@ -1,11 +1,19 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-001**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-002**
 
 ---
 
 ## 🔴 AÇIK HATALAR
+
+### HATA-002 · AÇIK
+- Tarih: 2026-11-15
+- Görev: GOREV-02
+- Yer: `ui/bilesenler/EymenCip.kt`, `ui/bilesenler/EymenAramaCubugu.kt`
+- Belirti: Tıklanabilir çipler ve arama çubuğundaki 30dp profil avatarı için asgari 48dp dokunma hedefi garanti edilmiyor (`AGENTS.md` §2.10).
+- Neden (tahmin): Görsel bileşene doğrudan `Modifier.clickable` uygulanması, görselin dokunma alanını büyütmüyor.
+- Durum: Düzeltme hazırlanıyor; `assembleDebug` ve `lint` GOREV-02 dalında henüz doğrulanmadı.
 
 
 <!-- ŞABLON — kopyala, doldur:
