@@ -3,6 +3,7 @@ package com.atasoy.eymentelefon.ui.ekranlar.arama
 import android.content.Intent
 import android.provider.ContactsContract
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -160,9 +161,7 @@ private fun AramaIcerik(
                 modifier = Modifier.weight(1f).heightIn(min = EymenBoyut.aramaCubugu)
                     .clip(EymenSekil.hap)
                     .background(renk.yuzey1)
-                    .then(
-                        Modifier.background(renk.vurgu.copy(alpha = 0f))
-                    )
+                    .border(EymenBoyut.odakCercevesi, renk.vurgu, EymenSekil.hap)
                     .padding(horizontal = EymenBosluk.m),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(EymenBosluk.s),
@@ -436,7 +435,7 @@ private fun AramaKoyuOnizleme() {
     )
     EymenTelefonTemasi(tema = TemaSecimi.KOYU) {
         AramaIcerik(
-            AramaUiState(sorgu = "Ay", sonucSorgusu = "Ay", kisiler = kisiler),
+            AramaUiState(sorgu = "Ay", sonucSorgusu = "Ay", kisiler = kisiler, yukleniyor = false),
             null, {}, {}, {}, {}, {}, {}, {}, {},
         )
     }
