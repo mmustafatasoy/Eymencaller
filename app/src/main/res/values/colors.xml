@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Sadece XML temaları için. Compose renkleri: ui/theme/Renk.kt -->
+<!-- Sadece XML temaları (açılış ekranı, pencere zemini). Compose renkleri: ui/theme/Renk.kt -->
 <resources>
-    <color name="arka_plan_koyu">#FF0A0F1C</color>
-    <color name="arama_zemini">#FF080C18</color>
-    <color name="vurgu">#FF19D3A2</color>
+    <color name="pencere_zemini">#FFFFFFFF</color>
+    <color name="arama_zemini">#FF000000</color>
+    <color name="vurgu">#FF007AFF</color>
 </resources>

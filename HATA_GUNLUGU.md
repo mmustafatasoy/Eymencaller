@@ -1,15 +1,16 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-001**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-017**
 
 ---
 
 ## 🔴 AÇIK HATALAR
 
+_(Şu an açık hata yok.)_
 
 <!-- ŞABLON — kopyala, doldur:
-### HATA-00X · AÇIK
+### HATA-0XX · AÇIK
 - Tarih: YYYY-AA-GG SS:DD
 - Görev: GOREV-NN
 - Yer: dosya/yolu.kt:satır
@@ -21,23 +22,122 @@
 
 ## ✅ DÜZELTİLEN HATALAR
 
-_(En yeni en üstte.)_
+_(En yeni en üstte. HATA-001: Codex (v1.0 iskelet derlemesi) · HATA-002…013: Claude'un eksik taraması · HATA-014…017: v1.1 iOS yeniden tasarımı, 15 Kasım 2026.)_
+
+### HATA-017 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: gorusme/ui/CallActivity.kt
+- Belirti: Gelen aramada ekran kilitli olsun olmasın hep kaydırma rayı vardı.
+- Yapılan düzeltme: `KeyguardManager.isKeyguardLocked` ile ayrım: kilitliyken "kaydırarak cevapla", açıkken Reddet / Kabul Et (iOS gibi).
+
+### HATA-016 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: res/values/themes.xml, res/values-night/colors.xml
+- Belirti: Açılış ekranı ve pencere zemini her temada lacivertti; açık temada uygulama açılırken koyu bir an görünüyordu.
+- Yapılan düzeltme: Pencere/açılış zemini temaya göre (açık: beyaz, koyu: siyah).
+
+### HATA-015 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: gorusme/ui/CallActivity.kt
+- Belirti: Arama ekranında (her zaman koyu) açık sistem temasında durum çubuğu ikonları siyah kalıyordu.
+- Yapılan düzeltme: `enableEdgeToEdge(SystemBarStyle.dark)` → ikonlar beyaz.
+
+### HATA-014 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: tüm ekranlar → ui/bilesenler/GuvenliAlan.kt, res/values/themes.xml
+- Belirti (kullanıcı bildirdi): Uygulama bazı cihazlarda **gezinme tuşlarının altında** kalıyor ya da **kameranın üstüne** çiziliyordu.
+- Gerçek neden: Kenardan kenara çizimde sadece `statusBarsPadding`/`navigationBarsPadding` kullanılıyordu; kamera kesiği (displayCutout) ve kilit ekranı/yatay mod hesaba katılmıyordu.
+- Yapılan düzeltme: Tüm ekranlar `IosSayfa` → `WindowInsets.safeDrawing` (durum çubuğu ∪ kamera kesiği ∪ gezinme ∪ klavye); tema `windowLayoutInDisplayCutoutMode=shortEdges`; sekme çubuğu zemini gezinme tuşlarının arkasına uzanıp ikonları üstte tutuyor. Ayrıntı: `docs/06_GUVENLI_ALAN.md`.
+- Doğrulama: kod incelemesi ✅ · cihazda GOREV-03
+
+### HATA-013 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: AndroidManifest.xml, gorusme/GorusmeAlicisi.kt
+- Belirti: Bildirim eylemlerini (reddet / kapat) alan alıcı dışarıya açık olacaktı.
+- Gerçek neden: Cevapsız arama yayını için alıcının `exported=true` olması gerekiyor; aynı alıcı iç eylemleri de alıyordu → başka bir uygulama aramayı kapatabilirdi.
+- Yapılan düzeltme: İki alıcıya bölündü: `GorusmeAlicisi` (exported=false) ve sadece cevapsız aramayı işleyen `CevapsizAramaAlicisi` (exported=true).
+- Doğrulama: manifest + kod incelemesi ✅
+
+### HATA-012 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: MainActivity.kt
+- Belirti: Telefon koyu temadayken uygulamada "Açık" tema seçilince durum çubuğu ikonları beyaz kalıp okunmuyordu.
+- Yapılan düzeltme: Seçilen temaya göre `enableEdgeToEdge(SystemBarStyle.light/dark)`.
+- Doğrulama: kod incelemesi ✅ (cihazda GOREV-03)
+
+### HATA-011 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: gorusme/GorusmeAlicisi.kt, gorusme/GorusmeBildirimi.kt
+- Belirti: Gelen aramadaki "Hatırlat" butonunun arkasında alarm/bildirim yoktu.
+- Yapılan düzeltme: `hatirlatKur()` (10 dk, kesin olmayan alarm, ek izin gerekmez) + `hatirlatGoster()`; dokununca Tuşlar'da numara dolu.
+
+### HATA-010 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: gorusme/ui/CallActivity.kt
+- Belirti: Telefon çalarken ses tuşları zili susturmuyordu.
+- Yapılan düzeltme: `onKeyDown` → `TelecomManager.silenceRinger()`.
+
+### HATA-009 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: gorusme/ui/CallActivity.kt
+- Belirti: Görüşmede telefon kulağa götürülünce ekran açık kalıyordu (yanak ile tuşlara basılabilir).
+- Yapılan düzeltme: Aktif görüşmede + ses telefon hoparlöründeyken `PROXIMITY_SCREEN_OFF_WAKE_LOCK`; görüşme bitince bırakılır.
+
+### HATA-008 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: MainActivity.kt, gorusme/ui/GorusmeEkrani.kt
+- Belirti: Görüşme sırasında "Arama ekle" ve "Kişiler" uygulamanın doğru sekmesini açamıyordu.
+- Yapılan düzeltme: `MainActivity.sekmeIntenti()` + `EK_SEKME` ekstrası; uygulama açıkken de yönlendirme.
+
+### HATA-007 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: cekirdek/arama/AramaBaslatici.kt
+- Belirti: Kişi detayındaki "Görüntülü" butonu için destek kontrolü ve görüntülü arama yolu yoktu.
+- Yapılan düzeltme: `goruntuluDestekleniyor()` + `ara(..., goruntulu = true)`; destek yoksa buton gizli.
+
+### HATA-006 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: cekirdek/arama/AramaBaslatici.kt
+- Belirti: Tuş takımında "1" uzun basış (sesli mesaj) için fonksiyon yoktu.
+- Yapılan düzeltme: `sesliMesaj()` (izin kontrolü dahil).
+
+### HATA-005 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: EymenTelefonUygulamasi.kt
+- Belirti: Bildirim kanalları sadece arama servisi çalışırken oluşacaktı; cevapsız arama bildirimi kanal olmadan düşmezdi.
+- Yapılan düzeltme: Kanallar uygulama açılışında oluşturuluyor.
+
+### HATA-004 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: gorusme/GorusmeBildirimi.kt, gorusme/ui/CallActivity.kt
+- Belirti: Bildirimdeki "Cevapla" yayın (broadcast) üzerinden activity açacaktı → Android 12+ "trampoline" yasağına takılır.
+- Yapılan düzeltme: "Cevapla" doğrudan `CallActivity`'yi `EYLEM_CEVAPLA` ile açıyor; cevaplama orada yapılıyor.
+
+### HATA-003 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: gorusme/GorusmeBildirimi.kt, gorusme/EymenInCallService.kt
+- Belirti: Ekran kapalı/kilitliyken gelen arama görünmeyebilirdi; uygulamadan çıkınca devam eden arama bildirimi yoktu.
+- Yapılan düzeltme: Gelen arama: `CallStyle` + tam ekran intent. Devam eden: süre sayaçlı bildirim + "Aramayı bitir". Servis arama durumunu izleyip bildirimi günceller.
+
+### HATA-002 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
+- Yer: AndroidManifest.xml, gorusme/GorusmeAlicisi.kt
+- Belirti: Uygulama varsayılan telefon uygulaması olunca **cevapsız arama bildirimi hiç görünmeyecekti.**
+- Gerçek neden: Android bu bildirimi varsayılan uygulamaya bırakır (`ACTION_SHOW_MISSED_CALLS_NOTIFICATION`); alıcı yoktu.
+- Yapılan düzeltme: `CevapsizAramaAlicisi` + `GorusmeBildirimi.cevapsizGoster()`; Son aramalar açılınca kapanır.
 
 ### HATA-001 · ✅ DÜZELTİLDİ
-- Tarih: 2026-11-14 21:10 → Düzeltme: 2026-11-14
-- Görev: GOREV-01
+- Tarih: 2026-11-14 21:10 → Düzeltme: 2026-11-14 (Codex)
+- Görev: GOREV-01 (v1.0 iskeleti)
 - Yer: `gradle/wrapper/gradle-wrapper.properties` / derleme ortamı
 - Belirti: Yerel ortamda Gradle 8.14.3 indirilemedi (`java.net.UnknownHostException: services.gradle.org`).
-- Gerçek neden: Önceki çalışma ortamının Gradle dağıtım sunucusuna DNS/ağ erişimi yoktu; uygulama kaynak kodundan kaynaklanan bir derleme hatası değildi.
-- Yapılan düzeltme:
-  - Kaynak kodunu veya bağımlılık sürümlerini değiştirmeden GitHub Actions ortamında derleme ve lint doğrulandı.
-  - [Actions #43628558227](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43628558227), `main`, SHA `c3ed9c15b8bbbf9099419ab87788dcd6d9d6ab02`.
-- Doğrulama: `assembleDebug` ✅ · `lintDebug` ✅ · `EymenTelefon-debug` APK artifact ✅ · fiziksel cihazda açılış henüz kontrol edilmedi.
+- Gerçek neden: Çalışma ortamının Gradle sunucusuna ağ erişimi yoktu; kaynak koddan kaynaklanan bir hata değildi.
+- Yapılan düzeltme: Kod ve sürümler değiştirilmeden derleme GitHub Actions'ta doğrulandı ([Actions #43628558227](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43628558227), SHA `c3ed9c1`).
+- Doğrulama: `assembleDebug` ✅ · `lintDebug` ✅ · APK artifact ✅
 - Commit: HATA-001: GitHub Actions ile derleme engeli doğrulandı
 
-
 <!-- ŞABLON:
-### HATA-00X · ✅ DÜZELTİLDİ
+### HATA-0XX · ✅ DÜZELTİLDİ
 - Tarih: ... → Düzeltme: ...
 - Görev: GOREV-NN
 - Yer:
@@ -45,7 +145,7 @@ _(En yeni en üstte.)_
 - Gerçek neden:
 - Yapılan düzeltme:
 - Doğrulama: assembleDebug ✅ · lint ✅ · cihazda ✅
-- Commit: HATA-00X: ...
+- Commit: HATA-0XX: ...
 -->
 
 ---

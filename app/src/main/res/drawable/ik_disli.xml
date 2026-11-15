@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Otomatik: design/ikonlar.py → design/ikon_ceviri.py. Elle DEĞİŞTİRME. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path android:pathData="M21.52,8.35 L22.20,11.73 L19.60,12.20 L19.10,14.72 L21.32,16.15 L19.40,19.02 L17.23,17.51 L15.09,18.94 L15.65,21.52 L12.27,22.20 L11.80,19.60 L9.28,19.10 L7.85,21.32 L4.98,19.40 L6.49,17.23 L5.06,15.09 L2.48,15.65 L1.80,12.27 L4.40,11.80 L4.90,9.28 L2.68,7.85 L4.60,4.98 L6.77,6.49 L8.91,5.06 L8.35,2.48 L11.73,1.80 L12.20,4.40 L14.72,4.90 L16.15,2.68 L19.02,4.60 L17.51,6.77 L18.94,8.91 Z M12,8.6 a3.4,3.4 0 1,0 0,6.8 a3.4,3.4 0 1,0 0,-6.8 Z"
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"/>
+</vector>

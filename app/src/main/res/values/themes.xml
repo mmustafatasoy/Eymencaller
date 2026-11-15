@@ -2,14 +2,21 @@
 <resources>
     <!-- Açılış (splash): karar verilene kadar tutulur, bkz. docs/04_IZINLER.md §2 -->
     <style name="Theme.EymenTelefon.Acilis" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/arka_plan_koyu</item>
+        <item name="windowSplashScreenBackground">@color/pencere_zemini</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="postSplashScreenTheme">@style/Theme.EymenTelefon</item>
     </style>
 
-    <style name="Theme.EymenTelefon" parent="android:Theme.Material.NoActionBar">
-        <item name="android:windowBackground">@color/arka_plan_koyu</item>
+    <!-- Kenardan kenara çizim: içerik kamera kesiğinin yanına kadar uzanır, Compose güvenli alanı hesaplar
+         (ui/bilesenler/GuvenliAlan.kt). shortEdges = dikeyde/yatayda kısa kenardaki kamera deliğini kapsa. -->
+    <style name="Theme.EymenTelefon" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/pencere_zemini</item>
         <item name="android:colorAccent">@color/vurgu</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+        <item name="android:enforceStatusBarContrast">false</item>
     </style>
 
     <style name="Theme.EymenTelefon.Arama" parent="Theme.EymenTelefon">

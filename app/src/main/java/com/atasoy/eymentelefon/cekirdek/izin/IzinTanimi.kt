@@ -65,7 +65,7 @@ object IzinListesi {
             baslik = R.string.izin_gecmis_baslik,
             aciklama = R.string.izin_gecmis_aciklama,
             neden = R.string.izin_gecmis_neden,
-            ikon = EymenIkon.Saat,
+            ikon = EymenIkon.SaatDolu,
             zorunlu = true,
             androidIzinleri = listOf(
                 Manifest.permission.READ_CALL_LOG,

@@ -1,12 +1,14 @@
 package com.atasoy.eymentelefon
 
-// ✅ HAZIR — DEĞİŞTİRME.
+// ✅ HAZIR.
 // Açılış kararı (docs/04_IZINLER.md §2): Karşılama → İzinler → Ana ekran.
 // İzinler tamam değilse ana ekran HİÇ gösterilmez; karar verilene kadar splash ekranı tutulur.
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
@@ -25,11 +27,12 @@ import com.atasoy.eymentelefon.ui.navigasyon.AnaSekme
 import com.atasoy.eymentelefon.ui.navigasyon.EymenNavHost
 import com.atasoy.eymentelefon.ui.navigasyon.Rotalar
 import com.atasoy.eymentelefon.ui.theme.EymenTelefonTemasi
+import com.atasoy.eymentelefon.ui.theme.temaKoyuMu
 
 class MainActivity : ComponentActivity() {
 
-    /** Uygulama açıkken başka uygulamadan gelen tel: numarası */
-    private var yeniNumara by mutableStateOf<String?>(null)
+    /** Uygulama açıkken gelen hedef: tel: numarası ya da sekme (arama ekranından "Kişiler" / "Arama ekle", bildirimden "Son") */
+    private var yeniHedef by mutableStateOf<Pair<AnaSekme, String?>?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
@@ -38,6 +41,7 @@ class MainActivity : ComponentActivity() {
 
         val k = konteyner()
         val ilkNumara = numaraCikar(intent)
+        val ilkSekme = sekmeCikar(intent)
         var hazir = false
         splash.setKeepOnScreenCondition { !hazir }
 
@@ -46,6 +50,16 @@ class MainActivity : ComponentActivity() {
             val a = ayarlar
             if (a != null) {
                 SideEffect { hazir = true }
+                // Durum çubuğu ikonları seçilen temaya uysun (sistem koyu, uygulama açık olabilir)
+                val koyu = temaKoyuMu(a.tema)
+                LaunchedEffect(koyu) {
+                    val stil = if (koyu) {
+                        SystemBarStyle.dark(Color.TRANSPARENT)
+                    } else {
+                        SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+                    }
+                    enableEdgeToEdge(statusBarStyle = stil, navigationBarStyle = stil)
+                }
                 EymenTelefonTemasi(tema = a.tema, vurguIndex = a.vurguIndex) {
                     val nav = rememberNavController()
                     // Başlangıç bir kez hesaplanır
@@ -57,8 +71,11 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                     val sekme = remember {
-                        if (ilkNumara != null) AnaSekme.TUSLAR
-                        else AnaSekme.entries.firstOrNull { it.name == a.sonSekme } ?: AnaSekme.SON
+                        when {
+                            ilkNumara != null -> AnaSekme.TUSLAR
+                            ilkSekme != null -> ilkSekme
+                            else -> AnaSekme.entries.firstOrNull { it.name == a.sonSekme } ?: AnaSekme.SON
+                        }
                     }
                     EymenNavHost(
                         nav = nav,
@@ -72,19 +89,19 @@ class MainActivity : ComponentActivity() {
                         val rota = nav.currentDestination?.route
                         val izinEkranindaDegil = rota != Rotalar.IZINLER && rota != Rotalar.KARSILAMA
                         if (a.ilkAcilisTamam && izinEkranindaDegil && !k.izinYoneticisi.zorunlularTamam()) {
-                            nav.navigate(Rotalar.izinler()) { popUpTo(0) { inclusive = true } }
+                            nav.navigate(Rotalar.izinler()) { popUpTo(nav.graph.id) { inclusive = true } }
                         }
                     }
 
-                    // Uygulama açıkken gelen tel: bağlantısı → Tuşlar sekmesi, numara dolu
-                    LaunchedEffect(yeniNumara) {
-                        val n = yeniNumara ?: return@LaunchedEffect
-                        if (nav.currentDestination?.route == Rotalar.ANA) {
-                            nav.navigate(Rotalar.ana(AnaSekme.TUSLAR, n)) {
-                                popUpTo(Rotalar.ANA) { inclusive = true }
+                    // Uygulama açıkken gelen hedef → ilgili sekme (numara varsa Tuşlar'da dolu)
+                    LaunchedEffect(yeniHedef) {
+                        val (s, n) = yeniHedef ?: return@LaunchedEffect
+                        if (k.izinYoneticisi.zorunlularTamam() && a.ilkAcilisTamam) {
+                            nav.navigate(Rotalar.ana(s, n)) {
+                                popUpTo(nav.graph.id) { inclusive = true }
                             }
                         }
-                        yeniNumara = null
+                        yeniHedef = null
                     }
                 }
             }
@@ -94,7 +111,26 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        yeniNumara = numaraCikar(intent)
+        val numara = numaraCikar(intent)
+        val sekme = sekmeCikar(intent)
+        yeniHedef = when {
+            numara != null -> AnaSekme.TUSLAR to numara
+            sekme != null -> sekme to null
+            else -> null
+        }
+    }
+
+    private fun sekmeCikar(intent: Intent?): AnaSekme? =
+        intent?.getStringExtra(EK_SEKME)?.let { ad -> AnaSekme.entries.firstOrNull { it.name == ad } }
+
+    companion object {
+        /** Intent ekstrası: açılacak ana sekme (AnaSekme.name) */
+        const val EK_SEKME = "eymen.sekme"
+
+        fun sekmeIntenti(context: android.content.Context, sekme: AnaSekme): Intent =
+            Intent(context, MainActivity::class.java)
+                .putExtra(EK_SEKME, sekme.name)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
     }
 
     private fun numaraCikar(intent: Intent?): String? {

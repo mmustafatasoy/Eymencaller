@@ -15,67 +15,68 @@
 | minSdk / targetSdk / compileSdk | 29 / 35 / 36 |
 | Paket adı | `com.atasoy.eymentelefon` |
 
-## 2. Paket ağacı (kesin — ✅ = hazır yazıldı, ⬜ = Codex yazacak)
+## 2. Paket ağacı (kesin — v1.1 iOS tarzı, hepsi ✅ Claude tarafından yazıldı, 15 Kasım 2026)
 
 ```
 app/src/main/java/com/atasoy/eymentelefon/
-├── EymenTelefonUygulamasi.kt            ✅ Application, konteyner + HataKaydedici kurulumu
-├── UygulamaKonteyneri.kt                ✅ Elle DI (tüm depolar burada tek örnek)
-├── MainActivity.kt                      ✅ Başlangıç yönlendirmesi (karşılama/izin/ana)
+├── EymenTelefonUygulamasi.kt            Application: HataKaydedici + konteyner + bildirim kanalları
+├── UygulamaKonteyneri.kt                Elle DI (tüm depolar tek örnek)
+├── MainActivity.kt                      Açılış kararı, tel: / sekme intent'leri, durum çubuğu teması
 │
 ├── cekirdek/
-│   ├── hata/HataKaydedici.kt            ✅ Çökme + yakalanan hata kaydı (dosyaya)
-│   ├── izin/IzinYoneticisi.kt           ✅ Tüm izin ve rol kontrolleri
-│   ├── izin/IzinTanimi.kt               ✅ 5 iznin tanımı (sıra, zorunluluk, metin)
-│   ├── arama/AramaBaslatici.kt          ✅ Tek arama giriş noktası
-│   ├── ayar/AyarDeposu.kt               ✅ DataStore
+│   ├── hata/HataKaydedici.kt            Çökme + yakalanan hata kaydı (dosyaya, 7 gün)
+│   ├── izin/IzinYoneticisi.kt           Tüm izin ve rol kontrolleri
+│   ├── izin/IzinTanimi.kt               5 iznin tanımı (sıra, zorunluluk, metin)
+│   ├── arama/AramaBaslatici.kt          Tek arama giriş noktası (+ sesli mesaj, görüntülü)
+│   ├── ayar/AyarDeposu.kt               DataStore
 │   └── yardimci/
-│       ├── NumaraBicimleyici.kt         ⬜ TR numara biçimi
-│       ├── T9Eslestirici.kt             ✅ Türkçe T9 tablosu
-│       └── TurkceMetin.kt               ✅ Türkçe sıralama/arama yardımcıları
+│       ├── NumaraBicimleyici.kt         TR numara biçimi + normalize
+│       ├── ZamanBicimleyici.kt          "20:31", "Pzt 11:20", "4 dk 12 sn", sayaç
+│       ├── T9Eslestirici.kt             Türkçe T9 tablosu + puanlama
+│       ├── TurkceMetin.kt               Türkçe sıralama / gruplama / aksan-duyarsız arama
+│       └── DisIslemler.kt               Sistem intent'leri (mesaj, kişi ekle/düzenle, paylaş, kopyala)
 │
 ├── veri/
-│   ├── model/Kisi.kt                    ✅
-│   ├── model/AramaKaydi.kt              ✅
-│   ├── rehber/RehberDeposu.kt           ⬜ ContactsContract okuma (+ContentObserver ile Flow)
-│   ├── gecmis/AramaGecmisiDeposu.kt     ⬜ CallLog okuma/silme (+ContentObserver)
-│   └── engel/EngelDeposu.kt             ⬜ BlockedNumberContract
+│   ├── IcerikGozlemci.kt                ContentObserver → Flow
+│   ├── model/Kisi.kt · AramaKaydi.kt
+│   ├── rehber/RehberDeposu.kt           ContactsContract
+│   ├── gecmis/AramaGecmisiDeposu.kt     CallLog
+│   └── engel/EngelDeposu.kt             BlockedNumberContract
 │
 ├── gorusme/                             (arama motoru)
-│   ├── EymenInCallService.kt            ✅ Sistem bu servise aramaları verir
-│   ├── GorusmeYoneticisi.kt             ✅ Aktif aramalar StateFlow (tek kaynak)
-│   ├── GorusmeDurumu.kt                 ✅ Arayüz için sade durum modeli
-│   ├── GorusmeBildirimi.kt              ⬜ Gelen/devam eden arama bildirimi (CallStyle)
-│   ├── EymenCallScreeningService.kt     ⬜ Engelli numaraları reddet
+│   ├── EymenInCallService.kt            Sistem aramaları buraya verir; bildirimi güncel tutar
+│   ├── GorusmeYoneticisi.kt             Aktif aramalar StateFlow (tek kaynak)
+│   ├── GorusmeDurumu.kt                 Arayüz için sade durum modeli
+│   ├── GorusmeBildirimi.kt              Gelen (CallStyle + tam ekran), devam eden, cevapsız, hatırlatma
+│   ├── GorusmeAlicisi.kt                GorusmeAlicisi (iç: reddet/kapat/hatırlat) + CevapsizAramaAlicisi (Telecom)
+│   ├── EymenCallScreeningService.kt     Engelli numaraları çaldırmadan reddeder
 │   └── ui/
-│       ├── CallActivity.kt              ✅ Kilit ekranı üstü, durumdan ekrana yönlendirir
-│       ├── GorusmeViewModel.kt          ⬜
-│       ├── GidenAramaEkrani.kt          ⬜ mockup 08
-│       ├── GelenAramaEkrani.kt          ⬜ mockup 09
-│       └── GorusmeEkrani.kt             ⬜ mockup 10
+│       ├── CallActivity.kt              Kilit ekranı üstü; kilitli mi?; yakınlık sensörü; ses tuşu zili susturur
+│       ├── GorusmeViewModel.kt
+│       └── AramaEkranlari.kt            11–16: GorusmeEkrani (giden + görüşme + tuşlar), GelenAramaEkrani (kilitli / açık)
 │
 └── ui/
-    ├── theme/                           ✅ Renk.kt · Yazi.kt · Olcu.kt (EymenBosluk · EymenBoyut · EymenSekil) · Tema.kt
-    ├── ikon/EymenIkon.kt                ✅ Tüm ikonlar (res/drawable/ik_*.xml) tek yerde
-    ├── navigasyon/Rotalar.kt            ✅
-    ├── navigasyon/EymenNavHost.kt       ✅ (ekranları bağlar)
-    ├── bilesenler/                      ⬜ 01_TASARIM_SISTEMI.md §5'teki 15 bileşen, her biri ayrı dosya
+    ├── theme/                           Renk.kt · Yazi.kt · Olcu.kt · Tema.kt (iOS renk/yazı/ölçü)
+    ├── ikon/EymenIkon.kt                39 ikon (design/ikonlar.py → res/drawable/ik_*.xml)
+    ├── navigasyon/Rotalar.kt · EymenNavHost.kt
+    ├── bilesenler/                      GuvenliAlan · IosNavCubugu · IosListe · IosKontroller · IosSekmeCubugu
+    │                                    IosTusTakimi · IosUyari · IosCagri · Tiklama (01_TASARIM_SISTEMI.md §4)
     └── ekranlar/
-        ├── karsilama/KarsilamaEkrani.kt             ⬜ 01
-        ├── izinler/IzinlerEkrani.kt + IzinlerViewModel.kt   ⬜ 02
-        ├── anaekran/AnaEkran.kt                     ⬜ alt menülü iskelet (4 sekme)
-        ├── favoriler/FavorilerEkrani.kt + VM        ⬜ (görsel: 05'teki favori şeridinin ızgara hali)
-        ├── tuslar/TusTakimiEkrani.kt + VM           ⬜ 03
-        ├── sonaramalar/SonAramalarEkrani.kt + VM    ⬜ 04
-        ├── rehber/RehberEkrani.kt + VM              ⬜ 05
-        ├── kisidetay/KisiDetayEkrani.kt + VM        ⬜ 06
-        ├── arama/AramaEkrani.kt + VM                ⬜ 07
-        ├── izineksik/IzinEksikAltSayfa.kt           ⬜ 12
-        └── ayarlar/AyarlarEkrani.kt + VM            ⬜ 11
-              HataKayitlariEkrani.kt, EngellenenlerEkrani.kt, HizliYanitlarEkrani.kt  ⬜
+        ├── Ortak.kt                                       numara/arama türü metinleri, kalın soyad, kalın eşleşme
+        ├── karsilama/KarsilamaEkrani.kt                   01
+        ├── izinler/IzinlerEkrani.kt + IzinlerViewModel.kt 02
+        ├── anaekran/AnaEkran.kt                           sekme iskeleti
+        ├── favoriler/FavorilerEkrani.kt + VM              03
+        ├── sonaramalar/SonAramalarEkrani.kt + VM          04, 05, 19
+        ├── rehber/RehberEkrani.kt + VM                    06 (Kişiler)
+        ├── kisidetay/KisiDetayEkrani.kt + VM              07
+        ├── tuslar/TusTakimiEkrani.kt + VM                 08, 09
+        ├── arama/AramaEkrani.kt + VM                      10
+        ├── izineksik/IzinEksikUyarisi.kt                  17
+        └── ayarlar/AyarlarEkrani.kt + VM + AyarAltEkranlari.kt   18 (+ hata kayıtları, engellenenler, hızlı yanıtlar)
 ```
 
-**Yeni dosya sadece bu ağaçta adı geçen yere açılır.** Gereken yardımcı fonksiyon, ait olduğu dosyanın içine `private` olarak yazılır.
+**Yeni dosya açılmaz.** Değişiklik gerekiyorsa HATA_GUNLUGU › SORULAR'a yazılır.
 
 ## 3. Ekran şablonu (her ekran bu kalıpta)
 
@@ -104,7 +105,7 @@ class TusTakimiViewModel(private val rehber: RehberDeposu, ...) : ViewModel() {
     TusTakimiIcerik(durum, vm::olay)
 }
 
-// 5) Durumsuz içerik + 6) @Preview (koyu ve açık)
+// 5) Kök her zaman IosSayfa (güvenli alan) — bkz. 06_GUVENLI_ALAN.md
 ```
 
 ## 4. Arama akışı (telecom)

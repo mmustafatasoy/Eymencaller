@@ -1,78 +1,92 @@
 package com.atasoy.eymentelefon.ui.theme
 
-// ✅ HAZIR — DEĞİŞTİRME. Kaynak: docs/01_TASARIM_SISTEMI.md §2, §3
-// Kod içinde çıplak 16.dp / RoundedCornerShape(12.dp) YASAK; buradakileri kullan.
+// ✅ v1.1 iOS ölçüleri. Kaynak: docs/01_TASARIM_SISTEMI.md §2–3 · Kod içinde çıplak 16.dp YASAK.
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.dp
 
 object EymenBosluk {
+    val cokKucuk = 2.dp
     val xs = 4.dp
     val s = 8.dp
     val m = 12.dp
-    val l = 16.dp
-    val kenar = 18.dp
+    val kenar = 16.dp
+    val l = 20.dp
     val xl = 24.dp
     val xxl = 32.dp
-    val kartArasi = 10.dp
-    val listeDikey = 8.dp
-    val tusYatay = 26.dp
-    val tusDikey = 10.dp
-    val kontrolYatay = 26.dp
-    val kontrolDikey = 18.dp
+    val dev = 48.dp
+    /** Gruplu liste başlığının soldan girintisi (kenar + iç girinti) */
+    val grupBaslik = 32.dp
+    val grupArasi = 35.dp
+    val tusYatay = 28.dp
+    val tusDikey = 16.dp
+    val cagriYatay = 30.dp
+    val cagriDikey = 26.dp
 }
 
 object EymenBoyut {
-    val dokunmaMin = 48.dp
-    val anaButon = 54.dp
-    val aramaCubugu = 50.dp
-    val altMenu = 84.dp
-    val altMenuHapGenislik = 60.dp
-    val altMenuHapYukseklik = 32.dp
-    val tusGenislik = 76.dp
-    val tusYukseklik = 62.dp
-    val araButonu = 70.dp
-    val kapatButonu = 76.dp
-    val kontrolButonu = 64.dp
-    val kaydirRay = 76.dp
-    val kaydirTutamac = 62.dp
-    val fab = 58.dp
-    val aksiyonKutusu = 58.dp
-    val izinIkonKutusu = 42.dp
-    val listeAraButonu = 38.dp
-    val ikon = 22.dp
-    val ikonKucuk = 18.dp
-    val ikonBuyuk = 24.dp
+    val dokunmaMin = 44.dp
+    val navCubugu = 44.dp
+    val sekmeCubugu = 49.dp
+    val sekmeIkonu = 26.dp
+    val satir = 44.dp
+    val satirAvatarli = 60.dp
     val avatarListe = 40.dp
-    val avatarAramaListe = 42.dp
-    val avatarFavori = 54.dp
-    val avatarFavoriIzgara = 72.dp
-    val avatarDetay = 104.dp
-    val avatarGiden = 120.dp
-    val avatarGelen = 128.dp
-    val avatarGorusme = 96.dp
-    val avatarProfil = 30.dp
-    val karsilamaSimge = 132.dp
-    val anahtarGenislik = 44.dp
-    val anahtarYukseklik = 26.dp
-    val altSayfaTutamacG = 42.dp
-    val altSayfaTutamacY = 5.dp
-    val odakCercevesi = 1.5.dp
-    val ilerlemeCubugu = 6.dp
+    val avatarKartim = 58.dp
+    val avatarKart = 112.dp
+    val aramaAlani = 36.dp
+    val segmentYukseklik = 32.dp
+    val anahtarG = 51.dp
+    val anahtarY = 31.dp
+    val anahtarTop = 27.dp
+    val buton = 50.dp
+    val kapsulY = 30.dp
+    val ikonKare = 29.dp
+    val ikon = 22.dp
+    val ikonKucuk = 17.dp
+    val ikonMini = 12.dp
+    val tus = 78.dp
+    val cagriButonu = 76.dp
+    val cagriIkonu = 30.dp
+    val cevapButonu = 78.dp
+    val kaydirY = 80.dp
+    val kaydirTutamac = 68.dp
+    val eylemKutusuY = 62.dp
+    val uyariGenislik = 270.dp
+    val karsilamaSimge = 92.dp
+    val ozellikIkonu = 30.dp
+    val hairline = 0.5.dp
+    val imlec = 2.dp
 }
 
 object EymenSekil {
-    val kart = RoundedCornerShape(20.dp)
-    val izinKarti = RoundedCornerShape(18.dp)
-    val buton = RoundedCornerShape(18.dp)
+    val grup = RoundedCornerShape(10.dp)
+    val buton = RoundedCornerShape(14.dp)
+    val kare = RoundedCornerShape(7.dp)
+    val aramaAlani = RoundedCornerShape(10.dp)
+    val segmentDis = RoundedCornerShape(9.dp)
+    val segmentIc = RoundedCornerShape(7.dp)
+    val eylemKutusu = RoundedCornerShape(12.dp)
+    val uyari = RoundedCornerShape(14.dp)
+    val sayfa = RoundedCornerShape(14.dp)
     val hap = CircleShape
-    val fab = RoundedCornerShape(20.dp)
-    val altSayfa = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
-    val cip = RoundedCornerShape(12.dp)
-    val aksiyon = RoundedCornerShape(20.dp)
-    val ikonKutusu = RoundedCornerShape(13.dp)
-    val oneriKarti = RoundedCornerShape(16.dp)
-    val etiket = RoundedCornerShape(6.dp)
-    val klavyeTusu = RoundedCornerShape(7.dp)
+}
+
+object EymenDolgu {
+    val satir = PaddingValues(top = 8.dp, bottom = 8.dp, end = 14.dp)
+    val grupSatiri = PaddingValues(top = 11.dp, bottom = 11.dp, end = 14.dp)
+    val kapsul = PaddingValues(horizontal = 12.dp, vertical = 5.dp)
+    val segment = PaddingValues(horizontal = 16.dp, vertical = 5.dp)
+    val segmentKucuk = PaddingValues(horizontal = 9.dp, vertical = 4.dp)
+    val uyariMetni = PaddingValues(start = 16.dp, end = 16.dp, top = 19.dp, bottom = 18.dp)
+    val uyariButonu = PaddingValues(vertical = 12.dp, horizontal = 4.dp)
+    val sayfaSecenegi = PaddingValues(vertical = 16.dp, horizontal = 10.dp)
+}
+
+object EymenOpaklik {
+    const val pasif = 0.35f
+    const val basili = 0.5f
+    const val golge = 0.12f
 }

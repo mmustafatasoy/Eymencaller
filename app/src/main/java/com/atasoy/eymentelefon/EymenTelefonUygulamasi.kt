@@ -4,6 +4,7 @@ package com.atasoy.eymentelefon
 
 import android.app.Application
 import com.atasoy.eymentelefon.cekirdek.hata.HataKaydedici
+import com.atasoy.eymentelefon.gorusme.GorusmeBildirimi
 
 class EymenTelefonUygulamasi : Application() {
 
@@ -14,5 +15,6 @@ class EymenTelefonUygulamasi : Application() {
         super.onCreate()
         HataKaydedici.kur(this)
         konteyner = UygulamaKonteyneri(this)
+        GorusmeBildirimi.kanallariOlustur(this)
     }
 }

@@ -1,66 +1,69 @@
-# 05 · Görev Planı (sırayla, tek tek)
+# 05 · Görev Planı
 
-> Kurallar: bir seferde **tek görev**. Her görev sonunda `assembleDebug` + `lint` temiz → kutuyu `[x]` yap → commit `GOREV-NN: ...`.
-> Açık hata varken yeni göreve geçme (`HATA_GUNLUGU.md`).
+> **Durum (15 Kasım 2026, v1.1):** Arayüz iOS tarzında baştan yazıldı (20 ekran görseli, her biri çalışır), güvenli alan (kamera deliği + gezinme tuşları) otomatik. Arama motoru, veri katmanı ve bildirimler v1.0'dan aynen devam.
+> Codex'in işi artık **derlemek, doğrulamak ve çıkan hataları kayıt kurallarıyla düzeltmek.** Yeni özellik eklemek yok.
+> Kurallar: bir seferde **tek görev** · her hata önce `HATA_GUNLUGU.md`'ye · görev sonunda `[x]` + commit `GOREV-NN: ...`
 
 ---
 
-### [x] GOREV-01 · İskeleti derle
-- Projeyi olduğu gibi derle: `./gradlew assembleDebug`.
-- Hazır (✅) dosyalara dokunma. Derleme hatası varsa HATA_GUNLUGU'na yaz, en küçük değişiklikle düzelt.
-- **Kabul:** APK oluşuyor, uygulama açılıyor, karşılama yerine geçici metin görünüyor.
+## ✅ Claude'un tamamladıkları
+- [x] Tasarım sistemi, 37 ikon, simge, 12 mockup
+- [x] 16 bileşen dosyası (`ui/bilesenler/`)
+- [x] Karşılama + İzinler (açılıştan önce) + İzin eksik alt sayfası
+- [x] Ana ekran: Favoriler · Son aramalar · Rehber · Tuş takımı
+- [x] Kişi detayı · Kişi/numara arama · Ayarlar (+ hata kayıtları, engellenenler, hızlı yanıtlar)
+- [x] Depolar: rehber, arama geçmişi, engellenen numaralar
+- [x] Arama motoru: InCallService, giden/gelen/görüşme ekranları, kaydırarak cevapla, DTMF, ses yolu, beklet, yakınlık sensörü
+- [x] Bildirimler: gelen arama (tam ekran), devam eden arama, cevapsız arama, hatırlatma
+- [x] Engelleme servisi (CallScreeningService)
+- [x] Kotlin sözdizimi denetimi + import / string / drawable çapraz kontrolü
+- [x] **v1.1:** iOS tarzı tema (açık + koyu), 9 iOS bileşen dosyası, tüm ekranlar yeniden yazıldı
+- [x] **v1.1:** Güvenli alan altyapısı (`GuvenliAlan.kt`, `shortEdges`, `SystemBarStyle`) — HATA-014
+- [x] **v1.1:** Son Aramalar'da kaydırarak sil + Düzenle/Temizle, Kişiler'de harf dizini, kilitliyken "kaydırarak cevapla"
 
-### [ ] GOREV-02 · Bileşenler
-- `ui/bilesenler/` altına `01_TASARIM_SISTEMI.md §5`'teki 15 bileşeni yaz (her biri ayrı dosya + `@Preview`).
-- İkonlar sadece `EymenIkon` üzerinden.
-- **Kabul:** Her bileşenin önizlemesi mockup'taki karşılığıyla aynı ölçü/renkte.
+---
 
-### [ ] GOREV-03 · Karşılama + İzinler (01, 02)
-- `KarsilamaEkrani`, `IzinlerEkrani`, `IzinlerViewModel`. `docs/04_IZINLER.md`'deki tüm durumlar.
-- "Ayar modu" parametresi (Ayarlar'dan açılınca üstte geri oku, alt buton "Tamam").
-- **Kabul:** Temiz kurulumda: Karşılama → İzinler → 5 izin verilince "Devam et" aktif → Ana ekran. Bir izni ayarlardan kaldırıp dönünce yine İzinler açılıyor.
+## Codex görevleri
 
-### [ ] GOREV-04 · Ana ekran iskeleti + Tuş takımı (03)
-- `AnaEkran` (4 sekme, `EymenAltMenu`), `TusTakimiEkrani` + VM, `NumaraBicimleyici`.
-- T9 eşleşme kartı, DTMF ses, titreşim, uzun basma davranışları.
-- **Kabul:** `0532…` yazınca biçimleniyor, rehberdeki kişi kartta çıkıyor, Ara → `AramaBaslatici`.
+### [ ] GOREV-01 · v1.1'i derle ve lint'i temizle
+- v1.0 iskeleti 14 Kasım'da GitHub Actions'ta derlendi (HATA-001). **v1.1 yeni koddur, yeniden derlenmeli.**
+- Yerel ortamda Gradle indirilemiyorsa (HATA-001) derlemeyi **GitHub Actions › APK Derle** ile yap; her `main` push'unda otomatik çalışır.
+- `./gradlew assembleDebug lintDebug`
+- Claude'un ortamında Android SDK olmadığı için tam derleme yapılamadı (sadece Kotlin sözdizimi denetimi ✅). Çıkan **her** derleme / lint hatası:
+  önce HATA_GUNLUGU'na AÇIK → en küçük düzeltme → DÜZELTİLDİ.
+- Düzeltirken tasarım, isim, imza, paket yapısı değişmez. Bir API gerçekten yoksa (sürüm farkı) eşdeğer API kullanılır ve kayda yazılır.
+- **Kabul:** APK oluşuyor, lint 0 hata.
 
-### [ ] GOREV-05 · Depolar
-- `RehberDeposu`, `AramaGecmisiDeposu`, `EngelDeposu` (Flow + ContentObserver, IO thread, izin yoksa boş liste).
-- **Kabul:** 2000 kişilik rehberde ilk yükleme < 500ms (Logcat'e süre yaz, sonra kaldır).
+### [ ] GOREV-02 · Görsel karşılaştırma
+- Uygulamayı aç, her ekranı `docs/mockups/01…20` ile yan yana karşılaştır (açık ve koyu tema).
+- Ölçü/renk/metin farkı = HATA kaydı. Düzeltme sadece `ui/theme` token'ları veya ilgili bileşen içinde yapılır.
+- **Kabul:** Her ekran mockup'a göz ile aynı.
 
-### [ ] GOREV-06 · Son aramalar (04)
-- Filtreler, gruplama, (n) birleştirme, uzun bas menüsü, FAB.
-- **Kabul:** Cevapsızlar kırmızı, sayıları çipte doğru.
+### [ ] GOREV-03 · Cihaz testi (Samsung Android 14 + Tecno Android 16)
+Her madde ayrı denenir; başarısız olan HATA olarak yazılır:
+- [ ] **Güvenli alan:** her ekranda üstte kamera deliğine, altta gezinme tuşlarına hiçbir şey değmiyor (hareket çubuğu + 3 tuş ayrı ayrı; telefon yan çevrilince de) — `06_GUVENLI_ALAN.md`
+- [ ] Gelen arama kilit ekranında: ad kameranın altında, "kaydırarak cevapla" gezinme çubuğunun üstünde
+- [ ] Son Aramalar: sola kaydır → Sil · Düzenle → (–) · Temizle → onay → hepsi siliniyor
+- [ ] Kilit açıkken gelen arama: Reddet / Kabul Et düğmeleri; kilitliyken kaydırma rayı
+- [ ] Temiz kurulum: Karşılama → İzinler → 5 izin → Ana ekran
+- [ ] Ayarlardan bir izni kaldır, uygulamaya dön → İzinler ekranı açılıyor
+- [ ] Tuşlar: `0532…` biçimleniyor, rehber eşleşmesi mavi, yoksa "Numara Ekle", `0` uzun bas = `+`, sil uzun bas = hepsini sil
+- [ ] Telefon iznini kaldır → Ara → 17 numaralı uyarı → izin ver → arama kendiliğinden başlıyor
+- [ ] Giden arama → 11 ("arıyor…") → karşı açınca 12, süre sayıyor
+- [ ] Çalarken ses tuşu zili susturuyor
+- [ ] Mesajla reddet → SMS gidiyor · Hatırlat → 10 dk sonra bildirim
+- [ ] Görüşmede: sessiz, hoparlör, beklet, tuş takımı (DTMF), kulakta ekran kapanıyor
+- [ ] Bluetooth kulaklık bağlıyken "Ses" menüsü çıkıyor
+- [ ] Arama ekle / Kişiler → uygulamaya dönüyor, arama bildirimi duruyor
+- [ ] Cevapsız arama → bildirim; Son aramalar açılınca bildirim kapanıyor
+- [ ] Engellenen numara aradığında çalmıyor, Son aramalarda "Engellendi"
+- [ ] Kişiler: "Çağla" Ç başlığında, "İsmail" İ başlığında; soyad kalın; harf dizini sürükleme çalışıyor
+- [ ] Arama: "ISIK" yazınca "Işık" bulunuyor, eşleşen kısım kalın; klavye listeyi örtmüyor
+- [ ] Ayarlar: Açık tema / vurgu rengi anında uygulanıyor; durum çubuğu ikonları okunuyor
+- [ ] Çift SIM'de "SIM 1 / SIM 2" yazıyor
+- [ ] Yazı boyutu en büyükte tuş takımı taşmıyor
+- **Kabul:** Tüm maddeler ✅, HATA_GUNLUGU'nda açık hata yok.
 
-### [ ] GOREV-07 · Rehber + Favoriler (05)
-- Türkçe sıralama, yapışkan harf başlıkları, harf dizini, Benim kartım, daralan FAB, Favoriler sekmesi.
-- **Kabul:** "Çağla" C'den sonra Ç başlığında; "İsmail" I'dan sonra İ başlığında.
-
-### [ ] GOREV-08 · Kişi detayı (06)
-- **Kabul:** Ara/Mesaj/E-posta/Paylaş/Engelle çalışıyor; olmayan alanların butonu gizli.
-
-### [ ] GOREV-09 · Arama ekranı (07)
-- Türkçe duyarsız arama, vurgulama, numara satırı, 150ms debounce.
-- **Kabul:** "ay" yazınca "Ayşe" ve "Aydın" vurgulu; "ISIK" yazınca "Işık" bulunuyor.
-
-### [ ] GOREV-10 · İzin eksik alt sayfası (12)
-- **Kabul:** Telefon izni kaldırılmışken Ara → alt sayfa; izin verilince arama kendiliğinden başlıyor.
-
-### [ ] GOREV-11 · Arama ekranları (08, 09, 10) + bildirim
-- `GorusmeViewModel`, 3 ekran, `GorusmeBildirimi` (CallStyle), kaydırarak cevapla, DTMF, yakınlık sensörü, ses yolu.
-- **Kabul (gerçek cihazda):** giden arama → 08 → açılınca 10; gelen arama ekran kilitliyken 09 tam ekran; reddet/cevapla/kapat/sessiz/hoparlör/beklet çalışıyor; arama bitince ekran kapanıyor.
-
-### [ ] GOREV-12 · Engelleme
-- `EymenCallScreeningService` + Ayarlar › Engellenen numaralar.
-- **Kabul:** Engelli numara aradığında hiç çalmıyor, Son aramalarda "Engellendi" olarak görünüyor.
-
-### [ ] GOREV-13 · Ayarlar (11) + alt sayfalar
-- Tema, vurgu rengi (anında uygulanır), titreşim, tuş sesi, hızlı yanıtlar, hata kayıtları, hakkında.
-- **Kabul:** Açık tema seçilince tüm ekranlar (arama ekranları hariç) açık tema oluyor.
-
-### [ ] GOREV-14 · Son kontrol
-- Tüm ekranları mockup'larla yan yana karşılaştır; farkları HATA olarak kaydet ve düzelt.
-- Yazı ölçeği 1.3x, açık tema, 5000 kişi, çift SIM testleri.
-- `./gradlew lint` 0 hata. `assembleRelease` imzasız APK oluşuyor.
-- **Kabul:** HATA_GUNLUGU'nda açık hata yok.
+### [ ] GOREV-04 · Sürüm
+- `assembleRelease` (R8 açık) → uygulama açılıyor, arama yapılabiliyor (ProGuard kaynaklı çökme yok).
+- **Kabul:** imzasız release APK çalışıyor.

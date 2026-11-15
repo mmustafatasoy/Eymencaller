@@ -83,7 +83,22 @@
             </intent-filter>
         </service>
 
-        <!-- Engellenen numaralar (GOREV-12) -->
+        <!-- Bildirim eylemleri ve "Hatırlat" alarmı (dışarıya kapalı) -->
+        <receiver
+            android:name=".gorusme.GorusmeAlicisi"
+            android:exported="false" />
+
+        <!-- Telecom'un cevapsız arama bildirimi isteği (varsayılan telefon uygulamasına gönderilir) -->
+        <receiver
+            android:name=".gorusme.CevapsizAramaAlicisi"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="android.telecom.action.SHOW_MISSED_CALLS_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Engellenen numaralar -->
         <service
             android:name=".gorusme.EymenCallScreeningService"
             android:exported="true"

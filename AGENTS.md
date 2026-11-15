@@ -1,13 +1,15 @@
 # AGENTS.md — CODEX İÇİN KESİN KURALLAR (Eymen Telefon)
 
 > Bu dosyayı **her görevden önce baştan sona oku.** Buradaki kurallar her şeyin üstündedir.
-> Tasarım ve mimari Claude tarafından belirlenmiştir. Senin görevin **uygulamak**, değiştirmek değil.
+> Tasarım, mimari **ve kodun tamamı** Claude tarafından yazılmıştır (15 Kasım 2026).
+> Senin görevin: **derlemek, test etmek, çıkan hataları kayıt kurallarıyla düzeltmek.**
+> Yeni özellik, yeni ekran, yeni dosya, yeniden yazma (refactor) **YOK.** Böyle bir ihtiyaç → `HATA_GUNLUGU.md › SORULAR`.
 
 ---
 
 ## 0. Okuma sırası (her oturumda)
 
-1. `AGENTS.md` (bu dosya)
+1. `AGENTS.md` (bu dosya) + **`DEVAM_NOTLARI.md`** (Claude'dan devir: durum, sıra, izin verilen düzeltmeler)
 2. `HATA_GUNLUGU.md` → açık hata var mı? Varsa **önce onu çöz.**
 3. `docs/05_GOREV_PLANI.md` → sıradaki görev hangisi?
 4. Görevin ilgili dokümanı: `docs/01_TASARIM_SISTEMI.md`, `docs/02_EKRANLAR.md`, `docs/03_MIMARI.md`, `docs/04_IZINLER.md`
@@ -17,8 +19,9 @@
 
 ## 1. YASAKLAR (kesinlikle yapma)
 
+0. **Çalışan kodu yeniden yazma.** Sadece hatanın olduğu satır(lar) düzeltilir. "Daha iyi olur" diye değişiklik yasak.
 1. **Tasarımı değiştirme.** Renk, yazı boyutu, köşe yuvarlaklığı, boşluk, ikon, metin, ekran sırası → `docs/01_TASARIM_SISTEMI.md` ve mockup görselleri neyse o.
-2. **Yeni renk / yeni dp değeri uydurma.** Sadece `ui/theme/` içindeki token'ları kullan (`EymenRenk`, `EymenGradyan`, `EymenBosluk`, `EymenBoyut`, `EymenSekil`, `EymenYazi`). İkonlar sadece `EymenIkonu(EymenIkon.Xxx, ...)`. Kod içinde `Color(0xFF...)`, `16.dp` gibi çıplak değer **YASAK** (tema dosyaları hariç).
+2. **Yeni renk / yeni dp değeri uydurma.** Sadece `ui/theme/` içindeki token'ları kullan (`EymenRenk`, `KareRenk`, `AramaEkraniRenk`, `AvatarRenk`, `EymenBosluk`, `EymenBoyut`, `EymenSekil`, `EymenDolgu`, `EymenYazi`). İkonlar sadece `EymenIkonu(EymenIkon.Xxx, ...)`. Kod içinde `Color(0xFF...)`, `16.dp` gibi çıplak değer **YASAK** (tema dosyaları hariç).
 3. **Paket yapısını değiştirme.** Dosya taşıma, yeniden adlandırma, yeni üst paket açma yok. Yeni dosya yalnızca `docs/03_MIMARI.md`'de adı geçen yere eklenir.
 4. **Yeni kütüphane ekleme.** `gradle/libs.versions.toml`'daki listenin dışına çıkma. (Hilt, Room, Koin, Accompanist, Glide vb. EKLEME.)
 5. **Sürüm yükseltme yok.** AGP, Kotlin, Compose BOM, SDK sürümlerine dokunma. Derleme bu sürümlerle hata verirse → HATA_GUNLUGU'na yaz, sürümü değiştirmeden çöz.
@@ -36,14 +39,15 @@
 
 1. Dil: **Kotlin**, arayüz: **Jetpack Compose + Material 3**. XML layout YOK.
 2. Mimari: **MVVM + tek yönlü veri akışı** (`UiState` data class + `ViewModel` + `StateFlow`). Ayrıntı: `docs/03_MIMARI.md`.
-3. Her ekran dosyası şu sırayla yazılır: `XxxEkrani(viewModel)` → `XxxIcerik(state, olaylar)` (durumsuz) → `@Preview` (koyu + açık tema).
-4. Her `@Composable` ekranın önizlemesi mockup görseliyle **göz ile karşılaştırılır.** Fark varsa düzeltilir.
+3. **Güvenli alan:** Her ekranın kökü `IosSayfa` (ya da arama ekranında `AramaZemini`). `statusBarsPadding`, `navigationBarsPadding`, `imePadding` ve sabit üst/alt boşluk YASAK. Ayrıntı: `docs/06_GUVENLI_ALAN.md`.
+4. Her ekran cihazda `docs/mockups/` içindeki görseliyle **göz ile karşılaştırılır.** Fark varsa HATA olarak kaydedilir.
 5. İzinler `IzinYoneticisi` üzerinden kontrol edilir. Bir ekranda doğrudan `ContextCompat.checkSelfPermission` çağırma.
-6. Arama başlatmak yalnızca `AramaBaslatici.ara(numara)` ile yapılır (izin eksikse 12 numaralı alt sayfayı açar).
+6. Arama başlatmak yalnızca `AramaBaslatici.ara(numara)` ile yapılır (izin eksikse 17 numaralı uyarıyı açar).
+6b. İkon eklemek/değiştirmek: sadece `design/ikonlar.py` düzenlenir, sonra `python3 design/ikon_ceviri.py` çalıştırılır. `ik_*.xml` elle değiştirilmez.
 7. Her görev sonunda: `./gradlew assembleDebug` **ve** `./gradlew lint` çalıştır. İkisi de temiz değilse görev bitmemiştir.
 8. Her görev sonunda `docs/05_GOREV_PLANI.md`'de ilgili kutuyu `[x]` yap ve commit at.
 9. Commit mesajı formatı: `GOREV-NN: kısa açıklama` (hata düzeltmede `HATA-NNN: kısa açıklama`).
-10. Minimum dokunma hedefi: tüm tıklanabilir öğeler ≥ 48dp. Her ikon butonunda `contentDescription` (strings.xml'den).
+10. Minimum dokunma hedefi: tüm tıklanabilir öğeler ≥ 44dp (iOS ölçüsü). Her ikon butonunda `contentDescription` (strings.xml'den).
 
 ---
 

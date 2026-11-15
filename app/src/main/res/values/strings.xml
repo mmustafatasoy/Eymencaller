@@ -1,214 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- TÜM kullanıcı metinleri burada. Metinler mockup'larla birebir aynıdır. Yeni metin eklenebilir, mevcutlar değiştirilmez. -->
+<!-- v1.1 · TÜM kullanıcı metinleri. Metinler docs/mockups ile birebir aynıdır. -->
 <resources>
     <string name="uygulama_adi">Eymen Telefon</string>
 
+    <!-- Genel -->
+    <string name="devam">Devam</string>
+    <string name="tamam">Tamam</string>
+    <string name="vazgec">Vazgeç</string>
+    <string name="duzenle">Düzenle</string>
+    <string name="bitti">Bitti</string>
+    <string name="geri">Geri</string>
+    <string name="sil">Sil</string>
+    <string name="simdi_degil">Şimdi Değil</string>
+    <string name="ara">Ara</string>
+    <string name="ae_ayarlar">Ayarlar</string>
+    <string name="ae_ekle">Ekle</string>
+    <string name="ae_bilgi">Kişi bilgisi</string>
+    <string name="ae_sil">Son rakamı sil</string>
+
     <!-- 01 Karşılama -->
-    <string name="karsilama_aciklama">Rehberin, aramaların ve görüşmelerin — tek, hızlı ve şık bir yerde.</string>
-    <string name="karsilama_basla">Başlayalım</string>
-    <string name="karsilama_gizlilik">Devam ederek gizlilik politikasını kabul edersiniz</string>
+    <string name="karsilama_baslik">Eymen Telefon\'a\nHoş Geldiniz</string>
+    <string name="ozellik1_baslik">Akıllı tuş takımı</string>
+    <string name="ozellik1_metin">Yazdıkça rehberden kişiyi bulur, numarayı biçimler.</string>
+    <string name="ozellik2_baslik">Rehber ve favoriler</string>
+    <string name="ozellik2_metin">Türkçe sıralı kişiler, hızlı arama ve kişi kartları.</string>
+    <string name="ozellik3_baslik">Gizlilik ve engelleme</string>
+    <string name="ozellik3_metin">Verilerin telefonunda kalır; istenmeyen aramalar çalmaz.</string>
+    <string name="karsilama_gizlilik">Verileriniz cihazdan çıkmaz.</string>
 
     <!-- 02 İzinler -->
-    <string name="izin_adim">ADIM 2 / 2</string>
-    <string name="izin_baslik">Başlamadan önce</string>
-    <string name="izin_aciklama">Arama yapabilmek ve rehberini gösterebilmek için birkaç izne ihtiyacımız var. Verilerin telefonundan çıkmaz.</string>
-    <string name="izin_ilerleme">%1$d / %2$d izin hazır</string>
-    <string name="izin_devam">Devam et</string>
-    <string name="izin_tamam">Tamam</string>
-    <string name="izin_neden">Neden bu izinler gerekli?</string>
-    <string name="izin_zorunlu">Zorunlu</string>
+    <string name="izinler">İzinler</string>
+    <string name="izin_aciklama">Arama yapabilmek ve kişilerini gösterebilmek için aşağıdaki izinler gerekiyor.</string>
+    <string name="izin_zorunlu_baslik">Zorunlu · %1$d / %2$d</string>
     <string name="izin_istege_bagli">İsteğe bağlı</string>
-    <string name="izin_verildi">Verildi</string>
-    <string name="izin_ver">İzin ver</string>
+    <string name="izin_dipnot">İzinleri daha sonra Ayarlar › İzinler\'den değiştirebilirsin.</string>
+    <string name="izin_neden">Neden bu izinler gerekli?</string>
+    <string name="izin_ver">İzin Ver</string>
     <string name="izin_ayarla">Ayarla</string>
-    <string name="izin_ayarlardan_ac">Ayarlardan aç</string>
-
-    <string name="izin_rol_baslik">Varsayılan telefon uygulaması</string>
-    <string name="izin_rol_aciklama">Gelen ve giden aramaları bu uygulama yönetir</string>
-    <string name="izin_rol_neden">Gelen aramaları kendi ekranımızda gösterebilmek ve aramaları yönetebilmek için.</string>
+    <string name="izin_ayarlardan_ac">Ayarlar</string>
+    <string name="izin_verildi">Verildi</string>
+    <string name="izin_rol_baslik">Varsayılan Telefon Uygulaması</string>
+    <string name="izin_rol_aciklama">Aramaları bu uygulama yönetir</string>
+    <string name="izin_rol_neden">Gelen aramaları kendi ekranımızda gösterebilmek için.</string>
     <string name="izin_telefon_baslik">Telefon</string>
-    <string name="izin_telefon_aciklama">Arama yapma, cevaplama, hat durumu</string>
-    <string name="izin_telefon_neden">Numara aramak, gelen aramayı cevaplamak ve hangi SIM\'in kullanıldığını görmek için.</string>
-    <string name="izin_rehber_baslik">Rehber</string>
-    <string name="izin_rehber_aciklama">Kişileri göster, ekle ve düzenle</string>
-    <string name="izin_rehber_neden">Kişilerini listelemek, arayanın adını göstermek ve yeni kişi kaydetmek için.</string>
-    <string name="izin_gecmis_baslik">Arama geçmişi</string>
-    <string name="izin_gecmis_aciklama">Son aramaları listele ve temizle</string>
-    <string name="izin_gecmis_neden">Son aramalar listesini göstermek ve istediğin kaydı silebilmek için.</string>
+    <string name="izin_telefon_aciklama">Arama yapma ve cevaplama</string>
+    <string name="izin_telefon_neden">Numara aramak, cevaplamak ve hangi SIM\'in kullanıldığını görmek için.</string>
+    <string name="izin_rehber_baslik">Kişiler</string>
+    <string name="izin_rehber_aciklama">Rehberi göster ve düzenle</string>
+    <string name="izin_rehber_neden">Kişilerini listelemek ve arayanın adını göstermek için.</string>
+    <string name="izin_gecmis_baslik">Arama Geçmişi</string>
+    <string name="izin_gecmis_aciklama">Son aramaları göster</string>
+    <string name="izin_gecmis_neden">Son aramalar listesini göstermek ve kayıt silebilmek için.</string>
     <string name="izin_bildirim_baslik">Bildirimler</string>
-    <string name="izin_bildirim_aciklama">Gelen arama ve cevapsız arama uyarısı</string>
-    <string name="izin_bildirim_neden">Ekran kapalıyken gelen aramayı ve cevapsız aramaları haber vermek için.</string>
+    <string name="izin_bildirim_aciklama">Gelen ve cevapsız aramalar</string>
+    <string name="izin_bildirim_neden">Ekran kapalıyken gelen ve cevapsız aramaları haber vermek için.</string>
 
-    <!-- Alt menü -->
+    <!-- Sekmeler -->
     <string name="sekme_favoriler">Favoriler</string>
-    <string name="sekme_son">Son</string>
-    <string name="sekme_rehber">Rehber</string>
-    <string name="sekme_tuslar">Tuşlar</string>
+    <string name="sekme_son">Son Aramalar</string>
+    <string name="sekme_rehber">Kişiler</string>
+    <string name="sekme_tuslar">Tuş Takımı</string>
 
-    <!-- Arama çubuğu -->
-    <string name="ara_ipucu">Kişi veya numara ara</string>
-    <string name="ara_ipucu_rehber">%1$d kişi arasında ara</string>
-
-    <!-- 03 Tuş takımı -->
-    <string name="tus_ekle">Ekle</string>
-    <string name="tus_kisi_ekle">Kişilere ekle</string>
-    <string name="tus_sil">Sil</string>
-    <string name="tus_ara">Ara</string>
+    <!-- 03 Favoriler -->
+    <string name="favoriler">Favoriler</string>
+    <string name="favori_bos">Favori yok</string>
+    <string name="favori_bos_metin">Sık aradığın kişileri kişi kartından favorilere ekle.</string>
 
     <!-- 04 Son aramalar -->
+    <string name="son_aramalar">Son Aramalar</string>
     <string name="filtre_tumu">Tümü</string>
     <string name="filtre_cevapsiz">Cevapsız</string>
-    <string name="filtre_gelen">Gelen</string>
-    <string name="filtre_giden">Giden</string>
-    <string name="grup_bugun">Bugün</string>
-    <string name="grup_dun">Dün</string>
-    <string name="grup_bu_hafta">Bu hafta</string>
-    <string name="grup_eski">Daha eski</string>
+    <string name="temizle">Temizle</string>
+    <string name="son_bos">Son arama yok</string>
     <string name="tekrar_sayisi">(%1$d)</string>
-    <string name="kayit_kopyala">Numarayı kopyala</string>
-    <string name="kayit_mesaj">Mesaj gönder</string>
-    <string name="kayit_kisiye_ekle">Kişilere ekle</string>
-    <string name="kayit_engelle">Engelle</string>
-    <string name="kayit_sil">Kaydı sil</string>
-    <string name="kayit_engellendi">Engellendi</string>
-    <string name="son_bos">Henüz arama yok</string>
+    <string name="dun">Dün</string>
+    <string name="gecmisi_temizle_baslik">Tüm son aramalar silinsin mi?</string>
+    <string name="gecmisi_temizle">Tüm Son Aramaları Temizle</string>
+    <string name="kayit_kopyala">Numarayı Kopyala</string>
+    <string name="kayit_mesaj">Mesaj Gönder</string>
+    <string name="kayit_kisiye_ekle">Kişilere Ekle</string>
+    <string name="kayit_engelle">Bu Arayanı Engelle</string>
+    <string name="kayit_sil">Kaydı Sil</string>
+    <string name="kayit_engellendi">engellendi</string>
 
-    <!-- 05 Rehber -->
-    <string name="rehber_favoriler">Favoriler</string>
-    <string name="rehber_benim_kartim">Benim kartım</string>
-    <string name="rehber_yeni_kisi">Yeni kişi</string>
-    <string name="rehber_bos">Rehberinde kişi yok</string>
-    <string name="favori_bos">Favori kişi yok</string>
-    <string name="favori_rehberden_ekle">Rehberden ekle</string>
+    <!-- 06 Kişiler -->
+    <string name="kisiler">Kişiler</string>
+    <string name="kartim">Kartım</string>
+    <string name="rehber_bos">Kişi yok</string>
+    <string name="favorilere_ekle">Favorilere Ekle</string>
+    <string name="favorilerden_cikar">Favorilerden Çıkar</string>
 
-    <!-- 06 Kişi detayı -->
-    <string name="detay_ara">Ara</string>
-    <string name="detay_mesaj">Mesaj</string>
-    <string name="detay_goruntulu">Görüntülü</string>
-    <string name="detay_eposta">E-posta</string>
-    <string name="detay_son_aramalar">Son aramalar</string>
-    <string name="detay_tumu">Tümü</string>
-    <string name="detay_paylas">Kişiyi paylaş</string>
-    <string name="detay_engelle">Numarayı engelle</string>
-    <string name="detay_engeli_kaldir">Engeli kaldır</string>
-    <string name="detay_varsayilan">Varsayılan</string>
-    <string name="detay_kisi_sil">Kişiyi sil</string>
-    <string name="detay_kisayol">Ana ekrana kısayol ekle</string>
-    <string name="numara_mobil">Mobil</string>
-    <string name="numara_ev">Ev</string>
-    <string name="numara_is">İş</string>
-    <string name="numara_diger">Diğer</string>
+    <!-- 07 Kişi kartı -->
+    <string name="eylem_mesaj">mesaj</string>
+    <string name="eylem_ara">ara</string>
+    <string name="eylem_video">video</string>
+    <string name="eylem_posta">posta</string>
+    <string name="numara_mobil">mobil</string>
+    <string name="numara_ev">ev</string>
+    <string name="numara_is">iş</string>
+    <string name="numara_diger">telefon</string>
+    <string name="kart_son_aramalar">Son Aramalar</string>
+    <string name="kart_tumu">Tümünü Göster</string>
+    <string name="kart_paylas">Kişiyi Paylaş</string>
+    <string name="kart_kisayol">Ana Ekrana Ekle</string>
+    <string name="kart_yeni_kisi">Yeni Kişi Oluştur</string>
+    <string name="kart_engeli_kaldir">Bu Arayanın Engelini Kaldır</string>
+    <string name="kart_kisiyi_sil">Kişiyi Sil</string>
+    <string name="kart_sil_onay">Bu kişi tüm hesaplardan silinecek.</string>
+    <string name="kart_engel_onay">Engellenen kişilerden arama almazsınız.</string>
     <string name="arama_gelen">Gelen</string>
     <string name="arama_giden">Giden</string>
     <string name="arama_cevapsiz">Cevapsız</string>
     <string name="arama_reddedilen">Reddedildi</string>
+    <string name="arama_engellenen">Engellendi</string>
+    <string name="arama_sesli_mesaj">Sesli Mesaj</string>
     <string name="sure_dk_sn">%1$d dk %2$02d sn</string>
     <string name="sure_sn">%1$d sn</string>
+    <string name="bugun">Bugün</string>
 
-    <!-- 07 Arama ekranı -->
-    <string name="arama_kisiler">Kişiler · %1$d</string>
-    <string name="arama_son_aramalarda">Son aramalarda</string>
-    <string name="arama_numarayi_ara">Ara: %1$s</string>
-    <string name="arama_sonuc_yok">Sonuç bulunamadı</string>
+    <!-- 08 Tuş takımı -->
+    <string name="numara_ekle">Numara Ekle</string>
 
-    <!-- 08 / 09 / 10 Arama ekranları -->
-    <string name="gorusme_araniyor">Aranıyor…</string>
-    <string name="gorusme_baglaniyor">Bağlanıyor…</string>
-    <string name="gorusme_gelen">Gelen arama</string>
-    <string name="gorusme_beklemede">Beklemede</string>
-    <string name="gorusme_bitti">Arama bitti</string>
-    <string name="gorusme_sim">SIM %1$d</string>
+    <!-- 10 Arama -->
+    <string name="arama_ipucu">Ara</string>
+    <string name="arama_kisiler">Kişiler</string>
+    <string name="arama_son">Son Aramalar</string>
+    <string name="arama_numarayi_ara">“%1$s” numarasını ara</string>
+    <string name="arama_sonuc_yok">Sonuç yok</string>
+
+    <!-- 11–16 Arama ekranları -->
+    <string name="gorusme_araniyor">arıyor…</string>
+    <string name="gorusme_baglaniyor">bağlanıyor…</string>
+    <string name="gorusme_beklemede">beklemede</string>
+    <string name="gorusme_bitti">arama bitti</string>
+    <string name="gorusme_bilinmeyen">Bilinmeyen</string>
     <string name="gorusme_hd">HD</string>
-    <string name="gorusme_bilinmeyen">Bilinmeyen numara</string>
-    <string name="kontrol_sessiz">Sessiz</string>
-    <string name="kontrol_tuslar">Tuşlar</string>
-    <string name="kontrol_tus_takimi">Tuş takımı</string>
-    <string name="kontrol_hoparlor">Hoparlör</string>
-    <string name="kontrol_ses">Ses</string>
-    <string name="kontrol_beklet">Beklet</string>
-    <string name="kontrol_arama_ekle">Arama ekle</string>
-    <string name="kontrol_kisiler">Kişiler</string>
-    <string name="kontrol_kapat">Aramayı bitir</string>
+    <string name="gorusme_sim">SIM %1$d</string>
+    <string name="kontrol_hoparlor">hoparlör</string>
+    <string name="kontrol_ses">ses</string>
+    <string name="kontrol_beklet">beklet</string>
+    <string name="kontrol_sessiz">sessiz</string>
+    <string name="kontrol_ekle">ekle</string>
+    <string name="kontrol_bitir">bitir</string>
+    <string name="kontrol_tuslar">tuşlar</string>
+    <string name="kontrol_gizle">Gizle</string>
+    <string name="gelen_hatirlat">Hatırlat</string>
+    <string name="gelen_mesaj">Mesaj</string>
+    <string name="gelen_reddet">Reddet</string>
+    <string name="gelen_kabul">Kabul Et</string>
+    <string name="gelen_kaydir">kaydırarak cevapla</string>
+    <string name="mesajla_yanitla">Mesajla yanıtla</string>
+    <string name="ses_kaynagi">Ses Kaynağı</string>
     <string name="ses_telefon">Telefon</string>
+    <string name="ses_hoparlor">Hoparlör</string>
     <string name="ses_bluetooth">Bluetooth</string>
     <string name="ses_kulaklik">Kulaklık</string>
-    <string name="gelen_mesajla_reddet">Mesajla reddet</string>
-    <string name="gelen_hatirlat">Hatırlat</string>
-    <string name="gelen_kaydir">‹ ‹  Kaydır  › ›</string>
-    <string name="gelen_kaydir_ipucu">Cevaplamak için sağa, reddetmek için sola kaydır</string>
-    <string name="gelen_cevapla">Cevapla</string>
-    <string name="gelen_reddet">Reddet</string>
-    <string name="aramaya_don">Aramaya dön</string>
     <string name="hatirlat_bildirim">%1$s kişisini geri ara</string>
-
-    <!-- 11 Ayarlar -->
-    <string name="ayarlar">Ayarlar</string>
-    <string name="ayar_gorunum">Görünüm</string>
-    <string name="ayar_tema">Tema</string>
-    <string name="ayar_tema_alt">Sistem · Koyu · Açık</string>
-    <string name="tema_sistem">Sistem</string>
-    <string name="tema_koyu">Koyu</string>
-    <string name="tema_acik">Açık</string>
-    <string name="ayar_vurgu">Vurgu rengi</string>
-    <string name="ayar_izinler_guvenlik">İzinler ve güvenlik</string>
-    <string name="ayar_izin_ayarlari">İzin ayarları</string>
-    <string name="ayar_izin_durumu">%1$d / %2$d izin verildi</string>
-    <string name="ayar_tamam">Tamam</string>
-    <string name="ayar_varsayilan_uygulama">Varsayılan telefon uygulaması</string>
-    <string name="ayar_engellenenler">Engellenen numaralar</string>
-    <string name="ayar_engellenen_sayisi">%1$d numara</string>
-    <string name="ayar_aramalar">Aramalar</string>
-    <string name="ayar_titresim">Tuşlarda titreşim</string>
-    <string name="ayar_tus_sesi">Tuş sesleri</string>
-    <string name="ayar_hizli_yanit">Hızlı yanıt mesajları</string>
-    <string name="ayar_hizli_yanit_sayisi">%1$d mesaj</string>
-    <string name="ayar_destek">Destek</string>
-    <string name="ayar_hata_kayitlari">Hata kayıtları</string>
-    <string name="ayar_hata_ozet">Son 7 gün · %1$d hata</string>
-    <string name="ayar_hakkinda">Hakkında</string>
-    <string name="ayar_surum">Sürüm %1$s (%2$d)</string>
-    <string name="hata_paylas">Paylaş</string>
-    <string name="hata_temizle">Temizle</string>
-    <string name="hata_yok">Kayıtlı hata yok</string>
-    <string name="engel_ekle">Numara engelle</string>
-    <string name="engel_bos">Engellenen numara yok</string>
-
-    <!-- Hızlı yanıtlar (varsayılan) -->
     <string name="hizli_yanit_1">Şu an konuşamıyorum, sonra ararım.</string>
     <string name="hizli_yanit_2">Toplantıdayım, mesaj atabilir misin?</string>
     <string name="hizli_yanit_3">Yoldayım, birazdan ararım.</string>
     <string name="hizli_yanit_4">Müsait olunca dönüş yapacağım.</string>
 
-    <!-- 12 İzin eksik -->
-    <string name="eksik_baslik">Arama için izin gerekli</string>
-    <string name="eksik_aciklama">Bu numarayı arayabilmemiz için Telefon izni ve varsayılan telefon uygulaması olarak seçilmemiz gerekiyor.</string>
-    <string name="eksik_gelen_aciklama">Gelen aramaları görebilmek için Eymen Telefon\'u varsayılan telefon uygulaması yap.</string>
-    <string name="eksik_telefon_izni">Telefon izni</string>
-    <string name="eksik_varsayilan">Varsayılan uygulama</string>
-    <string name="eksik_eksik">Eksik</string>
-    <string name="eksik_hazir">Hazır</string>
-    <string name="eksik_izin_ver_ara">İzin ver ve ara</string>
-    <string name="eksik_simdi_degil">Şimdi değil</string>
+    <!-- 17 İzin uyarısı -->
+    <string name="eksik_baslik">Arama İzni Gerekli</string>
+    <string name="eksik_aciklama">Bu numarayı arayabilmek için Telefon izni ve varsayılan telefon uygulaması olarak seçilmek gerekiyor.</string>
+    <string name="eksik_izin_ver_ara">İzin Ver ve Ara</string>
 
-    <!-- Bildirim kanalları -->
+    <!-- 18 Ayarlar -->
+    <string name="ayarlar">Ayarlar</string>
+    <string name="ayar_gorunum">Görünüm</string>
+    <string name="ayar_tema">Tema</string>
+    <string name="tema_sistem">Sistem</string>
+    <string name="tema_acik">Açık</string>
+    <string name="tema_koyu">Koyu</string>
+    <string name="ayar_vurgu">Vurgu Rengi</string>
+    <string name="ayar_izinler_guvenlik">İzinler ve Güvenlik</string>
+    <string name="ayar_varsayilan">Varsayılan Uygulama</string>
+    <string name="ayar_varsayilan_degil">Değil</string>
+    <string name="ayar_engellenenler">Engellenen Numaralar</string>
+    <string name="ayar_aramalar">Aramalar</string>
+    <string name="ayar_titresim">Tuşlarda Titreşim</string>
+    <string name="ayar_tus_sesi">Tuş Sesleri</string>
+    <string name="ayar_hizli_yanit">Hızlı Yanıtlar</string>
+    <string name="ayar_hizli_dipnot">Gelen aramayı mesajla yanıtlarken bu metinler gösterilir.</string>
+    <string name="ayar_destek">Destek</string>
+    <string name="ayar_hata_kayitlari">Hata Kayıtları</string>
+    <string name="ayar_hakkinda">Hakkında</string>
+    <string name="ayar_surum">Sürüm %1$s (%2$d)</string>
+    <string name="hata_paylas">Paylaş</string>
+    <string name="hata_temizle">Kayıtları Temizle</string>
+    <string name="hata_yok">Kayıtlı hata yok</string>
+    <string name="engel_ekle">Numara Ekle…</string>
+    <string name="engel_ekle_baslik">Numara Engelle</string>
+    <string name="engel_kaldir">Kaldır</string>
+    <string name="engel_dipnot">Engellenen numaralar seni arayamaz; aramaları Son Aramalar\'da “engellendi” olarak görünür.</string>
+    <string name="engel_ipucu">Telefon numarası</string>
+    <string name="engelle">Engelle</string>
+
+    <!-- Bildirimler -->
     <string name="kanal_gelen">Gelen aramalar</string>
     <string name="kanal_devam">Devam eden aramalar</string>
     <string name="kanal_cevapsiz">Cevapsız aramalar</string>
     <string name="bildirim_cevapsiz">%1$d cevapsız arama</string>
-
-    <!-- Erişilebilirlik (contentDescription) -->
-    <string name="ae_ara">Ara</string>
-    <string name="ae_sil">Son rakamı sil</string>
-    <string name="ae_kisi_ekle">Kişi ekle</string>
-    <string name="ae_geri">Geri</string>
-    <string name="ae_ayarlar">Ayarlar</string>
-    <string name="ae_favori">Favorilere ekle</string>
-    <string name="ae_duzenle">Düzenle</string>
-    <string name="ae_daha_fazla">Daha fazla seçenek</string>
-    <string name="ae_tus_takimi">Tuş takımı</string>
-    <string name="ae_temizle">Temizle</string>
-    <string name="ae_mesaj">Mesaj gönder</string>
-
-    <!-- Geçici (GOREV-01 iskeleti; ekranlar yazıldıkça kullanılmaz hale gelir) -->
-    <string name="gecici_ekran">%1$s\n(%2$s ile yazılacak)</string>
+    <string name="bildirim_gelen">Gelen arama</string>
+    <string name="bildirim_devam">Görüşme sürüyor</string>
+    <string name="bildirim_bitir">Bitir</string>
 </resources>
