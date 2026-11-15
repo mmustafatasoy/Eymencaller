@@ -74,7 +74,7 @@ fun KisiDetayEkrani(
     kisiId: Long,
     baslangicNumara: String,
     onGeri: () -> Unit,
-    onTumAramalar: () -> Unit,
+    onTumAramalar: (String) -> Unit,
     vm: KisiDetayViewModel = viewModel(factory = KisiDetayViewModel.Fabrika),
 ) {
     val context = LocalContext.current
@@ -148,7 +148,7 @@ fun KisiDetayEkrani(
         },
         onVarsayilanDuzenle = { durum.kisi?.let(::duzenle) },
         onEngelle = { vm.olay(KisiDetayOlay.EngeliDegistir) },
-        onTumAramalar = onTumAramalar,
+        onTumAramalar = { onTumAramalar(durum.numara) },
     )
 }
 
