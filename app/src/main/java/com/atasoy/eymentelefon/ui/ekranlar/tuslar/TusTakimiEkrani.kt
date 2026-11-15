@@ -1,5 +1,6 @@
 package com.atasoy.eymentelefon.ui.ekranlar.tuslar
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.AudioManager
 import android.media.ToneGenerator
@@ -33,8 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -61,6 +60,7 @@ import com.atasoy.eymentelefon.ui.theme.EymenTelefonTemasi
 import com.atasoy.eymentelefon.ui.theme.EymenYazi
 
 /** 03: Gerçek arama / numara işlemleri ViewModel'de, çizim durumsuz içerikte. */
+@SuppressLint("MissingPermission") // Sistem izni kullanıcıdan istenir; sesli mesaj sorgusunda SecurityException da kaydedilir.
 @Composable
 fun TusTakimiEkrani(
     baslangicNumara: String,
