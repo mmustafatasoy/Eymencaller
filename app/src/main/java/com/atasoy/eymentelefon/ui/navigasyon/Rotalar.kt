@@ -21,6 +21,11 @@ object Rotalar {
     fun kisiDetay(kisiId: Long, numara: String? = null) =
         "kisi/$kisiId?numara=${Uri.encode(numara.orEmpty())}"
 
+    /** V12-10: uygulama içi kişi ekle (kisiId = -1) / düzenle */
+    const val KISI_DUZENLE = "kisi-duzenle/{kisiId}?numara={numara}"
+    fun kisiDuzenle(kisiId: Long, numara: String? = null) =
+        "kisi-duzenle/$kisiId?numara=${Uri.encode(numara.orEmpty())}"
+
     /** V12-08: kişi posteri düzenleyici */
     const val POSTER = "poster/{lookupKey}?ad={ad}"
     fun poster(lookupKey: String, ad: String) = "poster/${Uri.encode(lookupKey)}?ad=${Uri.encode(ad)}"

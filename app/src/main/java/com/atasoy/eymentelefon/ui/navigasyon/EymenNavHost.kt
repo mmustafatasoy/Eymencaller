@@ -116,6 +116,26 @@ fun EymenNavHost(
         ) { KisiDetayEkrani(onGeri = geri, onPoster = { anahtar, ad -> nav.navigate(Rotalar.poster(anahtar, ad)) }) }
 
         composable(
+            Rotalar.KISI_DUZENLE,
+            arguments = listOf(
+                navArgument(Rotalar.Arguman.KISI_ID) { type = NavType.LongType },
+                navArgument(Rotalar.Arguman.NUMARA) { type = NavType.StringType; defaultValue = "" },
+            ),
+        ) {
+            com.atasoy.eymentelefon.ui.ekranlar.kisiduzenle.KisiDuzenleEkrani(
+                onVazgec = geri,
+                onBitti = { id, yeni ->
+                    if (yeni) {
+                        nav.navigate(Rotalar.kisiDetay(id)) { popUpTo(Rotalar.KISI_DUZENLE) { inclusive = true } }
+                    } else {
+                        nav.popBackStack()
+                    }
+                },
+                onPoster = { anahtar, ad -> nav.navigate(Rotalar.poster(anahtar, ad)) },
+            )
+        }
+
+        composable(
             Rotalar.POSTER,
             arguments = listOf(
                 navArgument(Rotalar.Arguman.LOOKUP) { type = NavType.StringType },

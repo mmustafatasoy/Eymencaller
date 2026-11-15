@@ -22,6 +22,7 @@ class UygulamaKonteyneri(uygulama: Application) {
     val rehberDeposu by lazy { RehberDeposu(uygulama) }
     val aramaGecmisiDeposu by lazy { AramaGecmisiDeposu(uygulama) }
     val engelDeposu by lazy { EngelDeposu(uygulama) }
+    val kisiYazici by lazy { com.atasoy.eymentelefon.veri.rehber.KisiYazici(uygulama) } // V12-10
     val posterDeposu by lazy { PosterDeposu(uygulama) } // V12-05
 }
 

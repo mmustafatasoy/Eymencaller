@@ -67,6 +67,19 @@
                 <data android:mimeType="vnd.android.cursor.item/contact" />
                 <data android:mimeType="vnd.android.cursor.item/person" />
             </intent-filter>
+            <!-- V12-10/12: başka uygulamalardan "kişi ekle" / "kişiyi düzenle" → uygulama içi form -->
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/contact" />
+                <data android:mimeType="vnd.android.cursor.dir/person" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.item/contact" />
+                <data android:mimeType="vnd.android.cursor.item/person" />
+            </intent-filter>
         </activity>
 
         <!-- 08 / 09 / 10 arama ekranları: kilit ekranı üstünde açılır -->

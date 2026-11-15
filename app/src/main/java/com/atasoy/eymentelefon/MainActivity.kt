@@ -38,6 +38,9 @@ class MainActivity : ComponentActivity() {
     /** V12-12: sistemden gelen "kişiyi göster" isteği (rehber kişi kimliği) */
     private var yeniKisi by mutableStateOf<Long?>(null)
 
+    /** V12-10/12: kişi ekle (-1, numara) / düzenle (id) isteği */
+    private var duzenleHedefi by mutableStateOf<Pair<Long, String?>?>(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -47,6 +50,7 @@ class MainActivity : ComponentActivity() {
         val ilkNumara = numaraCikar(intent)
         val ilkSekme = sekmeCikar(intent) ?: if (intent?.action == Intent.ACTION_CALL_BUTTON) AnaSekme.TUSLAR else null
         yeniKisi = kisiCikar(intent)
+        duzenleHedefi = duzenleCikar(intent)
         var hazir = false
         splash.setKeepOnScreenCondition { !hazir }
 
@@ -105,6 +109,13 @@ class MainActivity : ComponentActivity() {
                         yeniKisi = null
                     }
 
+                    // V12-10: ekle / düzenle → uygulama içi form
+                    LaunchedEffect(duzenleHedefi) {
+                        val (id, numara) = duzenleHedefi ?: return@LaunchedEffect
+                        if (k.izinYoneticisi.zorunlularTamam() && a.ilkAcilisTamam) nav.navigate(Rotalar.kisiDuzenle(id, numara))
+                        duzenleHedefi = null
+                    }
+
                     // Uygulama açıkken gelen hedef → ilgili sekme (numara varsa Tuşlar'da dolu)
                     LaunchedEffect(yeniHedef) {
                         val (s, n) = yeniHedef ?: return@LaunchedEffect
@@ -126,12 +137,25 @@ class MainActivity : ComponentActivity() {
         val numara = numaraCikar(intent)
         val sekme = sekmeCikar(intent)
         yeniKisi = kisiCikar(intent)
+        duzenleHedefi = duzenleCikar(intent)
         yeniHedef = when {
             numara != null -> AnaSekme.TUSLAR to numara
             sekme != null -> sekme to null
             intent.action == Intent.ACTION_CALL_BUTTON -> AnaSekme.TUSLAR to null
             else -> null
         }
+    }
+
+    /** V12-10/12: ACTION_INSERT (+ phone ekstrası) → (-1, numara) · ACTION_EDIT kişi URI → (id, null) */
+    private fun duzenleCikar(intent: Intent?): Pair<Long, String?>? = when (intent?.action) {
+        Intent.ACTION_INSERT -> -1L to intent.getStringExtra(android.provider.ContactsContract.Intents.Insert.PHONE)
+        Intent.ACTION_EDIT -> intent.data?.let { veri ->
+            runCatching {
+                val kisiUri = android.provider.ContactsContract.Contacts.lookupContact(contentResolver, veri) ?: veri
+                android.content.ContentUris.parseId(kisiUri).takeIf { it > 0 }
+            }.getOrNull()
+        }?.let { it to null }
+        else -> null
     }
 
     /** V12-12: content://com.android.contacts/contacts/... (lookup ya da id) → kişi kimliği */

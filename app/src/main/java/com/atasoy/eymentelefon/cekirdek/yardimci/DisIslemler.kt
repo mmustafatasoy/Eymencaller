@@ -20,17 +20,21 @@ object DisIslemler {
         }
     }
 
+    // V12-10: kişi ekle / düzenle artık uygulamanın kendi ekranında (MainActivity yönlendirir)
     fun kisiyeEkle(context: Context, numara: String) = baslat(context, "kisiyeEkle") {
         Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
             .putExtra(ContactsContract.Intents.Insert.PHONE, numara)
+            .setClass(context, com.atasoy.eymentelefon.MainActivity::class.java)
     }
 
     fun yeniKisi(context: Context) = baslat(context, "yeniKisi") {
         Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
+            .setClass(context, com.atasoy.eymentelefon.MainActivity::class.java)
     }
 
     fun kisiDuzenle(context: Context, kisiUri: Uri) = baslat(context, "kisiDuzenle") {
-        Intent(Intent.ACTION_EDIT, kisiUri).putExtra("finishActivityOnSaveCompleted", true)
+        Intent(Intent.ACTION_EDIT, kisiUri)
+            .setClass(context, com.atasoy.eymentelefon.MainActivity::class.java)
     }
 
     fun epostaGonder(context: Context, adres: String) = baslat(context, "eposta") {

@@ -45,7 +45,7 @@ Durum: `[x]` = Claude yaptı · `[ ]` = sırada. Sırayla, tek tek; her biri son
 ### [ ] V12-09 · Uzun basma önizleme (görsel 6)
 - Kişiler ve Favoriler'de uzun bas → titreşim (`HapticFeedbackType.LongPress`) + tam ekran katman: arka plan bulanık (12+ `blur`, altında %40 beyaz/siyah örtü), üstte 170dp posterli kart (ad + numara), altında 250dp menü: Ara · Mesaj · Görüntülü Ara | Paylaş · Favorilere Ekle/Çıkar · Düzenle | **Kişiyi Sil** (kırmızı, onaylı). Kart büyüyerek açılır (`scale 0.9→1`, 220ms). Karta dokun → kişi kartı; boşluğa dokun → kapanır.
 
-### [ ] V12-10 · Uygulama içinde kişi ekle / düzenle (görsel 8)
+### [x] V12-10 · Uygulama içinde kişi ekle / düzenle (görsel 8)
 - Yeni ekran `ui/ekranlar/kisiduzenle/KisiDuzenleEkrani.kt` + VM (rota `kisi-duzenle/{kisiId}`, -1 = yeni; `numara` argümanı ön doldurma).
 - Alanlar: fotoğraf (seç/kaldır), Ad, Soyad, Şirket, telefonlar (tür seçici: mobil/ev/iş/diğer, − ile sil, + telefon ekle), e-postalar, **Kişi Posteri** satırı.
 - Kayıt: `RehberDeposu.kaydet(KisiTaslak)` → `ContentProviderOperation` toplu işlem (RawContacts + StructuredName + Phone + Email + Organization + Photo `DATA15` küçültülmüş 720px JPEG). Düzenlemede eski Data satırları güncellenir/silinir.
@@ -54,7 +54,7 @@ Durum: `[x]` = Claude yaptı · `[ ]` = sırada. Sırayla, tek tek; her biri son
 ### [x] V12-11 · Kişiler satırlarında küçük avatar + toplam (görsel 5)
 - Satır: 34dp avatar (fotoğraf/monogram) + "Ad **Soyad**", satır yüksekliği 52dp; listenin sonunda "N Kişi" (dipnot, ortalı). Üst sol "Listeler" yerine boş (ayarlar Son Aramalar'da).
 
-### [ ] V12-12 · Sistem yönlendirmeleri (görsel 13) — *kısmen: VIEW kişi + CALL_BUTTON yapıldı (Claude); INSERT/EDIT, V12-10 ekranı bitince eklenecek*
+### [x] V12-12 · Sistem yönlendirmeleri (görsel 13)
 - Manifest `MainActivity`'ye ek filtreler: `android.intent.action.VIEW` + `vnd.android.cursor.item/contact` ve `…/person`; `INSERT` + `vnd.android.cursor.dir/contact`; `EDIT` + `vnd.android.cursor.item/contact`; `android.intent.action.CALL_BUTTON`.
 - `MainActivity.onNewIntent/onCreate`: kişi URI'si → `kisi/{id}`; INSERT → `kisi-duzenle/-1` (+`phone` ekstrası); EDIT → `kisi-duzenle/{id}`; CALL_BUTTON → Tuşlar.
 - Not (kullanıcıya): sistemin kendi Telefon/Rehber simgesi doğrudan açılırsa Android yönlendirmez; ana ekranda Eymen simgesi kullanılmalı.
