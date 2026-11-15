@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.atasoy.eymentelefon.ui.bilesenler.paylasilanAvatar
 import com.atasoy.eymentelefon.ui.bilesenler.LocalAltCamBoslugu
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.getValue
@@ -128,7 +129,7 @@ fun RehberEkrani(
                             baslik = kisiAdiMetni(k.ad),
                             modifier = Modifier.padding(start = EymenBosluk.kenar, end = EymenBosluk.l),
                             minYukseklik = EymenBoyut.satirKisi,
-                            sol = { IosAvatar(k.basHarfler, EymenBoyut.avatarKucuk, fotoUri = k.fotoUri) },
+                            sol = { IosAvatar(k.basHarfler, EymenBoyut.avatarKucuk, fotoUri = k.fotoUri, modifier = Modifier.paylasilanAvatar(k.id)) },
                             ayirici = k != g.kisiler.last(),
                             onTikla = { onKisiDetay(k.id, null) },
                             onUzunBas = { secili = k },

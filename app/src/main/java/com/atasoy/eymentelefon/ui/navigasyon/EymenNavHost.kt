@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 
 private const val GECIS_MS = 280
 
+@OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
 @Composable
 fun EymenNavHost(
     nav: NavHostController,
@@ -52,6 +53,9 @@ fun EymenNavHost(
     val kisiDetay: (Long, String?) -> Unit = { id, numara -> nav.navigate(Rotalar.kisiDetay(id, numara)) }
     val geri: () -> Unit = { nav.popBackStack() }
 
+    // V13-08: ortak öğe geçişleri için NavHost sarılır
+    androidx.compose.animation.SharedTransitionLayout {
+    androidx.compose.runtime.CompositionLocalProvider(com.atasoy.eymentelefon.ui.bilesenler.LocalPaylasimKapsami provides this) {
     NavHost(
         navController = nav,
         startDestination = baslangic,
@@ -98,6 +102,7 @@ fun EymenNavHost(
             ),
         ) { giris ->
             val sekmeAdi = giris.arguments?.getString(Rotalar.Arguman.SEKME)
+            androidx.compose.runtime.CompositionLocalProvider(com.atasoy.eymentelefon.ui.bilesenler.LocalGecisKapsami provides this) {
             AnaEkran(
                 baslangicSekme = AnaSekme.entries.firstOrNull { it.name == sekmeAdi } ?: baslangicSekme,
                 baslangicNumara = giris.arguments?.getString(Rotalar.Arguman.NUMARA).orEmpty(),
@@ -105,6 +110,7 @@ fun EymenNavHost(
                 onArama = { nav.navigate(Rotalar.ARAMA) },
                 onAyarlar = { nav.navigate(Rotalar.AYARLAR) },
             )
+            }
         }
 
         composable(
@@ -113,7 +119,11 @@ fun EymenNavHost(
                 navArgument(Rotalar.Arguman.KISI_ID) { type = NavType.LongType },
                 navArgument(Rotalar.Arguman.NUMARA) { type = NavType.StringType; defaultValue = "" },
             ),
-        ) { KisiDetayEkrani(onGeri = geri, onPoster = { anahtar, ad -> nav.navigate(Rotalar.poster(anahtar, ad)) }) }
+        ) {
+            androidx.compose.runtime.CompositionLocalProvider(com.atasoy.eymentelefon.ui.bilesenler.LocalGecisKapsami provides this) {
+                KisiDetayEkrani(onGeri = geri, onPoster = { anahtar, ad -> nav.navigate(Rotalar.poster(anahtar, ad)) })
+            }
+        }
 
         composable(
             Rotalar.KISI_DUZENLE,
@@ -156,6 +166,8 @@ fun EymenNavHost(
         composable(Rotalar.HATA_KAYITLARI) { HataKayitlariEkrani(onGeri = geri) }
         composable(Rotalar.ENGELLENENLER) { EngellenenlerEkrani(onGeri = geri) }
         composable(Rotalar.HIZLI_YANITLAR) { HizliYanitlarEkrani(onGeri = geri) }
+    }
+    }
     }
 
     // 17 · İzin uyarısı: herhangi bir ekranda "Ara"ya basılıp izin eksikse açılır

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 object EymenBosluk {
     val cokKucuk = 2.dp
@@ -43,6 +44,11 @@ object EymenBoyut {
     val cerceve = 3.dp
     val duzenleIsaret = 22.dp
     val camBulanik = 24.dp
+    val widgetKose = 22.dp
+    val widgetAvatar = 52.dp
+    val widgetAdYuksekligi = 18.dp
+    val widgetBaslik = 15.sp
+    val widgetYazi = 12.sp
     val sifir = 0.dp
     val kartBaslik = 280.dp
     val onizlemeKart = 270.dp

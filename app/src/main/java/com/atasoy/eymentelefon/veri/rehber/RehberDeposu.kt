@@ -167,6 +167,7 @@ class RehberDeposu(private val context: Context) {
                 cozucu.update(ContentUris.withAppendedId(Contacts.CONTENT_URI, id), degerler, null, null)
             }
         }
+        com.atasoy.eymentelefon.widget.FavoriWidget.guncelle(context) // V13-10
     }
 
     suspend fun sil(id: Long) {

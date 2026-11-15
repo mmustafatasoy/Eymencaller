@@ -42,7 +42,10 @@ app/src/main/java/com/atasoy/eymentelefon/
 │   ├── gorusme/ui/KisiPosteri.kt            PosterFotografi · PosterKucukResim · CanliAd
 │   ├── ui/ekranlar/poster/PosterEkrani.kt   poster düzenleyici (rota poster/{lookupKey})
 │   ├── ui/ekranlar/kisiduzenle/KisiDuzenleEkrani.kt  Yeni Kişi / Düzenle (rota kisi-duzenle/{kisiId})
-│   └── ui/ekranlar/rehber/KisiOnizleme.kt   uzun basma önizlemesi
+│   ├── ui/ekranlar/rehber/KisiOnizleme.kt   uzun basma önizlemesi
+│   ├── ui/bilesenler/Cam.kt                 v1.3 cam yüzey (Haze), yaylı basma, pencere bulanıklığı
+│   ├── ui/bilesenler/Gecis.kt               v1.3 ortak avatar geçişi
+│   └── widget/FavoriWidget.kt, WidgetAramaActivity.kt   v1.3 favoriler ana ekran bileşeni (Glance)
 ├── veri/
 │   ├── IcerikGozlemci.kt                ContentObserver → Flow
 │   ├── model/Kisi.kt · AramaKaydi.kt

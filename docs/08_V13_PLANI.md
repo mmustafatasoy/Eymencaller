@@ -28,14 +28,14 @@ AGENTS.md "yeni kütüphane yok" kuralının tek istisnası bu üçüdür. Durum
 ### [x] V13-07 · Yaylı basma
 - `Modifier.yayliBasma()` (Tiklama.kt): basınca 0.92 ölçek, yay ile geri döner. Arama düğmeleri, tuş takımı, eylem kutuları.
 
-### [ ] V13-08 · Ortak geçiş (avatar → kişi kartı)
+### [x] V13-08 · Ortak geçiş (avatar → kişi kartı)
 - `SharedTransitionLayout` NavHost'u sarar; Kişiler/Favoriler satır avatarı ile kişi kartı başlığı `sharedElement("avatar-<id>")`.
 
-### [ ] V13-09 · Kişi kartı v2
+### [x] V13-09 · Kişi kartı v2
 - Posteri olmayan kişide başlık: avatar renginde (fotoğraf varsa Palette renginde) dikey gradyan, büyük avatar, beyaz ad.
 - "Görüşmeler" grubu: bu ay görüşme sayısı, toplam konuşma süresi, son görüşme.
 
-### [ ] V13-10 · Favoriler ana ekran bileşeni (Glance)
+### [x] V13-10 · Favoriler ana ekran bileşeni (Glance)
 - 4 favori, yuvarlak fotoğraf/monogram + ad; dokununca arar (`WidgetAramaActivity` → `AramaBaslatici.ara`). Favori değişince güncellenir.
 
 ### Yapılmayan (bilerek)

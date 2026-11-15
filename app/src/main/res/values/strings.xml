@@ -106,6 +106,13 @@
     <string name="kd_foto_ekle">Fotoğraf Ekle</string>
     <string name="kd_kaydedilemedi">Kişi kaydedilemedi</string>
     <string name="onizleme_video">Görüntülü Ara</string>
+    <string name="kart_gorusmeler">Görüşmeler</string>
+    <string name="kart_bu_ay">Bu ay</string>
+    <string name="kart_gorusme_sayisi">%1$d görüşme</string>
+    <string name="kart_toplam_sure">Toplam süre</string>
+    <string name="kart_son_gorusme">Son görüşme</string>
+    <string name="widget_bos">Favori kişi yok</string>
+    <string name="widget_aciklama">Favori kişilerini tek dokunuşla ara</string>
     <string name="kisi_sayisi">%1$d Kişi</string>
     <string name="rehber_bos">Kişi yok</string>
     <string name="favorilere_ekle">Favorilere Ekle</string>

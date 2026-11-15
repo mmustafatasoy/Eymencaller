@@ -109,6 +109,26 @@
         </service>
 
         <!-- Bildirim eylemleri ve "Hatırlat" alarmı (dışarıya kapalı) -->
+        <!-- V13-10 · Favoriler ana ekran bileşeni -->
+        <receiver
+            android:name=".widget.FavoriWidgetAlicisi"
+            android:exported="true"
+            android:label="@string/favoriler">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favori_widget" />
+        </receiver>
+        <activity
+            android:name=".widget.WidgetAramaActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <receiver
             android:name=".gorusme.GorusmeAlicisi"
             android:exported="false" />

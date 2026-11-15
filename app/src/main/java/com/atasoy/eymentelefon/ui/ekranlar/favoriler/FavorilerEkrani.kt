@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.atasoy.eymentelefon.ui.bilesenler.paylasilanAvatar
 import com.atasoy.eymentelefon.ui.bilesenler.LocalAltCamBoslugu
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.setValue
@@ -88,7 +89,7 @@ fun FavorilerEkrani(
                     modifier = Modifier.padding(start = EymenBosluk.kenar),
                     minYukseklik = EymenBoyut.satirAvatarli,
                     ayirici = k != durum.kisiler.last(),
-                    sol = { IosAvatar(k.basHarfler, EymenBoyut.avatarListe, fotoUri = k.fotoUri) },
+                    sol = { IosAvatar(k.basHarfler, EymenBoyut.avatarListe, fotoUri = k.fotoUri, modifier = Modifier.paylasilanAvatar(k.id)) },
                     altBaslik = n?.let { num ->
                         @Composable {
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(EymenBosluk.xs)) {

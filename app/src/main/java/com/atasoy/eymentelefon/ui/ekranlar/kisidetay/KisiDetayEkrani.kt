@@ -15,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.atasoy.eymentelefon.ui.bilesenler.paylasilanAvatar
 import com.atasoy.eymentelefon.konteyner
 import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.graphics.asImageBitmap
@@ -86,6 +87,20 @@ fun KisiDetayEkrani(onGeri: () -> Unit, onPoster: (String, String) -> Unit = { _
     val kisi = durum.kisi
     val ad = kisi?.ad ?: NumaraBicimleyici.bicimle(durum.numara)
 
+    // V13-09: rehber fotoğrafının canlı rengi
+    val fotoRengi by produceState<androidx.compose.ui.graphics.Color?>(null, kisi?.fotoUri) {
+        value = kisi?.fotoUri?.let { uri ->
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                runCatching {
+                    context.contentResolver.openInputStream(uri)?.use { android.graphics.BitmapFactory.decodeStream(it) }?.let { bmp ->
+                        val p = androidx.palette.graphics.Palette.from(bmp).generate()
+                        (p.vibrantSwatch ?: p.dominantSwatch)?.rgb?.let { androidx.compose.ui.graphics.Color(it) }
+                    }
+                }.onFailure { com.atasoy.eymentelefon.cekirdek.hata.HataKaydedici.kaydet("KisiDetay.fotoRengi", it) }.getOrNull()
+            }
+        }
+    }
+
     // V12-07: kişi posteri varsa kartın üstü poster
     val posterDeposu = remember { context.konteyner().posterDeposu }
     val posterSurumu by posterDeposu.degisim.collectAsStateWithLifecycle()
@@ -124,10 +139,25 @@ fun KisiDetayEkrani(onGeri: () -> Unit, onPoster: (String, String) -> Unit = { _
                         kisi?.sirket?.let { Text(it, style = EymenYazi.dipnot, color = com.atasoy.eymentelefon.ui.theme.AramaEkraniRenk.ikincil) }
                     }
                 }
-            } else Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                IosAvatar(kisi?.basHarfler ?: "#", EymenBoyut.avatarKart, fotoUri = kisi?.fotoUri)
-                Text(ad, style = EymenYazi.baslik1, color = r.etiket, textAlign = TextAlign.Center, modifier = Modifier.padding(top = EymenBosluk.m, start = EymenBosluk.kenar, end = EymenBosluk.kenar))
-                kisi?.sirket?.let { Text(it, style = EymenYazi.dipnot, color = r.ikincilEtiket) }
+            } else {
+                // V13-09: renkli başlık — fotoğraf varsa fotoğrafın rengi, yoksa avatar rengi
+                val bas = kisi?.basHarfler ?: "#"
+                val (ustRenk, altRenk) = fotoRengi?.let { it to it.copy(alpha = BASLIK_ALT) }
+                    ?: if (bas.any { it.isLetter() }) com.atasoy.eymentelefon.ui.theme.AvatarRenk.renkliCift(bas)
+                    else com.atasoy.eymentelefon.ui.theme.AvatarRenk.ust to com.atasoy.eymentelefon.ui.theme.AvatarRenk.alt
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(EymenBoyut.kartBaslik)
+                        .clip(EymenSekil.sayfa)
+                        .background(androidx.compose.ui.graphics.Brush.verticalGradient(listOf(ustRenk, altRenk, r.grupluArkaPlan))),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    IosAvatar(bas, EymenBoyut.avatarKart, fotoUri = kisi?.fotoUri, modifier = Modifier.paylasilanAvatar(kisi?.id))
+                    Text(ad, style = EymenYazi.baslik1, color = r.etiket, textAlign = TextAlign.Center, modifier = Modifier.padding(top = EymenBosluk.m, start = EymenBosluk.kenar, end = EymenBosluk.kenar))
+                    kisi?.sirket?.let { Text(it, style = EymenYazi.dipnot, color = r.ikincilEtiket) }
+                }
             }
 
             // mesaj · ara · video · posta
@@ -164,6 +194,29 @@ fun KisiDetayEkrani(onGeri: () -> Unit, onPoster: (String, String) -> Unit = { _
                             onUzunBas = { DisIslemler.kopyala(context, "numara", n.numara) },
                         )
                     }
+                }
+            }
+
+            // V13-09: görüşme istatistikleri
+            if (durum.aramalar.isNotEmpty()) {
+                val ayBasi = remember(durum.aramalar) {
+                    java.util.Calendar.getInstance().apply {
+                        set(java.util.Calendar.DAY_OF_MONTH, 1)
+                        set(java.util.Calendar.HOUR_OF_DAY, 0)
+                        set(java.util.Calendar.MINUTE, 0)
+                        set(java.util.Calendar.SECOND, 0)
+                    }.timeInMillis
+                }
+                val buAy = durum.aramalar.count { it.tarih >= ayBasi }
+                val toplam = durum.aramalar.sumOf { it.sureSn }
+                IosGrup(baslik = stringResource(R.string.kart_gorusmeler)) {
+                    IosSatir(baslik = stringResource(R.string.kart_bu_ay), sag = { DegerMetni(stringResource(R.string.kart_gorusme_sayisi, buAy)) })
+                    IosSatir(baslik = stringResource(R.string.kart_toplam_sure), sag = { DegerMetni(ZamanBicimleyici.sure(context, toplam)) })
+                    IosSatir(
+                        baslik = stringResource(R.string.kart_son_gorusme),
+                        ayirici = false,
+                        sag = { DegerMetni(ZamanBicimleyici.detay(context, durum.aramalar.maxOf { it.tarih })) },
+                    )
                 }
             }
 
@@ -256,3 +309,10 @@ private fun kisayolEkle(context: Context, kisi: Kisi, numara: String) {
         .build()
     ShortcutManagerCompat.requestPinShortcut(context, bilgi, null)
 }
+
+@Composable
+private fun DegerMetni(metin: String) {
+    Text(metin, style = EymenYazi.govde, color = EymenRenk.ikincilEtiket, maxLines = 1)
+}
+
+private const val BASLIK_ALT = 0.55f
