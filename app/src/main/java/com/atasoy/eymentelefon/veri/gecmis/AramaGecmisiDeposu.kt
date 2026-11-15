@@ -61,13 +61,12 @@ class AramaGecmisiDeposu(private val context: Context) {
     /** Son giden aramanın numarası. */
     suspend fun sonArananNumara(): String? = withContext(Dispatchers.IO) {
         if (!okumaIzniVar()) return@withContext null
-        val c = CallLog.Calls
-        try {
-            val uri = c.CONTENT_URI.buildUpon()
-                .appendQueryParameter(c.LIMIT_PARAM_KEY, "1").build()
+                try {
+            val uri = CallLog.Calls.CONTENT_URI.buildUpon()
+                .appendQueryParameter(CallLog.Calls.LIMIT_PARAM_KEY, "1").build()
             context.contentResolver.query(
-                uri, arrayOf(c.NUMBER), "${c.TYPE} = ?",
-                arrayOf(c.OUTGOING_TYPE.toString()), "${c.DATE} DESC",
+                uri, arrayOf(CallLog.Calls.NUMBER), "${CallLog.Calls.TYPE} = ?",
+                arrayOf(CallLog.Calls.OUTGOING_TYPE.toString()), "${CallLog.Calls.DATE} DESC",
             )?.use { cursor ->
                 if (cursor.moveToFirst()) cursor.getString(0)?.takeIf(String::isNotBlank)
                 else null
@@ -85,8 +84,8 @@ class AramaGecmisiDeposu(private val context: Context) {
             try {
                 for (parca in kayitIdleri.distinct().chunked(200)) {
                     context.contentResolver.delete(
-                        c.CONTENT_URI,
-                        "${c._ID} IN (${List(parca.size) { "?" }.joinToString(",")})",
+                        CallLog.Calls.CONTENT_URI,
+                        "${CallLog.Calls._ID} IN (${List(parca.size) { "?" }.joinToString(",")})",
                         parca.map(Long::toString).toTypedArray(),
                     )
                 }
@@ -103,13 +102,13 @@ class AramaGecmisiDeposu(private val context: Context) {
             val c = CallLog.Calls
             try {
                 context.contentResolver.update(
-                    c.CONTENT_URI,
+                    CallLog.Calls.CONTENT_URI,
                     ContentValues().apply {
-                        put(c.NEW, 0)
-                        put(c.IS_READ, 1)
+                        put(CallLog.Calls.NEW, 0)
+                        put(CallLog.Calls.IS_READ, 1)
                     },
-                    "${c.TYPE} = ? AND (${c.NEW} = 1 OR ${c.IS_READ} = 0)",
-                    arrayOf(c.MISSED_TYPE.toString()),
+                    "${CallLog.Calls.TYPE} = ? AND (${CallLog.Calls.NEW} = 1 OR ${CallLog.Calls.IS_READ} = 0)",
+                    arrayOf(CallLog.Calls.MISSED_TYPE.toString()),
                 )
             } catch (hata: SecurityException) {
                 HataKaydedici.kaydet("AramaGecmisiDeposu.cevapsizlariGorulduYap", hata)
@@ -151,26 +150,26 @@ class AramaGecmisiDeposu(private val context: Context) {
         if (!okumaIzniVar()) return emptyList()
         val c = CallLog.Calls
         return try {
-            val uri = c.CONTENT_URI.buildUpon()
-                .appendQueryParameter(c.LIMIT_PARAM_KEY, "500").build()
+            val uri = CallLog.Calls.CONTENT_URI.buildUpon()
+                .appendQueryParameter(CallLog.Calls.LIMIT_PARAM_KEY, "500").build()
             val kayitlar = ArrayList<AramaKaydi>()
             context.contentResolver.query(
                 uri,
                 arrayOf(
-                    c._ID, c.NUMBER, c.CACHED_NAME, c.TYPE, c.DATE,
-                    c.DURATION, c.GEOCODED_LOCATION, c.CACHED_NUMBER_LABEL,
-                    c.NEW, c.IS_READ, c.PHONE_ACCOUNT_ID,
+                    CallLog.Calls._ID, CallLog.Calls.NUMBER, CallLog.Calls.CACHED_NAME, CallLog.Calls.TYPE, CallLog.Calls.DATE,
+                    CallLog.Calls.DURATION, CallLog.Calls.GEOCODED_LOCATION, CallLog.Calls.CACHED_NUMBER_LABEL,
+                    CallLog.Calls.NEW, CallLog.Calls.IS_READ, CallLog.Calls.PHONE_ACCOUNT_ID,
                 ),
-                null, null, "${c.DATE} DESC",
+                null, null, "${CallLog.Calls.DATE} DESC",
             )?.use { cursor ->
                 while (cursor.moveToNext() && kayitlar.size < 500) {
                     val tur = when (cursor.getInt(3)) {
-                        c.INCOMING_TYPE -> AramaTuru.GELEN
-                        c.OUTGOING_TYPE -> AramaTuru.GIDEN
-                        c.MISSED_TYPE -> AramaTuru.CEVAPSIZ
-                        c.REJECTED_TYPE -> AramaTuru.REDDEDILEN
-                        c.BLOCKED_TYPE -> AramaTuru.ENGELLENEN
-                        c.VOICEMAIL_TYPE -> AramaTuru.SESLI_MESAJ
+                        CallLog.Calls.INCOMING_TYPE -> AramaTuru.GELEN
+                        CallLog.Calls.OUTGOING_TYPE -> AramaTuru.GIDEN
+                        CallLog.Calls.MISSED_TYPE -> AramaTuru.CEVAPSIZ
+                        CallLog.Calls.REJECTED_TYPE -> AramaTuru.REDDEDILEN
+                        CallLog.Calls.BLOCKED_TYPE -> AramaTuru.ENGELLENEN
+                        CallLog.Calls.VOICEMAIL_TYPE -> AramaTuru.SESLI_MESAJ
                         else -> null
                     } ?: continue
                     val konum = cursor.getString(6)?.takeIf(String::isNotBlank)
