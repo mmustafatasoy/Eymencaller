@@ -1,11 +1,19 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-006**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-007**
 
 ---
 
 ## 🔴 AÇIK HATALAR
+
+### HATA-007 · AÇIK
+- Tarih: 2026-11-15
+- Görev: GOREV-11
+- Yer: `gorusme/EymenInCallService.kt` ve `gorusme/GorusmeBildirimi.kt`
+- Belirti: Mevcut `onCallAdded` gelen aramayı her durumda `CallActivity.ac()` ile açıyor; `CallStyle` heads-up / fullScreenIntent tercihi işletilemiyor.
+- Neden: GOREV-01 iskeleti, bildirim eklenmeden önce her aramada ekranı doğrudan açıyordu.
+- Durum: Bildirim izni ve FSI kontrolüyle yalnızca gereken durumda doğrudan ekranı açma düzeltmesi hazırlanıyor; APK/lint/cihaz testi henüz yok.
 
 ### HATA-006 · AÇIK
 - Tarih: 2026-11-15
