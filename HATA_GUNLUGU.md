@@ -121,3 +121,11 @@ S-04: GOREV-08 — "Görüntülü" eylemi yalnızca sistemde destek varsa göste
 S-05: GOREV-10 — `docs/04_IZINLER.md §5` uyarınca gelen arama sırasında varsayılan telefon rolü yoksa alt sayfa Ana ekranda bir kez gösterilmeli. Ancak değiştirilemez `AramaBaslatici.izinEksik` yalnızca `ara()` sırasında istek yayımlıyor; gelen aramada rol kaybını gösteren olay/akış mimaride tanımlı değil. Gelen arama uyarısının tetikleyicisi olarak hangi mevcut bileşen kullanılmalı? Bu bölüm karar verilene kadar eklenmedi. (GOREV-10)
 
 S-06: GOREV-10 — `docs/05_GOREV_PLANI.md` kabul koşulu "Telefon izni kaldırılmışken Ara → alt sayfa" diyor; ancak değiştirilemez `MainActivity` `ON_RESUME` sırasında `zorunlularTamam() == false` ise doğrudan tam ekran İzinler rotasına yönlendiriyor. Uygulama ön plandayken izin geri alındığında 12 numaralı alt sayfanın görünmesi için hangi öncelik geçerli? `MainActivity` veya izin açılış akışını onaysız değiştirmedim. (GOREV-10)
+
+S-07: GOREV-11 — Mockup 09'daki "Hatırlat" (10 dakika sonra bildirim) cihaz/uygulama yeniden başlatıldıktan sonra da çalışmalıdır. Mevcut sabit mimaride manifestte kayıtlı bir alarm BroadcastReceiver veya izin verilen bir görev zamanlayıcısı yok; yeni manifest bileşeni yasak. Arkaplanda kaybolabilecek sahte bir zamanlayıcı eklenmedi. AlarmManager için onaylanan mevcut giriş noktası hangisi? (GOREV-11)
+
+S-08: GOREV-11 — Gelen aramada ses kısma tuşuyla zil susturma, hazır `GorusmeYoneticisi` arayüzünde yok ve `CallActivity` üzerinde sadece GOREV-11 ekran satırları değiştirilebiliyor. OS varsayılan davranışı mı kullanılacak, yoksa `CallActivity.onKeyDown` veya `AudioManager` entegrasyonu için izin verilecek mi? (GOREV-11)
+
+S-09: GOREV-11 — `CallActivity` başlangıçta `FLAG_KEEP_SCREEN_ON` ayarlıyor. `GorusmeEkrani` ahize yolunda `PROXIMITY_SCREEN_OFF_WAKE_LOCK` edinip bırakıyor; iki mekanizmanın birlikte beklendiği gibi çalıştığı gerçek cihazda ölçülmeli. Değiştirilemez activity bayrağına dokunulmadı. (GOREV-11)
+
+S-10: GOREV-11 — `docs/01_TASARIM_SISTEMI.md` ses dalgası çubuklarını 3dp genişlikte tanımlıyor, fakat hazır tema ölçü tokenları arasında 3dp bulunmuyor. Kural gereği yeni dp uydurulmadı; geçici 4dp `EymenBosluk.xs` kullanıldı. Birebir 3dp için tema tokenı ekleme onayı var mı? (GOREV-11)
