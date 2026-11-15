@@ -1,11 +1,19 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-004**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-005**
 
 ---
 
 ## 🔴 AÇIK HATALAR
+
+### HATA-005 · AÇIK
+- Tarih: 2026-11-15
+- Görev: GOREV-08
+- Yer: `ui/ekranlar/kisidetay/KisiDetayEkrani.kt` koyu ve açık `@Preview`.
+- Belirti: `KisiDetayIcerik` 12 olay parametresi bekliyor; önizlemelerde 13 boş lambda verilmiş. Bu, derleme parametre sayısı hatası doğurur.
+- Neden: Önizleme çağrıları hazırlanırken fazla bir lambda eklenmiş.
+- Durum: Statik düzeltme uygulanacak; GitHub Actions `assembleDebug` ve `lint` henüz doğrulanmadı.
 
 ### HATA-004 · AÇIK
 - Tarih: 2026-11-15
