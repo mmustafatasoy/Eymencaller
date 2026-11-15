@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -257,12 +258,13 @@ private fun KisiDetayIcerik(
                 )
             }
             // Görüntülü arama sağlayıcısı doğrulanana kadar düğme gizlidir.
-            if (!kisi?.eposta.isNullOrBlank()) {
+            val eposta = kisi?.eposta
+            if (!eposta.isNullOrBlank()) {
                 EylemKutusu(
                     ikon = EymenIkon.Eposta,
                     baslik = stringResource(R.string.detay_eposta),
                     modifier = Modifier.weight(1f),
-                    onClick = { onEposta(kisi!!.eposta!!) },
+                    onClick = { onEposta(eposta) },
                 )
             }
         }
