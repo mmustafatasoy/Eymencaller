@@ -70,7 +70,7 @@ private const val ILK_ARAMA = 3
 
 /** 07 · Kişi kartı (rehberde olmayan numara için de). */
 @Composable
-fun KisiDetayEkrani(onGeri: () -> Unit, vm: KisiDetayViewModel = viewModel(factory = KisiDetayViewModel.Fabrika)) {
+fun KisiDetayEkrani(onGeri: () -> Unit, onPoster: (String, String) -> Unit = { _, _ -> }, vm: KisiDetayViewModel = viewModel(factory = KisiDetayViewModel.Fabrika)) {
     val durum by vm.durum.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val r = EymenRenk
@@ -156,6 +156,7 @@ fun KisiDetayEkrani(onGeri: () -> Unit, vm: KisiDetayViewModel = viewModel(facto
             IosGrup {
                 IosEylemSatiri(stringResource(R.string.kayit_mesaj), { DisIslemler.mesajGonder(context, durum.numara) })
                 if (kisi != null) {
+                    IosEylemSatiri(stringResource(R.string.kart_poster), { onPoster(kisi.lookupKey, kisi.ad) })
                     IosEylemSatiri(stringResource(R.string.kart_paylas), { DisIslemler.vcardPaylas(context, vm.vcardUri(kisi)) })
                     IosEylemSatiri(stringResource(if (kisi.favori) R.string.favorilerden_cikar else R.string.favorilere_ekle), vm::favori)
                     IosEylemSatiri(stringResource(R.string.kart_kisayol), { kisayolEkle(context, kisi, durum.numara) }, ayirici = false)

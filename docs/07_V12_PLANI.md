@@ -38,8 +38,9 @@ Durum: `[x]` = Claude yaptı · `[ ]` = sırada. Sırayla, tek tek; her biri son
 ### [ ] V12-07 · Kişi kartı posterli başlık (görsel 7)
 - Kartın üst 330dp'si poster (yoksa avatar rengi gradyan); ad posterin üstünde beyaz; 4 eylem kutusu buzlu cam (%22 beyaz). Gruplarda yeni satır: **Kişi Posteri ve Fotoğraf** → V12-08.
 
-### [ ] V12-08 · Kişi posteri düzenleyici (görsel 9)
-- Yeni ekran `ui/ekranlar/poster/PosterEkrani.kt` (rota `poster/{lookupKey}`): koyu zemin, ortada mini gelen-arama önizlemesi, altta **Fotoğraf / Renk / Yazı** sekmeleri; Fotoğraf → seçici; Renk → 5 hazır gradyan (`AramaEkraniRenk.palet`); **Canlı efekt** anahtarı; Vazgeç / Bitti.
+### [x] V12-08 · Kişi posteri düzenleyici (görsel 9)
+- Yapıldı (Claude): `ui/ekranlar/poster/PosterEkrani.kt` (rota `poster/{lookupKey}?ad=`), kişi kartında "Kişi Posteri ve Fotoğraf" satırı. Sekmeler yerine gruplu liste: Fotoğraf Seç/Kaldır · Renk (6 gradyan) · Canlı Efekt.
+- Plan: `ui/ekranlar/poster/PosterEkrani.kt` (rota `poster/{lookupKey}`): koyu zemin, ortada mini gelen-arama önizlemesi, altta **Fotoğraf / Renk / Yazı** sekmeleri; Fotoğraf → seçici; Renk → 5 hazır gradyan (`AramaEkraniRenk.palet`); **Canlı efekt** anahtarı; Vazgeç / Bitti.
 
 ### [ ] V12-09 · Uzun basma önizleme (görsel 6)
 - Kişiler ve Favoriler'de uzun bas → titreşim (`HapticFeedbackType.LongPress`) + tam ekran katman: arka plan bulanık (12+ `blur`, altında %40 beyaz/siyah örtü), üstte 170dp posterli kart (ad + numara), altında 250dp menü: Ara · Mesaj · Görüntülü Ara | Paylaş · Favorilere Ekle/Çıkar · Düzenle | **Kişiyi Sil** (kırmızı, onaylı). Kart büyüyerek açılır (`scale 0.9→1`, 220ms). Karta dokun → kişi kartı; boşluğa dokun → kapanır.

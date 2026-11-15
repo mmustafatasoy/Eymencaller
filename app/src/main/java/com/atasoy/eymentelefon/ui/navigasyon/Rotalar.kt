@@ -21,6 +21,10 @@ object Rotalar {
     fun kisiDetay(kisiId: Long, numara: String? = null) =
         "kisi/$kisiId?numara=${Uri.encode(numara.orEmpty())}"
 
+    /** V12-08: kişi posteri düzenleyici */
+    const val POSTER = "poster/{lookupKey}?ad={ad}"
+    fun poster(lookupKey: String, ad: String) = "poster/${Uri.encode(lookupKey)}?ad=${Uri.encode(ad)}"
+
     const val ARAMA = "arama"
     const val AYARLAR = "ayarlar"
     const val HATA_KAYITLARI = "ayarlar/hata-kayitlari"
@@ -32,5 +36,7 @@ object Rotalar {
         const val SEKME = "sekme"
         const val NUMARA = "numara"
         const val KISI_ID = "kisiId"
+        const val LOOKUP = "lookupKey"
+        const val AD = "ad"
     }
 }

@@ -113,7 +113,15 @@ fun EymenNavHost(
                 navArgument(Rotalar.Arguman.KISI_ID) { type = NavType.LongType },
                 navArgument(Rotalar.Arguman.NUMARA) { type = NavType.StringType; defaultValue = "" },
             ),
-        ) { KisiDetayEkrani(onGeri = geri) }
+        ) { KisiDetayEkrani(onGeri = geri, onPoster = { anahtar, ad -> nav.navigate(Rotalar.poster(anahtar, ad)) }) }
+
+        composable(
+            Rotalar.POSTER,
+            arguments = listOf(
+                navArgument(Rotalar.Arguman.LOOKUP) { type = NavType.StringType },
+                navArgument(Rotalar.Arguman.AD) { type = NavType.StringType; defaultValue = "" },
+            ),
+        ) { com.atasoy.eymentelefon.ui.ekranlar.poster.PosterEkrani(onGeri = geri) }
 
         composable(Rotalar.ARAMA) { AramaEkrani(onGeri = geri, onKisiDetay = kisiDetay) }
 

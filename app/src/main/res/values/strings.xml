@@ -86,6 +86,13 @@
     <!-- 06 Kişiler -->
     <string name="kisiler">Kişiler</string>
     <string name="kartim">Kartım</string>
+    <string name="poster_baslik">Kişi Posteri</string>
+    <string name="poster_foto">Fotoğraf</string>
+    <string name="poster_foto_sec">Fotoğraf Seç</string>
+    <string name="poster_foto_kaldir">Fotoğrafı Kaldır</string>
+    <string name="poster_renk">Renk</string>
+    <string name="poster_canli">Canlı Efekt</string>
+    <string name="kart_poster">Kişi Posteri ve Fotoğraf</string>
     <string name="kisi_sayisi">%1$d Kişi</string>
     <string name="rehber_bos">Kişi yok</string>
     <string name="favorilere_ekle">Favorilere Ekle</string>
