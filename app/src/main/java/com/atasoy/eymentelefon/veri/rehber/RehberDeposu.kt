@@ -233,15 +233,14 @@ class RehberDeposu(private val context: Context) {
                     when (tur) {
                         ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE -> {
                             if (value.isNullOrBlank()) continue
-                            val phone = ContactsContract.CommonDataKinds.Phone
                             val tip = cursor.getInt(3)
                             val tipAdi = when (tip) {
-                                phone.TYPE_MOBILE -> NumaraTuru.MOBIL
-                                phone.TYPE_HOME -> NumaraTuru.EV
-                                phone.TYPE_WORK, phone.TYPE_WORK_MOBILE -> NumaraTuru.IS
+                                ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE -> NumaraTuru.MOBIL
+                                ContactsContract.CommonDataKinds.Phone.TYPE_HOME -> NumaraTuru.EV
+                                ContactsContract.CommonDataKinds.Phone.TYPE_WORK, ContactsContract.CommonDataKinds.Phone.TYPE_WORK_MOBILE -> NumaraTuru.IS
                                 else -> NumaraTuru.DIGER
                             }
-                            val ozel = if (tip == phone.TYPE_CUSTOM) cursor.getString(4) else null
+                            val ozel = if (tip == ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM) cursor.getString(4) else null
                             satir.numaralar.add(Numara(
                                 numara = value, tur = tipAdi, ozelEtiket = ozel,
                                 varsayilan = cursor.getInt(6) != 0 || cursor.getInt(5) != 0,
