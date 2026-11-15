@@ -1,16 +1,45 @@
 package com.atasoy.eymentelefon.cekirdek.yardimci
 
-// ⬜ CODEX YAZACAK — GOREV-04
-// İmzalar SABİT, sadece gövdeleri doldur.
-// Kural: Türkiye formatı. "05321234567" → "0532 123 45 67", "+905321234567" → "+90 532 123 45 67",
-//        "02125550123" → "0212 555 01 23". Tanınmayan biçimde girdiyi olduğu gibi döndür.
-//        Android'in PhoneNumberUtils.formatNumber(numara, "TR") sonucunu temel al.
+// GOREV-04: Türkiye numara biçimi. İmzalar korunmuştur.
+// Tanınmayan numara veya özel servis kodlarına dokunulmaz.
 
 object NumaraBicimleyici {
+    /** Ekranda gösterim. "05321234567" -> "0532 123 45 67". */
+    fun bicimle(numara: String): String {
+        val rakamlar = numara.filter(Char::isDigit)
+        val bosluksuz = numara.filterNot(Char::isWhitespace)
+        if (bosluksuz.isEmpty() || bosluksuz.any { !it.isDigit() && it != '+' }) return numara
+        return when {
+            numara.startsWith("+90") && rakamlar.startsWith("90") && rakamlar.length in 3..12 ->
+                bolumle("+90", rakamlar.drop(2), intArrayOf(3, 3, 2, 2))
+            !numara.startsWith("+") && rakamlar.startsWith("0") && rakamlar.length in 1..11 ->
+                bolumle("", rakamlar, intArrayOf(4, 3, 2, 2))
+            !numara.startsWith("+") && rakamlar.length in 1..10 ->
+                bolumle("", rakamlar, intArrayOf(3, 3, 2, 2))
+            else -> numara
+        }
+    }
 
-    /** Ekranda gösterim için biçimler. */
-    fun bicimle(numara: String): String = numara // GOREV-04
+    /** "+90 532 123 45 67" ile "0532 123 45 67" -> "5321234567". */
+    fun normalize(numara: String): String {
+        val rakamlar = numara.filter(Char::isDigit)
+        return when {
+            rakamlar.length == 12 && rakamlar.startsWith("90") -> rakamlar.drop(2)
+            rakamlar.length == 11 && rakamlar.startsWith("0") -> rakamlar.drop(1)
+            else -> rakamlar
+        }
+    }
 
-    /** Karşılaştırma için normalize eder: "+90 532..." ve "0532..." aynı sonucu verir → "5321234567" */
-    fun normalize(numara: String): String = numara.filter { it.isDigit() } // GOREV-04
+    private fun bolumle(onEk: String, rakamlar: String, araliklar: IntArray): String {
+        val bolumler = mutableListOf<String>()
+        if (onEk.isNotEmpty()) bolumler.add(onEk)
+        var konum = 0
+        for (uzunluk in araliklar) {
+            if (konum >= rakamlar.length) break
+            val son = (konum + uzunluk).coerceAtMost(rakamlar.length)
+            bolumler.add(rakamlar.substring(konum, son))
+            konum = son
+        }
+        return bolumler.joinToString(" ")
+    }
 }
