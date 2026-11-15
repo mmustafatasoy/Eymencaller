@@ -20,13 +20,13 @@ class EymenInCallService : InCallService() {
         GorusmeYoneticisi.ekle(call)
         // Sistem tarafından bağlı InCallService arka planda activity açabilir (BAL istisnası).
         CallActivity.ac(this)
-        // GOREV-11: GorusmeBildirimi.goster(this) — gelen arama tam ekran bildirimi + devam eden arama bildirimi
+        GorusmeBildirimi.goster(this)
     }
 
     override fun onCallRemoved(call: Call) {
         super.onCallRemoved(call)
         GorusmeYoneticisi.cikar(call)
-        // GOREV-11: arama kalmadıysa GorusmeBildirimi.kaldir(this)
+        if (GorusmeYoneticisi.gorusmeler.value.isEmpty()) GorusmeBildirimi.kaldir(this)
     }
 
     @Deprecated("API 34'te eskidi; yerine onCallEndpointChanged var ama tüm sürümlerde çağrılır")
