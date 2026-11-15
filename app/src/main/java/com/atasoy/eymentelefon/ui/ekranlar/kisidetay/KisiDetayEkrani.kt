@@ -522,7 +522,7 @@ private fun KisiDetayKoyuOnizleme() {
     EymenTelefonTemasi(tema = TemaSecimi.KOYU) {
         KisiDetayIcerik(
             KisiDetayUiState(kisi = kisi, numara = "05339876543", yukleniyor = false),
-            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
         )
     }
 }
@@ -533,7 +533,7 @@ private fun KisiDetayAcikOnizleme() {
     EymenTelefonTemasi(tema = TemaSecimi.ACIK) {
         KisiDetayIcerik(
             KisiDetayUiState(numara = "05321234567", yukleniyor = false),
-            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
         )
     }
 }
