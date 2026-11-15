@@ -79,3 +79,9 @@ _(En yeni en üstte.)_
 _(Belgede cevabı olmayan kararlar buraya: `S-01: ... (GOREV-NN)`)_
 
 S-01: GOREV-04 — `docs/02_EKRANLAR.md` uzun 1 basmayı `voicemail:` URI ile ister; ancak değiştirilemez `AramaBaslatici.temizle()` harfli URI'yi çıkarır. Şimdilik cihazın `TelephonyManager.voiceMailNumber` değeri varsa bu numara `AramaBaslatici.ara()` ile aranıyor, yoksa tuşa 1 ekleniyor. Tam `voicemail:` davranışı için hazır `AramaBaslatici` içinde istisna tanımlanmasına izin var mı? (GOREV-04)
+
+S-02: GOREV-08 — Numarayı "Varsayılan yap" işlemi için değiştirilemez `RehberDeposu` imzalarında `ContactsContract.Data.IS_SUPER_PRIMARY` güncelleme metodu yok. Şimdilik "Varsayılan" satırı Android kişi düzenleyicisini açıyor; tercih kullanıcının oradan yapmasına bırakıldı. Bu yeni depo metoduna izin veriliyor mu? (GOREV-08)
+
+S-03: GOREV-08 — "Ana ekrana kısayol ekle" işleminin kişi detayını açabilmesi için `MainActivity` veya `Rotalar` içinde kişi derin bağlantısı gerekiyor; ikisi de "DEĞİŞTİRME" işaretli. Desteklenmeyen kısayol eylemi gösterilmedi. Onaylanan giriş yöntemi nedir? (GOREV-08)
+
+S-04: GOREV-08 — "Görüntülü" eylemi yalnızca sistemde destek varsa gösterilecek; ancak `AramaBaslatici` yalnızca normal `TelecomManager.placeCall` çağırıyor ve video sağlayıcı tespiti için önceden tanımlı yöntem yok. Mevcut kodda düğme gizli. Video araması için hangi mevcut altyapı/izin kullanılmalı? (GOREV-08)
