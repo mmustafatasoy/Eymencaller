@@ -111,6 +111,7 @@
     <string name="arama_son_aramalarda">Son aramalarda</string>
     <string name="arama_numarayi_ara">Ara: %1$s</string>
     <string name="arama_sonuc_yok">Sonuç bulunamadı</string>
+    <string name="arama_not_etiket">Not: </string>
 
     <!-- 08 / 09 / 10 Arama ekranları -->
     <string name="gorusme_araniyor">Aranıyor…</string>
