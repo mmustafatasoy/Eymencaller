@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 
@@ -25,8 +26,15 @@ class EymenCallScreeningService : CallScreeningService() {
         }
         val numara = callDetails.handle?.schemeSpecificPart.orEmpty()
         kapsam.launch {
-            val engelli = withTimeoutOrNull(ZAMAN_ASIMI_MS) { konteyner().engelDeposu.engelliMi(numara) } ?: false
-            val yanit = if (engelli) {
+            val k = konteyner()
+            val engelli = withTimeoutOrNull(ZAMAN_ASIMI_MS) { k.engelDeposu.engelliMi(numara) } ?: false
+            // V12-04: "Bilinmeyen Arayanları Sustur" açıksa rehberde olmayan numara çalmaz (kayda düşer)
+            val sustur = !engelli && withTimeoutOrNull(ZAMAN_ASIMI_MS) {
+                k.ayarDeposu.ayarlar.first().bilinmeyenSustur && numara.isNotBlank() && k.rehberDeposu.numaradanKisi(numara) == null
+            } == true
+            val yanit = if (sustur) {
+                CallResponse.Builder().setSilenceCall(true).build()
+            } else if (engelli) {
                 CallResponse.Builder()
                     .setDisallowCall(true)
                     .setRejectCall(true)

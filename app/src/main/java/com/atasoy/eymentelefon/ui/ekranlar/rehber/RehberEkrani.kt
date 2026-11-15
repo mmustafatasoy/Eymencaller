@@ -62,7 +62,7 @@ import kotlinx.coroutines.launch
 fun RehberEkrani(
     onKisiDetay: (Long, String?) -> Unit,
     onArama: () -> Unit,
-    onAyarlar: () -> Unit,
+    @Suppress("UNUSED_PARAMETER") onAyarlar: () -> Unit,
     vm: RehberViewModel = viewModel(factory = RehberViewModel.Fabrika),
 ) {
     val durum by vm.durum.collectAsStateWithLifecycle()
@@ -90,7 +90,7 @@ fun RehberEkrani(
             IosNavCubugu(
                 kucukBaslik = baslik,
                 baslikGorunur = kucuk,
-                sol = { IosNavIkonu(EymenIkon.Disli, stringResource(R.string.ae_ayarlar), onAyarlar) },
+                // V12-11: ayarlar girişi Son Aramalar'daki dişlide
                 sag = { IosNavIkonu(EymenIkon.Arti, stringResource(R.string.ae_ekle)) { DisIslemler.yeniKisi(context) } },
             )
             LazyColumn(state = liste, modifier = Modifier.fillMaxSize()) {
@@ -125,9 +125,22 @@ fun RehberEkrani(
                         IosSatir(
                             baslik = kisiAdiMetni(k.ad),
                             modifier = Modifier.padding(start = EymenBosluk.kenar, end = EymenBosluk.l),
+                            minYukseklik = EymenBoyut.satirKisi,
+                            sol = { IosAvatar(k.basHarfler, EymenBoyut.avatarKucuk, fotoUri = k.fotoUri) },
                             ayirici = k != g.kisiler.last(),
                             onTikla = { onKisiDetay(k.id, null) },
                             onUzunBas = { secili = k },
+                        )
+                    }
+                }
+                if (durum.sayi > 0) {
+                    item(key = "toplam") {
+                        Text(
+                            stringResource(R.string.kisi_sayisi, durum.sayi),
+                            style = EymenYazi.dipnot,
+                            color = EymenRenk.ikincilEtiket,
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth().padding(EymenBosluk.kenar),
                         )
                     }
                 }

@@ -8,19 +8,19 @@ Durum: `[x]` = Claude yaptı · `[ ]` = sırada. Sırayla, tek tek; her biri son
 
 ---
 
-### [ ] V12-01 · "Bilinmeyen" hatası (görsel 4)
+### [x] V12-01 · "Bilinmeyen" hatası (görsel 4)
 - `GorusmeViewModel`: son görülen `GorusmeDurumu` ve `Kisi` saklanır (`sonGorusme`). Liste boşalınca ekran `sonGorusme` ile çizilir.
 - Ekranda: ad + "Arama bitti · süre". Rehberde yoksa biçimli numara. `gorusme_bilinmeyen` sadece numara gizliyse.
 
-### [ ] V12-02 · Tema sadece sistemden (görsel 10)
+### [x] V12-02 · Tema sadece sistemden (görsel 10)
 - `MainActivity` + `EymenTelefonTemasi`: her zaman `TemaSecimi.SISTEM`. Ayarlar'daki **Tema** satırı kaldırılır. (`AyarDeposu.tema` alanı dokunulmadan kalır, okunmaz.)
 
-### [ ] V12-03 · Ayarlar sadeleşir (görsel 10, 11)
+### [x] V12-03 · Ayarlar sadeleşir (görsel 10, 11)
 - Başlık "Telefon". Gruplar: **ARAMALAR** (Varsayılan Telefon Uygulaması, Mesajla Yanıtla) · **SES VE TİTREŞİM** (Tuş Takımında Titreşim, Tuş Takımı Sesleri) · **ENGELLEME** (Engellenen Kişiler, Bilinmeyen Arayanları Sustur + dipnot) · **DESTEK** (Hata Kayıtları, Hakkında).
 - **İzinler** ve **Vurgu Rengi** satırları kalkar. Ayarlar girişi: Son Aramalar'daki dişli.
 - Engellenen Kişiler ekranı (görsel 11): satırda avatar + ad (rehberde varsa) + numara; "Yeni Ekle…" → numara uyarısı.
 
-### [ ] V12-04 · Bilinmeyen Arayanları Sustur
+### [x] V12-04 · Bilinmeyen Arayanları Sustur
 - `AyarDeposu`: `bilinmeyenSustur: Boolean` (anahtar `bilinmeyen_sustur`, varsayılan false).
 - `EymenCallScreeningService`: açıksa ve `RehberDeposu.numaradanKisi(numara) == null` → `CallResponse.Builder().setSilenceCall(true).build()` (çalmaz, kayda düşer).
 
@@ -49,7 +49,7 @@ Durum: `[x]` = Claude yaptı · `[ ]` = sırada. Sırayla, tek tek; her biri son
 - Kayıt: `RehberDeposu.kaydet(KisiTaslak)` → `ContentProviderOperation` toplu işlem (RawContacts + StructuredName + Phone + Email + Organization + Photo `DATA15` küçültülmüş 720px JPEG). Düzenlemede eski Data satırları güncellenir/silinir.
 - Tüm `DisIslemler.kisiyeEkle / yeniKisi / kisiDuzenle` çağrıları bu ekrana yönlendirilir.
 
-### [ ] V12-11 · Kişiler satırlarında küçük avatar + toplam (görsel 5)
+### [x] V12-11 · Kişiler satırlarında küçük avatar + toplam (görsel 5)
 - Satır: 34dp avatar (fotoğraf/monogram) + "Ad **Soyad**", satır yüksekliği 52dp; listenin sonunda "N Kişi" (dipnot, ortalı). Üst sol "Listeler" yerine boş (ayarlar Son Aramalar'da).
 
 ### [ ] V12-12 · Sistem yönlendirmeleri (görsel 13)

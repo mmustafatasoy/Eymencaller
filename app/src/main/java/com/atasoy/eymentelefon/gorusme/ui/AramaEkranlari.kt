@@ -111,7 +111,11 @@ fun GorusmeEkrani(durum: GorusmeUiState, onOlay: (GorusmeOlay) -> Unit, onEkle: 
         GorusmeAsamasi.ARANIYOR -> stringResource(R.string.gorusme_araniyor)
         GorusmeAsamasi.BAGLANIYOR -> stringResource(R.string.gorusme_baglaniyor)
         GorusmeAsamasi.BEKLEMEDE -> stringResource(R.string.gorusme_beklemede)
-        GorusmeAsamasi.BITTI -> stringResource(R.string.gorusme_bitti)
+        GorusmeAsamasi.BITTI -> if (durum.sure > 0) {
+            stringResource(R.string.gorusme_bitti_sure, ZamanBicimleyici.sayac(durum.sure))
+        } else {
+            stringResource(R.string.gorusme_bitti)
+        }
         else -> listOfNotNull(
             ZamanBicimleyici.sayac(durum.sure),
             if (g?.hd == true) stringResource(R.string.gorusme_hd) else null,

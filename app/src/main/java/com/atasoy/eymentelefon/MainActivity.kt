@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.atasoy.eymentelefon.cekirdek.ayar.Ayarlar
+import com.atasoy.eymentelefon.cekirdek.ayar.TemaSecimi
 import com.atasoy.eymentelefon.ui.navigasyon.AnaSekme
 import com.atasoy.eymentelefon.ui.navigasyon.EymenNavHost
 import com.atasoy.eymentelefon.ui.navigasyon.Rotalar
@@ -51,7 +52,7 @@ class MainActivity : ComponentActivity() {
             if (a != null) {
                 SideEffect { hazir = true }
                 // Durum çubuğu ikonları seçilen temaya uysun (sistem koyu, uygulama açık olabilir)
-                val koyu = temaKoyuMu(a.tema)
+                val koyu = temaKoyuMu(TemaSecimi.SISTEM) // V12-02: tema her zaman sistemden
                 LaunchedEffect(koyu) {
                     val stil = if (koyu) {
                         SystemBarStyle.dark(Color.TRANSPARENT)
@@ -60,7 +61,7 @@ class MainActivity : ComponentActivity() {
                     }
                     enableEdgeToEdge(statusBarStyle = stil, navigationBarStyle = stil)
                 }
-                EymenTelefonTemasi(tema = a.tema, vurguIndex = a.vurguIndex) {
+                EymenTelefonTemasi(tema = TemaSecimi.SISTEM) {
                     val nav = rememberNavController()
                     // Başlangıç bir kez hesaplanır
                     val baslangic = remember {

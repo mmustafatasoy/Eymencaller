@@ -34,6 +34,8 @@ data class Ayarlar(
     val istenenIzinler: Set<String> = emptySet(),
     /** AnaSekme.name */
     val sonSekme: String = "SON",
+    /** V12-04: rehberde olmayan numaralar çalmaz */
+    val bilinmeyenSustur: Boolean = false,
 )
 
 private val Context.ayarDataStore: DataStore<Preferences> by preferencesDataStore(name = "eymen_ayarlar")
@@ -49,6 +51,7 @@ class AyarDeposu(private val context: Context) {
         val hizliYanit = stringPreferencesKey("hizli_yanitlar")
         val istenen = stringSetPreferencesKey("istenen_izinler")
         val sonSekme = stringPreferencesKey("son_sekme")
+        val bilinmeyen = booleanPreferencesKey("bilinmeyen_sustur")
     }
 
     private companion object {
@@ -75,6 +78,7 @@ class AyarDeposu(private val context: Context) {
                 hizliYanitlar = p[Anahtar.hizliYanit]?.split(AYIRICI)?.filter { it.isNotBlank() },
                 istenenIzinler = p[Anahtar.istenen] ?: emptySet(),
                 sonSekme = p[Anahtar.sonSekme] ?: "SON",
+                bilinmeyenSustur = p[Anahtar.bilinmeyen] ?: false,
             )
         }
 
@@ -92,6 +96,7 @@ class AyarDeposu(private val context: Context) {
     suspend fun tusSesi(acik: Boolean) = guncelle { it[Anahtar.tusSesi] = acik }
     suspend fun hizliYanitlariKaydet(liste: List<String>) =
         guncelle { it[Anahtar.hizliYanit] = liste.joinToString(AYIRICI) }
+    suspend fun bilinmeyenSustur(acik: Boolean) = guncelle { it[Anahtar.bilinmeyen] = acik }
     suspend fun sonSekme(ad: String) = guncelle { it[Anahtar.sonSekme] = ad }
     suspend fun izinlerIstendi(izinler: Collection<String>) = guncelle {
         it[Anahtar.istenen] = (it[Anahtar.istenen] ?: emptySet()) + izinler

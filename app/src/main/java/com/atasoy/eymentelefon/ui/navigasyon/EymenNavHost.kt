@@ -120,7 +120,6 @@ fun EymenNavHost(
         composable(Rotalar.AYARLAR) {
             AyarlarEkrani(
                 onGeri = geri,
-                onIzinler = { nav.navigate(Rotalar.izinler(ayarModu = true)) },
                 onHataKayitlari = { nav.navigate(Rotalar.HATA_KAYITLARI) },
                 onEngellenenler = { nav.navigate(Rotalar.ENGELLENENLER) },
                 onHizliYanitlar = { nav.navigate(Rotalar.HIZLI_YANITLAR) },

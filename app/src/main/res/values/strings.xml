@@ -86,6 +86,7 @@
     <!-- 06 Kişiler -->
     <string name="kisiler">Kişiler</string>
     <string name="kartim">Kartım</string>
+    <string name="kisi_sayisi">%1$d Kişi</string>
     <string name="rehber_bos">Kişi yok</string>
     <string name="favorilere_ekle">Favorilere Ekle</string>
     <string name="favorilerden_cikar">Favorilerden Çıkar</string>
@@ -132,7 +133,8 @@
     <string name="gorusme_araniyor">arıyor…</string>
     <string name="gorusme_baglaniyor">bağlanıyor…</string>
     <string name="gorusme_beklemede">beklemede</string>
-    <string name="gorusme_bitti">arama bitti</string>
+    <string name="gorusme_bitti">Arama bitti</string>
+    <string name="gorusme_bitti_sure">Arama bitti · %1$s</string>
     <string name="gorusme_bilinmeyen">Bilinmeyen</string>
     <string name="gorusme_hd">HD</string>
     <string name="gorusme_sim">SIM %1$d</string>
@@ -167,7 +169,7 @@
     <string name="eksik_izin_ver_ara">İzin Ver ve Ara</string>
 
     <!-- 18 Ayarlar -->
-    <string name="ayarlar">Ayarlar</string>
+    <string name="ayarlar">Telefon</string>
     <string name="ayar_gorunum">Görünüm</string>
     <string name="ayar_tema">Tema</string>
     <string name="tema_sistem">Sistem</string>
@@ -177,11 +179,15 @@
     <string name="ayar_izinler_guvenlik">İzinler ve Güvenlik</string>
     <string name="ayar_varsayilan">Varsayılan Uygulama</string>
     <string name="ayar_varsayilan_degil">Değil</string>
-    <string name="ayar_engellenenler">Engellenen Numaralar</string>
+    <string name="ayar_engellenenler">Engellenen Kişiler</string>
+    <string name="ayar_engelleme">Engelleme</string>
+    <string name="ayar_bilinmeyen">Bilinmeyen Arayanları Sustur</string>
+    <string name="ayar_bilinmeyen_dipnot">Rehberde olmayan numaralar çalmadan Son Aramalar'a düşer.</string>
+    <string name="ayar_ses_titresim">Ses ve Titreşim</string>
     <string name="ayar_aramalar">Aramalar</string>
-    <string name="ayar_titresim">Tuşlarda Titreşim</string>
-    <string name="ayar_tus_sesi">Tuş Sesleri</string>
-    <string name="ayar_hizli_yanit">Hızlı Yanıtlar</string>
+    <string name="ayar_titresim">Tuş Takımında Titreşim</string>
+    <string name="ayar_tus_sesi">Tuş Takımı Sesleri</string>
+    <string name="ayar_hizli_yanit">Mesajla Yanıtla</string>
     <string name="ayar_hizli_dipnot">Gelen aramayı mesajla yanıtlarken bu metinler gösterilir.</string>
     <string name="ayar_destek">Destek</string>
     <string name="ayar_hata_kayitlari">Hata Kayıtları</string>
@@ -190,7 +196,7 @@
     <string name="hata_paylas">Paylaş</string>
     <string name="hata_temizle">Kayıtları Temizle</string>
     <string name="hata_yok">Kayıtlı hata yok</string>
-    <string name="engel_ekle">Numara Ekle…</string>
+    <string name="engel_ekle">Yeni Ekle…</string>
     <string name="engel_ekle_baslik">Numara Engelle</string>
     <string name="engel_kaldir">Kaldır</string>
     <string name="engel_dipnot">Engellenen numaralar seni arayamaz; aramaları Son Aramalar\'da “engellendi” olarak görünür.</string>

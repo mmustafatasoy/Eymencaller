@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -35,6 +36,7 @@ import com.atasoy.eymentelefon.R
 import com.atasoy.eymentelefon.cekirdek.yardimci.DisIslemler
 import com.atasoy.eymentelefon.cekirdek.yardimci.NumaraBicimleyici
 import com.atasoy.eymentelefon.konteyner
+import com.atasoy.eymentelefon.ui.bilesenler.IosAvatar
 import com.atasoy.eymentelefon.ui.bilesenler.IosBuyukBaslik
 import com.atasoy.eymentelefon.ui.bilesenler.IosEylemSatiri
 import com.atasoy.eymentelefon.ui.bilesenler.IosGeriButonu
@@ -88,6 +90,7 @@ fun EngellenenlerEkrani(onGeri: () -> Unit) {
     val r = EymenRenk
     val context = LocalContext.current
     val depo = remember { context.konteyner().engelDeposu }
+    val rehber = remember { context.konteyner().rehberDeposu }
     val akis = remember { depo.engelliler() }
     val liste by akis.collectAsStateWithLifecycle(initialValue = emptyList())
     val kapsam = rememberCoroutineScope()
@@ -99,8 +102,14 @@ fun EngellenenlerEkrani(onGeri: () -> Unit) {
             IosBuyukBaslik(stringResource(R.string.ayar_engellenenler))
             IosGrup(dipnot = stringResource(R.string.engel_dipnot)) {
                 liste.forEach { n ->
+                    // Rehberdeki adı ve fotoğrafı (görsel v12_11)
+                    val kisi by produceState<com.atasoy.eymentelefon.veri.model.Kisi?>(null, n) { value = rehber.numaradanKisi(n) }
+                    val k = kisi
                     IosSatir(
-                        baslik = NumaraBicimleyici.bicimle(n),
+                        baslik = k?.ad ?: NumaraBicimleyici.bicimle(n),
+                        altBaslik = if (k != null) NumaraBicimleyici.bicimle(n) else null,
+                        minYukseklik = com.atasoy.eymentelefon.ui.theme.EymenBoyut.satirAvatarli - EymenBosluk.s,
+                        sol = { IosAvatar(k?.basHarfler ?: "#", com.atasoy.eymentelefon.ui.theme.EymenBoyut.avatarListe - EymenBosluk.xs - EymenBosluk.cokKucuk, fotoUri = k?.fotoUri) },
                         sag = { IosMetinButonu(stringResource(R.string.engel_kaldir), { kapsam.launch { depo.engeliKaldir(n) } }, renk = r.kirmizi) },
                     )
                 }

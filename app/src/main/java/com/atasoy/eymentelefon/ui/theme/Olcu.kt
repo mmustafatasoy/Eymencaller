@@ -35,6 +35,8 @@ object EymenBoyut {
     val satirAvatarli = 60.dp
     val avatarListe = 40.dp
     val avatarKartim = 58.dp
+    val avatarKucuk = 34.dp
+    val satirKisi = 52.dp
     val avatarKart = 112.dp
     val aramaAlani = 36.dp
     val segmentYukseklik = 32.dp

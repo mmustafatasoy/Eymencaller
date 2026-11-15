@@ -69,6 +69,7 @@ class AyarlarViewModel(
     fun vurguSec(i: Int) = viewModelScope.launch { ayarDeposu.vurguSec(i) }
     fun titresim(a: Boolean) = viewModelScope.launch { ayarDeposu.tusTitresimi(a) }
     fun tusSesi(a: Boolean) = viewModelScope.launch { ayarDeposu.tusSesi(a) }
+    fun bilinmeyenSustur(a: Boolean) = viewModelScope.launch { ayarDeposu.bilinmeyenSustur(a) }
 
     fun hizliYanitlar(): List<String> = durum.value.ayarlar.hizliYanitlar ?: ayarDeposu.varsayilanHizliYanitlar()
 

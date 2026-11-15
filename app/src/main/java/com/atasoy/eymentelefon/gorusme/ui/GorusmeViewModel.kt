@@ -67,6 +67,10 @@ class GorusmeViewModel(
 ) : ViewModel() {
 
     private val ekran = MutableStateFlow(EkranDurumu())
+
+    /** V12-01: arama bitince ekran kapanana kadar son ad/numara/süre korunur ("Bilinmeyen" yazmaz). */
+    private var sonGorusme: GorusmeDurumu? = null
+    private var sonSure: Long = 0
     private val kisi = MutableStateFlow<Kisi?>(null)
     private val saniye = flow {
         while (true) {
@@ -82,12 +86,21 @@ class GorusmeViewModel(
             combine(ekran, kisi, ayarDeposu.ayarlar) { e, k, a -> Triple(e, k, a.hizliYanitlar ?: ayarDeposu.varsayilanHizliYanitlar()) },
             saniye,
         ) { liste, ses, (e, k, yanitlar), simdi ->
-            val g = GorusmeYoneticisi.oncelikli(liste)
+            val canli = GorusmeYoneticisi.oncelikli(liste)
+            val g = when {
+                canli != null && canli.asama != GorusmeAsamasi.BITTI -> canli.also { sonGorusme = it }
+                else -> (canli ?: sonGorusme)?.copy(asama = GorusmeAsamasi.BITTI)
+            }
+            val sure = if (g?.asama == GorusmeAsamasi.BITTI) {
+                sonSure
+            } else {
+                (g?.baglanmaZamani?.let { ((simdi - it) / SANIYE_MS).coerceAtLeast(0) } ?: 0L).also { sonSure = it }
+            }
             GorusmeUiState(
                 gorusme = g,
                 kisi = k,
                 ses = ses,
-                sure = g?.baglanmaZamani?.let { ((simdi - it) / SANIYE_MS).coerceAtLeast(0) } ?: 0,
+                sure = sure,
                 tusTakimiAcik = e.tusTakimiAcik,
                 dtmf = e.dtmf,
                 hizliYanitlar = yanitlar,
@@ -103,7 +116,7 @@ class GorusmeViewModel(
             GorusmeYoneticisi.gorusmeler
                 .map { GorusmeYoneticisi.oncelikli(it)?.numara }
                 .distinctUntilChanged()
-                .collect { n -> kisi.value = n?.let { rehber.numaradanKisi(it) } }
+                .collect { n -> if (n != null) kisi.value = rehber.numaradanKisi(n) }
         }
     }
 
