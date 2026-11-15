@@ -1,6 +1,8 @@
 # DEVAM NOTLARI — Claude'dan Codex'e devir (15 Kasım 2026)
 
 > **EN GÜNCEL (v1.3 — 15 Kasım 14:30):** Sıradaki iş **`docs/08_V13_PLANI.md`** (V13-01 … V13-10). `[x]` = Claude yaptı.
+> **V13-01 … V13-10 hepsi yapıldı (Claude), son yeşil derleme run 43710525328.** Codex: cihazda doğrula, farkları HATA kaydıyla düzelt.
+> Release imzası için kullanıcının GitHub secret `EYMEN_IMZA` eklemesi gerekir (anahtar kullanıcıya dosya olarak verildi; repoya KONMAZ).
 > Codex ilk `[ ]` görevden devam eder, sadece orada yazanı yapar. Yeni kütüphaneler (Haze 1.6.10, palette 1.0.0, glance 1.1.1)
 > kullanıcı onaylıdır; sürümlerini DEĞİŞTİRME (Haze 1.7+/2.x daha yeni Compose ister). CI artık release APK üretir.
 > Sıradaki hata numarası **HATA-025**.
