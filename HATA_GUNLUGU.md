@@ -1,35 +1,35 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-005**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-009**
 
 ---
 
 ## 🔴 AÇIK HATALAR
 
-### HATA-005 · AÇIK
+### HATA-008 · AÇIK
 - Tarih: 2026-11-15
-- Görev: GOREV-08
-- Yer: `ui/ekranlar/kisidetay/KisiDetayEkrani.kt` koyu ve açık `@Preview`.
-- Belirti: `KisiDetayIcerik` 12 olay parametresi bekliyor; önizlemelerde 13 boş lambda verilmiş. Bu, derleme parametre sayısı hatası doğurur.
-- Neden: Önizleme çağrıları hazırlanırken fazla bir lambda eklenmiş.
-- Durum: Statik düzeltme uygulanacak; GitHub Actions `assembleDebug` ve `lint` henüz doğrulanmadı.
+- Görev: GOREV-11
+- Yer: `gorusme/ui/GidenAramaEkrani.kt`, `GelenAramaEkrani.kt`, `GorusmeEkrani.kt`
+- Belirti: İlk Compose sürümünde arka plan yalnızca tek renk; mockup 08/09/10'da radyal renk ışıkları bulunuyor.
+- Neden: Görsel karşılaştırma öncesinde yalnızca düz `aramaZemini` çizilmiş.
+- Durum: Mevcut `AramaEkraniRenk` renk tokenlarıyla katmanlı gradyan uygulanacak; cihaz/derleme doğrulaması bekliyor.
 
-### HATA-004 · AÇIK
+### HATA-007 · AÇIK
 - Tarih: 2026-11-15
-- Görev: GOREV-07
-- Yer: `app/src/main/java/com/atasoy/eymentelefon/ui/ekranlar/rehber/RehberEkrani.kt`
-- Belirti: `animateContentSize` için yanlış `androidx.compose.ui.draw` paketinden import yapılmış; Compose derlemesinde çözümlenemeyen import oluşur.
-- Neden (tahmin): Animasyon uzantısının ait olduğu `androidx.compose.animation` paketi yerine çizim paketi seçilmiş.
-- Durum: Düzeltme yapılacak; APK/lint kontrolü bekliyor.
+- Görev: GOREV-11
+- Yer: `gorusme/EymenInCallService.kt` ve `gorusme/GorusmeBildirimi.kt`
+- Belirti: Mevcut `onCallAdded` gelen aramayı her durumda `CallActivity.ac()` ile açıyor; `CallStyle` heads-up / fullScreenIntent tercihi işletilemiyor.
+- Neden: GOREV-01 iskeleti, bildirim eklenmeden önce her aramada ekranı doğrudan açıyordu.
+- Durum: Bildirim izni ve FSI kontrolüyle yalnızca gereken durumda doğrudan ekranı açma düzeltmesi hazırlanıyor; APK/lint/cihaz testi henüz yok.
 
-### HATA-003 · AÇIK
+### HATA-006 · AÇIK
 - Tarih: 2026-11-15
-- Görev: GOREV-05 (GOREV-07 çalışması öncesi kontrol)
-- Yer: `app/src/main/java/com/atasoy/eymentelefon/veri/rehber/RehberDeposu.kt`
-- Belirti: `val phone = ContactsContract.CommonDataKinds.Phone` kullanımı Kotlin'de Java sabit sınıfını değer olarak kullanıyor; derlemeyi engelleyebilir.
-- Neden (tahmin): Android sağlayıcısının statik sabit sınıfı Kotlin nesnesi sanılmış.
-- Durum: Düzeltme uygulanacak; APK ve lint henüz doğrulanmadı.
+- Görev: GOREV-11
+- Yer: `gorusme/ui/GidenAramaEkrani.kt`
+- Belirti: Giden arama ekranında Tuşlar kontrolü durum değiştiriyor fakat DTMF tuş takımını göstermiyor.
+- Neden: Görsel kontrolde `durum.tuslarAcik` dalı henüz çizilmemişti.
+- Durum: Kod düzeltmesi hazırlanıyor; `assembleDebug` ve `lint` doğrulaması yapılmadı.
 
 ### HATA-002 · AÇIK
 - Tarih: 2026-11-15
@@ -54,6 +54,50 @@
 ## ✅ DÜZELTİLEN HATALAR
 
 _(En yeni en üstte.)_
+
+### HATA-009 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15
+- Görev: Derleme doğrulaması (GOREV-02/03, tüm geliştirme dalı)
+- Yer: `ui/bilesenler/AltSayfa.kt:29`, `ui/ekranlar/izinler/IzinlerEkrani.kt:189`
+- Belirti: `compileDebugKotlin` — "This material API is experimental and is likely to change or to be removed in the future." (GitHub Actions #43688684802)
+- Neden: `ModalBottomSheet` kullanılan Compose fonksiyonlarında `ExperimentalMaterial3Api` kabul işaretlemesi eksik.
+- Durum: Düzeltme GitHub Actions üzerinde derleme ve lint ile doğrulandı.
+- Düzeltme tarihi: 2026-11-15
+- Yapılan düzeltme: `AltSayfa.kt` ve `IzinlerEkrani.kt` içinde `@OptIn(ExperimentalMaterial3Api::class)` eklendi.
+- Doğrulama: `assembleDebug` ✅ · `lint` ✅ · cihaz testi henüz yapılmadı · [Actions #43688835653](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43688835653) (SHA `9b0ba7f2c5769eddcb663eeee780e7c8ea1f9c68`)
+
+### HATA-005 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15
+- Görev: GOREV-08
+- Yer: `ui/ekranlar/kisidetay/KisiDetayEkrani.kt` koyu ve açık `@Preview`.
+- Belirti: `KisiDetayIcerik` 12 olay parametresi bekliyor; önizlemelerde 13 boş lambda verilmiş. Bu, derleme parametre sayısı hatası doğurur.
+- Neden: Önizleme çağrıları hazırlanırken fazla bir lambda eklenmiş.
+- Durum: Düzeltme GitHub Actions üzerinde derleme ve lint ile doğrulandı.
+- Düzeltme tarihi: 2026-11-15
+- Yapılan düzeltme: `KisiDetayEkrani.kt` iki önizlemesindeki fazladan boş lambda kaldırıldı.
+- Doğrulama: `assembleDebug` ✅ · `lint` ✅ · cihaz testi henüz yapılmadı · [Actions #43688835653](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43688835653) (SHA `9b0ba7f2c5769eddcb663eeee780e7c8ea1f9c68`)
+
+### HATA-004 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15
+- Görev: GOREV-07
+- Yer: `app/src/main/java/com/atasoy/eymentelefon/ui/ekranlar/rehber/RehberEkrani.kt`
+- Belirti: `animateContentSize` için yanlış `androidx.compose.ui.draw` paketinden import yapılmış; Compose derlemesinde çözümlenemeyen import oluşur.
+- Neden (tahmin): Animasyon uzantısının ait olduğu `androidx.compose.animation` paketi yerine çizim paketi seçilmiş.
+- Durum: Düzeltme GitHub Actions üzerinde derleme ve lint ile doğrulandı.
+- Düzeltme tarihi: 2026-11-15
+- Yapılan düzeltme: `animateContentSize` importu `androidx.compose.animation` paketine taşındı.
+- Doğrulama: `assembleDebug` ✅ · `lint` ✅ · cihaz testi henüz yapılmadı · [Actions #43688835653](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43688835653) (SHA `9b0ba7f2c5769eddcb663eeee780e7c8ea1f9c68`)
+
+### HATA-003 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15
+- Görev: GOREV-05 (GOREV-07 çalışması öncesi kontrol)
+- Yer: `app/src/main/java/com/atasoy/eymentelefon/veri/rehber/RehberDeposu.kt`
+- Belirti: `val phone = ContactsContract.CommonDataKinds.Phone` kullanımı Kotlin'de Java sabit sınıfını değer olarak kullanıyor; derlemeyi engelleyebilir.
+- Neden (tahmin): Android sağlayıcısının statik sabit sınıfı Kotlin nesnesi sanılmış.
+- Durum: Düzeltme GitHub Actions üzerinde derleme ve lint ile doğrulandı.
+- Düzeltme tarihi: 2026-11-15
+- Yapılan düzeltme: `ContactsContract.CommonDataKinds.Phone` statik sabitleri doğrudan sınıf adıyla kullanıldı.
+- Doğrulama: `assembleDebug` ✅ · `lint` ✅ · cihaz testi henüz yapılmadı · [Actions #43688835653](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43688835653) (SHA `9b0ba7f2c5769eddcb663eeee780e7c8ea1f9c68`)
 
 ### HATA-001 · ✅ DÜZELTİLDİ
 - Tarih: 2026-11-14 21:10 → Düzeltme: 2026-11-14
@@ -97,3 +141,11 @@ S-04: GOREV-08 — "Görüntülü" eylemi yalnızca sistemde destek varsa göste
 S-05: GOREV-10 — `docs/04_IZINLER.md §5` uyarınca gelen arama sırasında varsayılan telefon rolü yoksa alt sayfa Ana ekranda bir kez gösterilmeli. Ancak değiştirilemez `AramaBaslatici.izinEksik` yalnızca `ara()` sırasında istek yayımlıyor; gelen aramada rol kaybını gösteren olay/akış mimaride tanımlı değil. Gelen arama uyarısının tetikleyicisi olarak hangi mevcut bileşen kullanılmalı? Bu bölüm karar verilene kadar eklenmedi. (GOREV-10)
 
 S-06: GOREV-10 — `docs/05_GOREV_PLANI.md` kabul koşulu "Telefon izni kaldırılmışken Ara → alt sayfa" diyor; ancak değiştirilemez `MainActivity` `ON_RESUME` sırasında `zorunlularTamam() == false` ise doğrudan tam ekran İzinler rotasına yönlendiriyor. Uygulama ön plandayken izin geri alındığında 12 numaralı alt sayfanın görünmesi için hangi öncelik geçerli? `MainActivity` veya izin açılış akışını onaysız değiştirmedim. (GOREV-10)
+
+S-07: GOREV-11 — Mockup 09'daki "Hatırlat" (10 dakika sonra bildirim) cihaz/uygulama yeniden başlatıldıktan sonra da çalışmalıdır. Mevcut sabit mimaride manifestte kayıtlı bir alarm BroadcastReceiver veya izin verilen bir görev zamanlayıcısı yok; yeni manifest bileşeni yasak. Arkaplanda kaybolabilecek sahte bir zamanlayıcı eklenmedi. AlarmManager için onaylanan mevcut giriş noktası hangisi? (GOREV-11)
+
+S-08: GOREV-11 — Gelen aramada ses kısma tuşuyla zil susturma, hazır `GorusmeYoneticisi` arayüzünde yok ve `CallActivity` üzerinde sadece GOREV-11 ekran satırları değiştirilebiliyor. OS varsayılan davranışı mı kullanılacak, yoksa `CallActivity.onKeyDown` veya `AudioManager` entegrasyonu için izin verilecek mi? (GOREV-11)
+
+S-09: GOREV-11 — `CallActivity` başlangıçta `FLAG_KEEP_SCREEN_ON` ayarlıyor. `GorusmeEkrani` ahize yolunda `PROXIMITY_SCREEN_OFF_WAKE_LOCK` edinip bırakıyor; iki mekanizmanın birlikte beklendiği gibi çalıştığı gerçek cihazda ölçülmeli. Değiştirilemez activity bayrağına dokunulmadı. (GOREV-11)
+
+S-10: GOREV-11 — `docs/01_TASARIM_SISTEMI.md` ses dalgası çubuklarını 3dp genişlikte tanımlıyor, fakat hazır tema ölçü tokenları arasında 3dp bulunmuyor. Kural gereği yeni dp uydurulmadı; geçici 4dp `EymenBosluk.xs` kullanıldı. Birebir 3dp için tema tokenı ekleme onayı var mı? (GOREV-11)

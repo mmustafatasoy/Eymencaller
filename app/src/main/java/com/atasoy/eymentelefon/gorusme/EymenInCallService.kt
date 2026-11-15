@@ -18,15 +18,21 @@ class EymenInCallService : InCallService() {
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
         GorusmeYoneticisi.ekle(call)
-        // Sistem tarafından bağlı InCallService arka planda activity açabilir (BAL istisnası).
-        CallActivity.ac(this)
-        // GOREV-11: GorusmeBildirimi.goster(this) — gelen arama tam ekran bildirimi + devam eden arama bildirimi
+        // CallStyle etkinse Android kilitli ekranda FSI, açıksa heads-up seçer.
+        // Bildirim kapalıysa veya FSI yetkisi yoksa doğrudan CallActivity açılır.
+        GorusmeBildirimi.goster(this)
+        if (
+            GorusmeYoneticisi.oncelikli()?.asama != GorusmeAsamasi.CALIYOR ||
+            !GorusmeBildirimi.tamEkranBildirimMumkun(this)
+        ) {
+            CallActivity.ac(this)
+        }
     }
 
     override fun onCallRemoved(call: Call) {
         super.onCallRemoved(call)
         GorusmeYoneticisi.cikar(call)
-        // GOREV-11: arama kalmadıysa GorusmeBildirimi.kaldir(this)
+        if (GorusmeYoneticisi.gorusmeler.value.isEmpty()) GorusmeBildirimi.kaldir(this)
     }
 
     @Deprecated("API 34'te eskidi; yerine onCallEndpointChanged var ama tüm sürümlerde çağrılır")
