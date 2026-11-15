@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -66,11 +67,14 @@ fun EymenAramaCubugu(
             },
         )
         if (profilAdi != null) {
-            KisiAvatari(
-                ad = profilAdi,
-                modifier = if (onProfil == null) Modifier else Modifier.clickable(onClick = onProfil),
-                boyut = EymenBoyut.avatarProfil,
-            )
+            // Avatar 30dp görünür, isteğe bağlı profil eyleminin hedefi en az 48dp.
+            Box(
+                modifier = Modifier.size(EymenBoyut.dokunmaMin)
+                    .then(if (onProfil == null) Modifier else Modifier.clickable(onClick = onProfil)),
+                contentAlignment = Alignment.Center,
+            ) {
+                KisiAvatari(ad = profilAdi, boyut = EymenBoyut.avatarProfil)
+            }
         }
     }
 }
