@@ -93,3 +93,5 @@ S-02: GOREV-08 — Numarayı "Varsayılan yap" işlemi için değiştirilemez `R
 S-03: GOREV-08 — "Ana ekrana kısayol ekle" işleminin kişi detayını açabilmesi için `MainActivity` veya `Rotalar` içinde kişi derin bağlantısı gerekiyor; ikisi de "DEĞİŞTİRME" işaretli. Desteklenmeyen kısayol eylemi gösterilmedi. Onaylanan giriş yöntemi nedir? (GOREV-08)
 
 S-04: GOREV-08 — "Görüntülü" eylemi yalnızca sistemde destek varsa gösterilecek; ancak `AramaBaslatici` yalnızca normal `TelecomManager.placeCall` çağırıyor ve video sağlayıcı tespiti için önceden tanımlı yöntem yok. Mevcut kodda düğme gizli. Video araması için hangi mevcut altyapı/izin kullanılmalı? (GOREV-08)
+
+S-05: GOREV-10 — `docs/04_IZINLER.md §5` uyarınca gelen arama sırasında varsayılan telefon rolü yoksa alt sayfa Ana ekranda bir kez gösterilmeli. Ancak değiştirilemez `AramaBaslatici.izinEksik` yalnızca `ara()` sırasında istek yayımlıyor; gelen aramada rol kaybını gösteren olay/akış mimaride tanımlı değil. Gelen arama uyarısının tetikleyicisi olarak hangi mevcut bileşen kullanılmalı? Bu bölüm karar verilene kadar eklenmedi. (GOREV-10)
