@@ -90,16 +90,19 @@ class GorusmeViewModel(
     val poster: StateFlow<PosterGorunumu?> =
         combine(kisi, posterDeposu.degisim) { k, _ -> k }
             .map { k ->
-                posterDeposu.oku(k?.lookupKey)?.let { p ->
-                    val resim = p.dosya?.let { f ->
-                        withContext(Dispatchers.IO) {
-                            runCatching { BitmapFactory.decodeFile(f.path)?.asImageBitmap() }
-                                .onFailure { HataKaydedici.kaydet("GorusmeViewModel.poster", it) }
-                                .getOrNull()
-                        }
+                // HATA-023: efektler herkese otomatik; sadece fotoğraf kişiye özel.
+                // Öncelik: poster fotoğrafı → (renk seçilmediyse) rehber fotoğrafı → canlı renk zemini
+                val p = posterDeposu.oku(k?.lookupKey)
+                val posterResmi = p?.dosya?.let { f ->
+                    withContext(Dispatchers.IO) {
+                        runCatching { BitmapFactory.decodeFile(f.path)?.asImageBitmap() }
+                            .onFailure { HataKaydedici.kaydet("GorusmeViewModel.poster", it) }
+                            .getOrNull()
                     }
-                    PosterGorunumu(resim, p.renkIndex, p.canli)
                 }
+                val resim = posterResmi
+                    ?: k?.fotoUri?.takeIf { p?.renkIndex == null }?.let { posterDeposu.rehberFotosu(it)?.asImageBitmap() }
+                PosterGorunumu(resim, p?.renkIndex, p?.canli ?: true)
             }
             .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 

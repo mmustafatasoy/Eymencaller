@@ -104,8 +104,9 @@ fun PosterKucukResim(resim: ImageBitmap, modifier: Modifier = Modifier) {
 @Composable
 fun CanliAd(ad: String, modifier: Modifier = Modifier) {
     val satirlar = remember(ad) {
+        // Numara (harf yok) tek satır kalır; ad soyad iki satır
         val p = ad.trim().split(Regex("\\s+"), limit = 2)
-        if (p.size == 2) p else listOf(ad.trim())
+        if (p.size == 2 && ad.any { it.isLetter() }) p else listOf(ad.trim())
     }
     val enUzun = satirlar.maxOf { it.length }.coerceAtLeast(1)
     val stil = if (enUzun > SIGAN_HARF) {

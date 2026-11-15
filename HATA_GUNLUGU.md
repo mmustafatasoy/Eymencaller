@@ -1,7 +1,7 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-022**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-023**
 
 ---
 
@@ -21,6 +21,16 @@ _(Şu an açık hata yok.)_
 ---
 
 ## ✅ DÜZELTİLEN HATALAR
+
+### HATA-023 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 12:54 → Düzeltme: 2026-11-15 13:05
+- Görev: V12-06 (kullanıcı cihaz testi)
+- Yer: gorusme/ui/AramaEkranlari.kt, gorusme/ui/GorusmeViewModel.kt, veri/poster/PosterDeposu.kt, gorusme/ui/KisiPosteri.kt
+- Belirti: Canlı ad ve hareketli arka plan sadece poster ayarlanmış kişide çıkıyor; diğer aramalarda düz ekran.
+- Gerçek neden: Efektler posterin varlığına bağlanmıştı. Kullanıcı isteği: efektler herkese otomatik, sadece fotoğraf kişiye özel.
+- Yapılan düzeltme: görüşme/giden ekranında her zaman `CanliAd`; fotoğrafsız zeminde ışık gezinen + nefes alan canlı gradyan; posteri yoksa rehber fotoğrafı otomatik arka plan (canlı efekt varsayılan açık); numaralar tek satır.
+- Doğrulama: CI derlemesi; cihazda kullanıcı tekrar deneyecek
+- Commit: HATA-023: efektler tüm aramalarda otomatik
 
 ### HATA-022 · ✅ DÜZELTİLDİ
 - Tarih: 2026-11-15 12:44 → Düzeltme: 2026-11-15 12:55

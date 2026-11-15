@@ -4,6 +4,13 @@ package com.atasoy.eymentelefon.gorusme.ui
 // Giden arama ve görüşme AYNI düzendir (iOS gibi): üstte ad + durum, altta 3×2 buton.
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.runtime.getValue
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
@@ -58,6 +65,23 @@ import com.atasoy.eymentelefon.veri.model.Kisi
 fun AramaZemini(ad: String, poster: PosterGorunumu? = null, bulanik: Boolean = false, icerik: @Composable BoxScope.() -> Unit) {
     val (ust, orta, alt) = poster?.renkIndex?.let(AramaEkraniRenk::paletSirayla) ?: AramaEkraniRenk.palet(ad)
     val resim = poster?.resim
+    // HATA-023: fotoğraf yoksa da zemin canlı: ışık yavaşça gezinir ve nefes alır
+    val gezinme = rememberInfiniteTransition(label = "zemin")
+    val isikX by gezinme.animateFloat(
+        ISIK_X_MIN, ISIK_X_MAKS,
+        infiniteRepeatable(tween(ZEMIN_SURE_MS, easing = FastOutSlowInEasing), RepeatMode.Reverse),
+        label = "isikX",
+    )
+    val isikY by gezinme.animateFloat(
+        ISIK_Y_MIN, ISIK_Y_MAKS,
+        infiniteRepeatable(tween(ZEMIN_SURE_MS * 2 / 3, easing = FastOutSlowInEasing), RepeatMode.Reverse),
+        label = "isikY",
+    )
+    val yaricap by gezinme.animateFloat(
+        ISIK_YARICAP, ISIK_YARICAP_MAKS,
+        infiniteRepeatable(tween(ZEMIN_SURE_MS / 2, easing = FastOutSlowInEasing), RepeatMode.Reverse),
+        label = "isikYaricap",
+    )
     Box(Modifier.fillMaxSize()) {
         // V12-06: kişi posteri varsa tam ekran fotoğraf
         if (resim != null && poster != null) PosterFotografi(resim, poster.canli, bulanik)
@@ -70,7 +94,15 @@ fun AramaZemini(ad: String, poster: PosterGorunumu? = null, bulanik: Boolean = f
                 drawRect(
                     Brush.radialGradient(
                         listOf(ust, orta, alt),
-                        center = Offset(size.width / 2, size.height * UST_ISIK),
+                        center = Offset(size.width * isikX, size.height * isikY),
+                        radius = size.height * yaricap,
+                    ),
+                )
+                // karşı köşeden ikinci, yumuşak ışık
+                drawRect(
+                    Brush.radialGradient(
+                        listOf(ust.copy(alpha = IKINCI_ISIK), alt.copy(alpha = 0f)),
+                        center = Offset(size.width * (1f - isikX), size.height * (1f - isikY)),
                         radius = size.height * ISIK_YARICAP,
                     ),
                 )
@@ -82,8 +114,14 @@ fun AramaZemini(ad: String, poster: PosterGorunumu? = null, bulanik: Boolean = f
     }
 }
 
-private const val UST_ISIK = 0.2f
 private const val ISIK_YARICAP = 0.65f
+private const val ISIK_YARICAP_MAKS = 0.8f
+private const val ISIK_X_MIN = 0.25f
+private const val ISIK_X_MAKS = 0.75f
+private const val ISIK_Y_MIN = 0.12f
+private const val ISIK_Y_MAKS = 0.32f
+private const val IKINCI_ISIK = 0.45f
+private const val ZEMIN_SURE_MS = 9_000
 
 @Composable
 fun gorunenAd(g: GorusmeDurumu?, kisi: Kisi?): String =
@@ -160,8 +198,8 @@ fun GorusmeEkrani(durum: GorusmeUiState, onOlay: (GorusmeOlay) -> Unit, onEkle: 
                 }
             } else {
                 Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    if (poster?.resim != null) {
-                        // HATA-022: posterli kişide arama boyunca dev canlı ad + net poster (iOS)
+                    run {
+                        // HATA-023: her aramada (rehberde olsun olmasın) dev canlı ad
                         Spacer(Modifier.height(EymenBosluk.xl))
                         CanliAd(ad, Modifier.padding(horizontal = EymenBosluk.l))
                         Text(
@@ -171,9 +209,6 @@ fun GorusmeEkrani(durum: GorusmeUiState, onOlay: (GorusmeOlay) -> Unit, onEkle: 
                             maxLines = 1,
                             modifier = Modifier.padding(top = EymenBosluk.s),
                         )
-                    } else {
-                        Spacer(Modifier.height(EymenBosluk.dev + EymenBosluk.xl))
-                        UstBilgi(ad, durumMetni)
                     }
                     Spacer(Modifier.weight(1f))
                     KontrolIzgarasi(durum, onOlay, onEkle)

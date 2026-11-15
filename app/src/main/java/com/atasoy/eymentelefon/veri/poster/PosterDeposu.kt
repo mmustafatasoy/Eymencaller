@@ -54,6 +54,13 @@ class PosterDeposu(context: Context) {
         )
     }
 
+    /** HATA-023: posteri olmayan kişide rehber fotoğrafı arka plan olur. */
+    suspend fun rehberFotosu(uri: Uri): Bitmap? = withContext(Dispatchers.IO) {
+        runCatching { cozumleyici.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) } }
+            .onFailure { HataKaydedici.kaydet("PosterDeposu.rehberFotosu", it) }
+            .getOrNull()
+    }
+
     /** Fotoğrafı küçültüp kaydeder. Başarısızsa false. */
     suspend fun fotoKaydet(anahtar: String, kaynak: Uri): Boolean = withContext(Dispatchers.IO) {
         runCatching {
