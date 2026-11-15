@@ -186,17 +186,16 @@ class RehberDeposu(private val context: Context) {
         kosul: String?,
         argumanlar: Array<String>?,
     ): List<Kisi> {
-        val c = ContactsContract.Contacts
-        val satirlar = linkedMapOf<Long, KisiSatiri>()
+                val satirlar = linkedMapOf<Long, KisiSatiri>()
         val sutunlar = arrayOf(
-            c._ID, c.LOOKUP_KEY, c.DISPLAY_NAME_PRIMARY, c.PHOTO_URI, c.STARRED
+            ContactsContract.Contacts._ID, ContactsContract.Contacts.LOOKUP_KEY, ContactsContract.Contacts.DISPLAY_NAME_PRIMARY, ContactsContract.Contacts.PHOTO_URI, ContactsContract.Contacts.STARRED
         )
         context.contentResolver.query(uri, sutunlar, kosul, argumanlar, null)?.use { cursor ->
-            val idI = cursor.getColumnIndexOrThrow(c._ID)
-            val lookupI = cursor.getColumnIndexOrThrow(c.LOOKUP_KEY)
-            val adI = cursor.getColumnIndexOrThrow(c.DISPLAY_NAME_PRIMARY)
-            val fotoI = cursor.getColumnIndexOrThrow(c.PHOTO_URI)
-            val favoriI = cursor.getColumnIndexOrThrow(c.STARRED)
+            val idI = cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID)
+            val lookupI = cursor.getColumnIndexOrThrow(ContactsContract.Contacts.LOOKUP_KEY)
+            val adI = cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+            val fotoI = cursor.getColumnIndexOrThrow(ContactsContract.Contacts.PHOTO_URI)
+            val favoriI = cursor.getColumnIndexOrThrow(ContactsContract.Contacts.STARRED)
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idI)
                 val ad = cursor.getString(adI).orEmpty()
@@ -210,8 +209,7 @@ class RehberDeposu(private val context: Context) {
         if (satirlar.isEmpty()) return emptyList()
 
         // Android SQLite binder parametre sınırı için 200 kimliklik parçalar.
-        val d = ContactsContract.Data
-        val turler = arrayOf(
+                val turler = arrayOf(
             ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE,
             ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE,
             ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE,
@@ -219,12 +217,12 @@ class RehberDeposu(private val context: Context) {
         )
         for (ids in satirlar.keys.toList().chunked(200)) {
             val idYerTutucular = List(ids.size) { "?" }.joinToString(",")
-            val veriKosulu = "${d.CONTACT_ID} IN ($idYerTutucular) AND ${d.MIMETYPE} IN (?,?,?,?)"
+            val veriKosulu = "${ContactsContract.Data.CONTACT_ID} IN ($idYerTutucular) AND ${ContactsContract.Data.MIMETYPE} IN (?,?,?,?)"
             val degerler = ids.map(Long::toString) + turler.toList()
             context.contentResolver.query(
-                d.CONTENT_URI,
-                arrayOf(d.CONTACT_ID, d.MIMETYPE, d.DATA1, d.DATA2, d.DATA3,
-                    d.IS_PRIMARY, d.IS_SUPER_PRIMARY),
+                ContactsContract.Data.CONTENT_URI,
+                arrayOf(ContactsContract.Data.CONTACT_ID, ContactsContract.Data.MIMETYPE, ContactsContract.Data.DATA1, ContactsContract.Data.DATA2, ContactsContract.Data.DATA3,
+                    ContactsContract.Data.IS_PRIMARY, ContactsContract.Data.IS_SUPER_PRIMARY),
                 veriKosulu,
                 degerler.toTypedArray(), null,
             )?.use { cursor ->
