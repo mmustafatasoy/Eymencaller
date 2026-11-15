@@ -54,6 +54,22 @@ object GorusmeBildirimi {
         }
     }
 
+    /**
+     * CallActivity'nin doğrudan açılması gereken durumları ayırt eder:
+     * bildirim / kanal kapalıysa veya Android 14+ FSI yetkisi yoksa fallback.
+     */
+    fun tamEkranBildirimMumkun(context: Context): Boolean {
+        val yonetici = context.getSystemService(NotificationManager::class.java) ?: return false
+        if (!yonetici.areNotificationsEnabled()) return false
+        if (yonetici.getNotificationChannel(KANAL)?.importance == NotificationManager.IMPORTANCE_NONE)
+            return false
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            !context.konteyner().izinYoneticisi.izinVarMi(Manifest.permission.POST_NOTIFICATIONS)
+        ) return false
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE ||
+            yonetici.canUseFullScreenIntent()
+    }
+
     /** EymenInCallService bağlandıktan sonra çağrılır; durum değiştikçe yenilenir. */
     fun goster(context: Context) {
         val app = context.applicationContext
