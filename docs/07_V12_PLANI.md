@@ -24,7 +24,7 @@ Durum: `[x]` = Claude yaptı · `[ ]` = sırada. Sırayla, tek tek; her biri son
 - `AyarDeposu`: `bilinmeyenSustur: Boolean` (anahtar `bilinmeyen_sustur`, varsayılan false).
 - `EymenCallScreeningService`: açıksa ve `RehberDeposu.numaradanKisi(numara) == null` → `CallResponse.Builder().setSilenceCall(true).build()` (çalmaz, kayda düşer).
 
-### [ ] V12-05 · Kişi Posteri altyapısı (görsel 1, 2, 3, 9)
+### [x] V12-05 · Kişi Posteri altyapısı (görsel 1, 2, 3, 9)
 - Yeni dosya: `veri/poster/PosterDeposu.kt` — `filesDir/posterler/<lookupKey>.jpg` (en uzun kenar 1600px, JPEG %90) + `posterler/<lookupKey>.json` (`{"canli":true,"renk":null}`). Fonksiyonlar: `kaydet(lookupKey, Uri)`, `sil(lookupKey)`, `oku(lookupKey): Poster?` (`data class Poster(val dosya: File?, val renkIndex: Int?, val canli: Boolean)`).
 - `UygulamaKonteyneri`'ne `posterDeposu` eklenir.
 - Fotoğraf seçimi: `ActivityResultContracts.PickVisualMedia(ImageOnly)` (izin gerektirmez).

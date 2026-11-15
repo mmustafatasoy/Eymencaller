@@ -1,7 +1,7 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-020**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-021**
 
 ---
 
@@ -21,6 +21,16 @@ _(Şu an açık hata yok.)_
 ---
 
 ## ✅ DÜZELTİLEN HATALAR
+
+### HATA-021 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 09:13 → Düzeltme: 2026-11-15 09:25
+- Görev: V12-03 (Claude)
+- Yer: app/src/main/res/values/strings.xml:185 (`ayar_bilinmeyen_dipnot`)
+- Belirti: CI `mergeDebugResources` → "Invalid unicode escape sequence in string" (run 43698136866)
+- Gerçek neden: Metindeki kesme işareti (`Aramalar'a`) kaçışsız yazılmış.
+- Yapılan düzeltme: `'` → `\'`
+- Doğrulama: CI derlemesi (sonraki çalışma)
+- Commit: HATA-021: strings.xml kesme işareti kaçışı
 
 _(En yeni en üstte. HATA-001: Codex (v1.0 iskelet derlemesi) · HATA-002…013: Claude'un eksik taraması · HATA-014…017: v1.1 iOS yeniden tasarımı, 15 Kasım 2026.)_
 

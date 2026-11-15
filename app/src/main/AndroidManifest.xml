@@ -55,6 +55,18 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="tel" />
             </intent-filter>
+            <!-- V12-12: kulaklık/araba arama tuşu -->
+            <intent-filter>
+                <action android:name="android.intent.action.CALL_BUTTON" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- V12-12: başka uygulamalardan "kişiyi göster" (Android "Her zaman" sorar) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.item/contact" />
+                <data android:mimeType="vnd.android.cursor.item/person" />
+            </intent-filter>
         </activity>
 
         <!-- 08 / 09 / 10 arama ekranları: kilit ekranı üstünde açılır -->

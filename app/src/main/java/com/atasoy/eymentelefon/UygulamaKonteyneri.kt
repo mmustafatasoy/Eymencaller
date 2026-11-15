@@ -12,6 +12,7 @@ import com.atasoy.eymentelefon.cekirdek.ayar.AyarDeposu
 import com.atasoy.eymentelefon.cekirdek.izin.IzinYoneticisi
 import com.atasoy.eymentelefon.veri.engel.EngelDeposu
 import com.atasoy.eymentelefon.veri.gecmis.AramaGecmisiDeposu
+import com.atasoy.eymentelefon.veri.poster.PosterDeposu
 import com.atasoy.eymentelefon.veri.rehber.RehberDeposu
 
 class UygulamaKonteyneri(uygulama: Application) {
@@ -21,6 +22,7 @@ class UygulamaKonteyneri(uygulama: Application) {
     val rehberDeposu by lazy { RehberDeposu(uygulama) }
     val aramaGecmisiDeposu by lazy { AramaGecmisiDeposu(uygulama) }
     val engelDeposu by lazy { EngelDeposu(uygulama) }
+    val posterDeposu by lazy { PosterDeposu(uygulama) } // V12-05
 }
 
 fun Context.konteyner(): UygulamaKonteyneri =

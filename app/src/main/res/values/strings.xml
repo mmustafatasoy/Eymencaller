@@ -182,7 +182,7 @@
     <string name="ayar_engellenenler">Engellenen Kişiler</string>
     <string name="ayar_engelleme">Engelleme</string>
     <string name="ayar_bilinmeyen">Bilinmeyen Arayanları Sustur</string>
-    <string name="ayar_bilinmeyen_dipnot">Rehberde olmayan numaralar çalmadan Son Aramalar'a düşer.</string>
+    <string name="ayar_bilinmeyen_dipnot">Rehberde olmayan numaralar çalmadan Son Aramalar\'a düşer.</string>
     <string name="ayar_ses_titresim">Ses ve Titreşim</string>
     <string name="ayar_aramalar">Aramalar</string>
     <string name="ayar_titresim">Tuş Takımında Titreşim</string>
