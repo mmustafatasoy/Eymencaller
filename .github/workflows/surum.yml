@@ -7,4 +7,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          for u in https://repo1.maven.org/maven2/dev/chrisbanes/haze/haze/maven-metadata.xml; done
+          curl -s https://repo1.maven.org/maven2/dev/chrisbanes/haze/haze/maven-metadata.xml | grep -oE "<version>1\.[^<]+" | tail -15
+          curl -s https://repo1.maven.org/maven2/dev/chrisbanes/haze/haze/1.6.0/haze-1.6.0.pom | grep -E "artifactId|<version>" | head -30
