@@ -214,4 +214,5 @@
     <!-- Geçici (GOREV-01 iskeleti; ekranlar yazıldıkça kullanılmaz hale gelir) -->
     <string name="gecici_ekran">%1$s\n(%2$s ile yazılacak)</string>
     <string name="gorusme_tam_ekran_izni">Tam ekran arama bildirimi izni kapalı</string>
+    <string name="gorusme_aramaya_don">Aramaya dön</string>
 </resources>
