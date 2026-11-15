@@ -18,9 +18,15 @@ class EymenInCallService : InCallService() {
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
         GorusmeYoneticisi.ekle(call)
-        // Sistem tarafından bağlı InCallService arka planda activity açabilir (BAL istisnası).
-        CallActivity.ac(this)
+        // CallStyle etkinse Android kilitli ekranda FSI, açıksa heads-up seçer.
+        // Bildirim kapalıysa veya FSI yetkisi yoksa doğrudan CallActivity açılır.
         GorusmeBildirimi.goster(this)
+        if (
+            GorusmeYoneticisi.oncelikli()?.asama != GorusmeAsamasi.CALIYOR ||
+            !GorusmeBildirimi.tamEkranBildirimMumkun(this)
+        ) {
+            CallActivity.ac(this)
+        }
     }
 
     override fun onCallRemoved(call: Call) {
