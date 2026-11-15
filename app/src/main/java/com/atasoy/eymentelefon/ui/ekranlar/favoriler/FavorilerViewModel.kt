@@ -12,7 +12,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-data class FavorilerUiState(val kisiler: List<Kisi> = emptyList(), val yukleniyor: Boolean = true)
+data class FavorilerUiState(
+    val kisiler: List<Kisi> = emptyList(),
+    val toplamKisi: Int = 0,
+    val yukleniyor: Boolean = true,
+)
 
 class FavorilerViewModel(private val depo: RehberDeposu) : ViewModel() {
     private val _durum = MutableStateFlow(FavorilerUiState())
@@ -21,7 +25,12 @@ class FavorilerViewModel(private val depo: RehberDeposu) : ViewModel() {
     init {
         viewModelScope.launch {
             depo.favoriler().collect { kisiler ->
-                _durum.value = FavorilerUiState(kisiler = kisiler, yukleniyor = false)
+                _durum.value = _durum.value.copy(kisiler = kisiler, yukleniyor = false)
+            }
+        }
+        viewModelScope.launch {
+            depo.kisiler().collect { kisiler ->
+                _durum.value = _durum.value.copy(toplamKisi = kisiler.size)
             }
         }
     }
