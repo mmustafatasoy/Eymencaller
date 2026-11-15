@@ -80,7 +80,6 @@ class AramaGecmisiDeposu(private val context: Context) {
     suspend fun sil(kayitIdleri: List<Long>) {
         withContext(Dispatchers.IO) {
             if (!yazmaIzniVar() || kayitIdleri.isEmpty()) return@withContext
-            val c = CallLog.Calls
             try {
                 for (parca in kayitIdleri.distinct().chunked(200)) {
                     context.contentResolver.delete(
@@ -99,7 +98,6 @@ class AramaGecmisiDeposu(private val context: Context) {
     suspend fun cevapsizlariGorulduYap() {
         withContext(Dispatchers.IO) {
             if (!yazmaIzniVar()) return@withContext
-            val c = CallLog.Calls
             try {
                 context.contentResolver.update(
                     CallLog.Calls.CONTENT_URI,
@@ -148,7 +146,6 @@ class AramaGecmisiDeposu(private val context: Context) {
 
     private fun oku(): List<AramaKaydi> {
         if (!okumaIzniVar()) return emptyList()
-        val c = CallLog.Calls
         return try {
             val uri = CallLog.Calls.CONTENT_URI.buildUpon()
                 .appendQueryParameter(CallLog.Calls.LIMIT_PARAM_KEY, "500").build()
