@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.atasoy.eymentelefon.R
 import com.atasoy.eymentelefon.ui.ekranlar.anaekran.AnaEkran
+import com.atasoy.eymentelefon.ui.ekranlar.arama.AramaEkrani
 import com.atasoy.eymentelefon.ui.ekranlar.kisidetay.KisiDetayEkrani
 import com.atasoy.eymentelefon.ui.ekranlar.karsilama.KarsilamaEkrani
 import com.atasoy.eymentelefon.ui.ekranlar.izinler.IzinlerEkrani
@@ -110,7 +111,17 @@ fun EymenNavHost(
             )
         }
 
-        composable(Rotalar.ARAMA) { GeciciEkran("07 Arama", "GOREV-09") }
+        composable(Rotalar.ARAMA) {
+            AramaEkrani(
+                onGeri = { nav.popBackStack() },
+                onKisiDetay = { kisi ->
+                    nav.navigate(Rotalar.kisiDetay(kisi.id, kisi.varsayilanNumara?.numara))
+                },
+                onGecmisDetay = { kayit ->
+                    nav.navigate(Rotalar.kisiDetay(kayit.kisiId ?: -1L, kayit.numara))
+                },
+            )
+        }
         composable(Rotalar.AYARLAR) { GeciciEkran("11 Ayarlar", "GOREV-13") }
         composable(Rotalar.HATA_KAYITLARI) { GeciciEkran("Hata kayıtları", "GOREV-13") }
         composable(Rotalar.ENGELLENENLER) { GeciciEkran("Engellenen numaralar", "GOREV-12") }
