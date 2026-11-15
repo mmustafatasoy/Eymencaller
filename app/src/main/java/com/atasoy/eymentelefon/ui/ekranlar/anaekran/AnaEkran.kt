@@ -23,6 +23,8 @@ import com.atasoy.eymentelefon.cekirdek.ayar.TemaSecimi
 import com.atasoy.eymentelefon.konteyner
 import com.atasoy.eymentelefon.ui.bilesenler.EymenAltMenu
 import com.atasoy.eymentelefon.ui.ekranlar.tuslar.TusTakimiEkrani
+import com.atasoy.eymentelefon.ui.ekranlar.sonaramalar.SonAramalarEkrani
+import com.atasoy.eymentelefon.veri.model.AramaKaydi
 import com.atasoy.eymentelefon.ui.navigasyon.AnaSekme
 import com.atasoy.eymentelefon.ui.theme.EymenBosluk
 import com.atasoy.eymentelefon.ui.theme.EymenRenk
@@ -35,6 +37,7 @@ fun AnaEkran(
     baslangicSekme: AnaSekme,
     baslangicNumara: String,
     onAramaAc: () -> Unit,
+    onDetay: (AramaKaydi) -> Unit,
 ) {
     val ayarlar = LocalContext.current.konteyner().ayarDeposu
     var secili by rememberSaveable { mutableStateOf(baslangicSekme) }
@@ -47,6 +50,7 @@ fun AnaEkran(
         baslangicNumara = baslangicNumara,
         onSec = { secili = it },
         onAramaAc = onAramaAc,
+        onDetay = onDetay,
     )
 }
 
@@ -56,6 +60,7 @@ fun AnaIcerik(
     baslangicNumara: String,
     onSec: (AnaSekme) -> Unit,
     onAramaAc: () -> Unit,
+    onDetay: (AramaKaydi) -> Unit,
 ) {
     Column(
         Modifier.fillMaxSize().background(EymenRenk.arkaPlan).safeDrawingPadding(),
@@ -66,7 +71,11 @@ fun AnaIcerik(
                     baslangicNumara = baslangicNumara,
                     onAramaAc = onAramaAc,
                 )
-                AnaSekme.SON -> BekleyenSekme(R.string.son_bos)
+                AnaSekme.SON -> SonAramalarEkrani(
+                    onAramaEkrani = onAramaAc,
+                    onDetay = onDetay,
+                    onTuslar = { onSec(AnaSekme.TUSLAR) },
+                )
                 AnaSekme.REHBER -> BekleyenSekme(R.string.rehber_bos)
                 AnaSekme.FAVORILER -> BekleyenSekme(R.string.favori_bos)
             }
@@ -85,13 +94,13 @@ private fun BekleyenSekme(metin: Int) {
 @Preview(name = "Koyu")
 @Composable private fun AnaEkranKoyu() {
     EymenTelefonTemasi(tema = TemaSecimi.KOYU) {
-        AnaIcerik(AnaSekme.SON, "", {}, {})
+        AnaIcerik(AnaSekme.SON, "", {}, {}, {})
     }
 }
 
 @Preview(name = "Açık")
 @Composable private fun AnaEkranAcik() {
     EymenTelefonTemasi(tema = TemaSecimi.ACIK) {
-        AnaIcerik(AnaSekme.REHBER, "", {}, {})
+        AnaIcerik(AnaSekme.REHBER, "", {}, {}, {})
     }
 }

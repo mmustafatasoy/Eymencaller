@@ -87,6 +87,7 @@ fun EymenNavHost(
                 baslangicSekme = sekme,
                 baslangicNumara = numara,
                 onAramaAc = { nav.navigate(Rotalar.ARAMA) },
+                onDetay = { kayit -> nav.navigate(Rotalar.kisiDetay(kayit.kisiId ?: -1L, kayit.numara)) },
             )
         }
 
