@@ -7,14 +7,6 @@
 
 ## 🔴 AÇIK HATALAR
 
-### HATA-009 · AÇIK
-- Tarih: 2026-11-15
-- Görev: Derleme doğrulaması (GOREV-02/03, tüm geliştirme dalı)
-- Yer: `ui/bilesenler/AltSayfa.kt:29`, `ui/ekranlar/izinler/IzinlerEkrani.kt:189`
-- Belirti: `compileDebugKotlin` — "This material API is experimental and is likely to change or to be removed in the future." (GitHub Actions #43688684802)
-- Neden: `ModalBottomSheet` kullanılan Compose fonksiyonlarında `ExperimentalMaterial3Api` kabul işaretlemesi eksik.
-- Durum: En küçük `@OptIn(ExperimentalMaterial3Api::class)` düzeltmesi hazırlanıyor; yeniden derleme bekliyor.
-
 ### HATA-008 · AÇIK
 - Tarih: 2026-11-15
 - Görev: GOREV-11
@@ -39,30 +31,6 @@
 - Neden: Görsel kontrolde `durum.tuslarAcik` dalı henüz çizilmemişti.
 - Durum: Kod düzeltmesi hazırlanıyor; `assembleDebug` ve `lint` doğrulaması yapılmadı.
 
-### HATA-005 · AÇIK
-- Tarih: 2026-11-15
-- Görev: GOREV-08
-- Yer: `ui/ekranlar/kisidetay/KisiDetayEkrani.kt` koyu ve açık `@Preview`.
-- Belirti: `KisiDetayIcerik` 12 olay parametresi bekliyor; önizlemelerde 13 boş lambda verilmiş. Bu, derleme parametre sayısı hatası doğurur.
-- Neden: Önizleme çağrıları hazırlanırken fazla bir lambda eklenmiş.
-- Durum: Statik düzeltme uygulanacak; GitHub Actions `assembleDebug` ve `lint` henüz doğrulanmadı.
-
-### HATA-004 · AÇIK
-- Tarih: 2026-11-15
-- Görev: GOREV-07
-- Yer: `app/src/main/java/com/atasoy/eymentelefon/ui/ekranlar/rehber/RehberEkrani.kt`
-- Belirti: `animateContentSize` için yanlış `androidx.compose.ui.draw` paketinden import yapılmış; Compose derlemesinde çözümlenemeyen import oluşur.
-- Neden (tahmin): Animasyon uzantısının ait olduğu `androidx.compose.animation` paketi yerine çizim paketi seçilmiş.
-- Durum: Düzeltme yapılacak; APK/lint kontrolü bekliyor.
-
-### HATA-003 · AÇIK
-- Tarih: 2026-11-15
-- Görev: GOREV-05 (GOREV-07 çalışması öncesi kontrol)
-- Yer: `app/src/main/java/com/atasoy/eymentelefon/veri/rehber/RehberDeposu.kt`
-- Belirti: `val phone = ContactsContract.CommonDataKinds.Phone` kullanımı Kotlin'de Java sabit sınıfını değer olarak kullanıyor; derlemeyi engelleyebilir.
-- Neden (tahmin): Android sağlayıcısının statik sabit sınıfı Kotlin nesnesi sanılmış.
-- Durum: Düzeltme uygulanacak; APK ve lint henüz doğrulanmadı.
-
 ### HATA-002 · AÇIK
 - Tarih: 2026-11-15
 - Görev: GOREV-02
@@ -86,6 +54,50 @@
 ## ✅ DÜZELTİLEN HATALAR
 
 _(En yeni en üstte.)_
+
+### HATA-009 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15
+- Görev: Derleme doğrulaması (GOREV-02/03, tüm geliştirme dalı)
+- Yer: `ui/bilesenler/AltSayfa.kt:29`, `ui/ekranlar/izinler/IzinlerEkrani.kt:189`
+- Belirti: `compileDebugKotlin` — "This material API is experimental and is likely to change or to be removed in the future." (GitHub Actions #43688684802)
+- Neden: `ModalBottomSheet` kullanılan Compose fonksiyonlarında `ExperimentalMaterial3Api` kabul işaretlemesi eksik.
+- Durum: Düzeltme GitHub Actions üzerinde derleme ve lint ile doğrulandı.
+- Düzeltme tarihi: 2026-11-15
+- Yapılan düzeltme: `AltSayfa.kt` ve `IzinlerEkrani.kt` içinde `@OptIn(ExperimentalMaterial3Api::class)` eklendi.
+- Doğrulama: `assembleDebug` ✅ · `lint` ✅ · cihaz testi henüz yapılmadı · [Actions #43688835653](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43688835653) (SHA `9b0ba7f2c5769eddcb663eeee780e7c8ea1f9c68`)
+
+### HATA-005 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15
+- Görev: GOREV-08
+- Yer: `ui/ekranlar/kisidetay/KisiDetayEkrani.kt` koyu ve açık `@Preview`.
+- Belirti: `KisiDetayIcerik` 12 olay parametresi bekliyor; önizlemelerde 13 boş lambda verilmiş. Bu, derleme parametre sayısı hatası doğurur.
+- Neden: Önizleme çağrıları hazırlanırken fazla bir lambda eklenmiş.
+- Durum: Düzeltme GitHub Actions üzerinde derleme ve lint ile doğrulandı.
+- Düzeltme tarihi: 2026-11-15
+- Yapılan düzeltme: `KisiDetayEkrani.kt` iki önizlemesindeki fazladan boş lambda kaldırıldı.
+- Doğrulama: `assembleDebug` ✅ · `lint` ✅ · cihaz testi henüz yapılmadı · [Actions #43688835653](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43688835653) (SHA `9b0ba7f2c5769eddcb663eeee780e7c8ea1f9c68`)
+
+### HATA-004 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15
+- Görev: GOREV-07
+- Yer: `app/src/main/java/com/atasoy/eymentelefon/ui/ekranlar/rehber/RehberEkrani.kt`
+- Belirti: `animateContentSize` için yanlış `androidx.compose.ui.draw` paketinden import yapılmış; Compose derlemesinde çözümlenemeyen import oluşur.
+- Neden (tahmin): Animasyon uzantısının ait olduğu `androidx.compose.animation` paketi yerine çizim paketi seçilmiş.
+- Durum: Düzeltme GitHub Actions üzerinde derleme ve lint ile doğrulandı.
+- Düzeltme tarihi: 2026-11-15
+- Yapılan düzeltme: `animateContentSize` importu `androidx.compose.animation` paketine taşındı.
+- Doğrulama: `assembleDebug` ✅ · `lint` ✅ · cihaz testi henüz yapılmadı · [Actions #43688835653](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43688835653) (SHA `9b0ba7f2c5769eddcb663eeee780e7c8ea1f9c68`)
+
+### HATA-003 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15
+- Görev: GOREV-05 (GOREV-07 çalışması öncesi kontrol)
+- Yer: `app/src/main/java/com/atasoy/eymentelefon/veri/rehber/RehberDeposu.kt`
+- Belirti: `val phone = ContactsContract.CommonDataKinds.Phone` kullanımı Kotlin'de Java sabit sınıfını değer olarak kullanıyor; derlemeyi engelleyebilir.
+- Neden (tahmin): Android sağlayıcısının statik sabit sınıfı Kotlin nesnesi sanılmış.
+- Durum: Düzeltme GitHub Actions üzerinde derleme ve lint ile doğrulandı.
+- Düzeltme tarihi: 2026-11-15
+- Yapılan düzeltme: `ContactsContract.CommonDataKinds.Phone` statik sabitleri doğrudan sınıf adıyla kullanıldı.
+- Doğrulama: `assembleDebug` ✅ · `lint` ✅ · cihaz testi henüz yapılmadı · [Actions #43688835653](https://github.com/mmustafatasoy/Eymencaller/actions/runs/43688835653) (SHA `9b0ba7f2c5769eddcb663eeee780e7c8ea1f9c68`)
 
 ### HATA-001 · ✅ DÜZELTİLDİ
 - Tarih: 2026-11-14 21:10 → Düzeltme: 2026-11-14
