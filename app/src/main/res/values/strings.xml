@@ -102,6 +102,7 @@
     <string name="arama_giden">Giden</string>
     <string name="arama_cevapsiz">Cevapsız</string>
     <string name="arama_reddedilen">Reddedildi</string>
+    <string name="arama_sesli_mesaj">Sesli mesaj</string>
     <string name="sure_dk_sn">%1$d dk %2$02d sn</string>
     <string name="sure_sn">%1$d sn</string>
 
