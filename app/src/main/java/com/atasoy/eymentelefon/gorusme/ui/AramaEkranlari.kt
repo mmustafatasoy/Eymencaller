@@ -55,12 +55,17 @@ import com.atasoy.eymentelefon.veri.model.Kisi
 
 /** Kişiye göre koyu radyal zemin; içerik güvenli alanda (kamera deliği / gezinme tuşları). */
 @Composable
-fun AramaZemini(ad: String, icerik: @Composable BoxScope.() -> Unit) {
-    val (ust, orta, alt) = AramaEkraniRenk.palet(ad)
-    Box(
+fun AramaZemini(ad: String, poster: PosterGorunumu? = null, bulanik: Boolean = false, icerik: @Composable BoxScope.() -> Unit) {
+    val (ust, orta, alt) = poster?.renkIndex?.let(AramaEkraniRenk::paletSirayla) ?: AramaEkraniRenk.palet(ad)
+    val resim = poster?.resim
+    Box(Modifier.fillMaxSize()) {
+        // V12-06: kişi posteri varsa tam ekran fotoğraf
+        if (resim != null && poster != null) PosterFotografi(resim, poster.canli, bulanik)
+        Box(
         Modifier
             .fillMaxSize()
             .drawBehind {
+                if (resim != null) return@drawBehind
                 drawRect(alt)
                 drawRect(
                     Brush.radialGradient(
@@ -73,7 +78,8 @@ fun AramaZemini(ad: String, icerik: @Composable BoxScope.() -> Unit) {
             .ustGuvenli()
             .altGuvenli(),
         content = icerik,
-    )
+        )
+    }
 }
 
 private const val UST_ISIK = 0.2f
@@ -104,7 +110,7 @@ private fun UstBilgi(ad: String, durum: String, modifier: Modifier = Modifier) {
 
 /** 11 · Giden arama  ·  12 · Görüşme  ·  13 · Görüşmede tuş takımı */
 @Composable
-fun GorusmeEkrani(durum: GorusmeUiState, onOlay: (GorusmeOlay) -> Unit, onEkle: () -> Unit) {
+fun GorusmeEkrani(durum: GorusmeUiState, onOlay: (GorusmeOlay) -> Unit, onEkle: () -> Unit, poster: PosterGorunumu? = null) {
     val g = durum.gorusme
     val ad = gorunenAd(g, durum.kisi)
     val durumMetni = when (g?.asama) {
@@ -122,7 +128,7 @@ fun GorusmeEkrani(durum: GorusmeUiState, onOlay: (GorusmeOlay) -> Unit, onEkle: 
             g?.simSirasi?.let { stringResource(R.string.gorusme_sim, it) },
         ).joinToString(" · ")
     }
-    AramaZemini(ad) {
+    AramaZemini(ad, poster, bulanik = true) {
         AnimatedContent(durum.tusTakimiAcik, transitionSpec = { fadeIn() togetherWith fadeOut() }, label = "tuslar") { tuslar ->
             if (tuslar) {
                 Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -153,7 +159,14 @@ fun GorusmeEkrani(durum: GorusmeUiState, onOlay: (GorusmeOlay) -> Unit, onEkle: 
                 }
             } else {
                 Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Spacer(Modifier.height(EymenBosluk.dev + EymenBosluk.xl))
+                    val kucuk = poster?.resim
+                    if (kucuk != null) {
+                        // V12-06: cevaplanınca poster küçük yuvarlak resme iner (görsel v12_03)
+                        Spacer(Modifier.height(EymenBosluk.xl))
+                        PosterKucukResim(kucuk, Modifier.padding(bottom = EymenBosluk.m))
+                    } else {
+                        Spacer(Modifier.height(EymenBosluk.dev + EymenBosluk.xl))
+                    }
                     UstBilgi(ad, durumMetni)
                     Spacer(Modifier.weight(1f))
                     KontrolIzgarasi(durum, onOlay, onEkle)
@@ -210,15 +223,17 @@ private fun Hucre(icerik: @Composable () -> Unit) {
 
 /** 14 · Gelen arama (kilit açık: Reddet / Kabul Et)  ·  15 · kilitli: kaydırarak cevapla  ·  16 · mesajla yanıtla */
 @Composable
-fun GelenAramaEkrani(durum: GorusmeUiState, kilitli: Boolean, onOlay: (GorusmeOlay) -> Unit, onHatirlat: () -> Unit) {
+fun GelenAramaEkrani(durum: GorusmeUiState, kilitli: Boolean, onOlay: (GorusmeOlay) -> Unit, onHatirlat: () -> Unit, poster: PosterGorunumu? = null) {
     val g = durum.gorusme
     val ad = gorunenAd(g, durum.kisi)
     val alt = listOfNotNull(numaraSatiri(g, durum.kisi).takeIf { it.isNotBlank() }, g?.simSirasi?.let { stringResource(R.string.gorusme_sim, it) })
         .joinToString(" · ")
-    AramaZemini(ad) {
+    AramaZemini(ad, poster) {
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Spacer(Modifier.height(EymenBosluk.dev + EymenBosluk.xl))
-            UstBilgi(ad, alt)
+            Spacer(Modifier.height(EymenBosluk.dev))
+            // V12-06: üstte küçük "mobil", altında iOS gibi dev canlı ad
+            if (alt.isNotBlank()) Text(alt, style = EymenYazi.aramaDurum, color = AramaEkraniRenk.ikincil, maxLines = 1)
+            CanliAd(ad, Modifier.padding(horizontal = EymenBosluk.l))
             Spacer(Modifier.weight(1f))
             Row(Modifier.fillMaxWidth().padding(horizontal = EymenBosluk.dev), horizontalArrangement = Arrangement.SpaceBetween) {
                 KucukEylem(EymenIkon.Alarm, stringResource(R.string.gelen_hatirlat), onHatirlat)

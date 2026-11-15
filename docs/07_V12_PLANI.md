@@ -25,11 +25,12 @@ Durum: `[x]` = Claude yaptı · `[ ]` = sırada. Sırayla, tek tek; her biri son
 - `EymenCallScreeningService`: açıksa ve `RehberDeposu.numaradanKisi(numara) == null` → `CallResponse.Builder().setSilenceCall(true).build()` (çalmaz, kayda düşer).
 
 ### [x] V12-05 · Kişi Posteri altyapısı (görsel 1, 2, 3, 9)
-- Yeni dosya: `veri/poster/PosterDeposu.kt` — `filesDir/posterler/<lookupKey>.jpg` (en uzun kenar 1600px, JPEG %90) + `posterler/<lookupKey>.json` (`{"canli":true,"renk":null}`). Fonksiyonlar: `kaydet(lookupKey, Uri)`, `sil(lookupKey)`, `oku(lookupKey): Poster?` (`data class Poster(val dosya: File?, val renkIndex: Int?, val canli: Boolean)`).
+- Yapıldı: `veri/poster/PosterDeposu.kt` (`fotoKaydet`, `ayarKaydet`, `fotoSil`, `sil`, `oku`, `degisim`). Arama ekranında: `gorusme/ui/KisiPosteri.kt` (`PosterGorunumu`, `PosterFotografi`, `PosterKucukResim`, `CanliAd`).
+- Plan: `veri/poster/PosterDeposu.kt` — `filesDir/posterler/<lookupKey>.jpg` (en uzun kenar 1600px, JPEG %90) + `posterler/<lookupKey>.json` (`{"canli":true,"renk":null}`). Fonksiyonlar: `kaydet(lookupKey, Uri)`, `sil(lookupKey)`, `oku(lookupKey): Poster?` (`data class Poster(val dosya: File?, val renkIndex: Int?, val canli: Boolean)`).
 - `UygulamaKonteyneri`'ne `posterDeposu` eklenir.
 - Fotoğraf seçimi: `ActivityResultContracts.PickVisualMedia(ImageOnly)` (izin gerektirmez).
 
-### [ ] V12-06 · Gelen arama posteri + canlı ad (görsel 1, 2)
+### [x] V12-06 · Gelen arama posteri + canlı ad (görsel 1, 2)
 - `GorusmeViewModel` kişinin posterini yükler. `AramaZemini`: poster varsa fotoğraf tam ekran (`ContentScale.Crop`), canlıysa `infiniteTransition` ile 18 sn'de 1.0 → 1.12 ölçek (ileri-geri). Üst %35 ve alt %40'ta karartma gradyanı. Poster yoksa mevcut renkli zemin.
 - Gelen aramada ad: 64sp ExtraBold, iki satır (ad / soyad), her harf 70ms arayla aşağıdan yukarı + saydamdan belirir (600ms), sonra 3.2 sn'lik %3.5 "nefes" ölçeği. Üstünde küçük "mobil".
 - Cevaplanınca (görsel 3): fotoğraf 18dp bulanık + %35 karartma (Android 12+ `Modifier.blur`, altında sadece karartma); ad 34sp'ye küçülüp yukarı kayar (`AnimatedContent`/`animateDpAsState`), üstte 72dp yuvarlak poster küçük resmi.
@@ -52,7 +53,7 @@ Durum: `[x]` = Claude yaptı · `[ ]` = sırada. Sırayla, tek tek; her biri son
 ### [x] V12-11 · Kişiler satırlarında küçük avatar + toplam (görsel 5)
 - Satır: 34dp avatar (fotoğraf/monogram) + "Ad **Soyad**", satır yüksekliği 52dp; listenin sonunda "N Kişi" (dipnot, ortalı). Üst sol "Listeler" yerine boş (ayarlar Son Aramalar'da).
 
-### [ ] V12-12 · Sistem yönlendirmeleri (görsel 13)
+### [ ] V12-12 · Sistem yönlendirmeleri (görsel 13) — *kısmen: VIEW kişi + CALL_BUTTON yapıldı (Claude); INSERT/EDIT, V12-10 ekranı bitince eklenecek*
 - Manifest `MainActivity`'ye ek filtreler: `android.intent.action.VIEW` + `vnd.android.cursor.item/contact` ve `…/person`; `INSERT` + `vnd.android.cursor.dir/contact`; `EDIT` + `vnd.android.cursor.item/contact`; `android.intent.action.CALL_BUTTON`.
 - `MainActivity.onNewIntent/onCreate`: kişi URI'si → `kisi/{id}`; INSERT → `kisi-duzenle/-1` (+`phone` ekstrası); EDIT → `kisi-duzenle/{id}`; CALL_BUTTON → Tuşlar.
 - Not (kullanıcıya): sistemin kendi Telefon/Rehber simgesi doğrudan açılırsa Android yönlendirmez; ana ekranda Eymen simgesi kullanılmalı.

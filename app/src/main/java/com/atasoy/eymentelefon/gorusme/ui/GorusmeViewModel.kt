@@ -6,6 +6,12 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.atasoy.eymentelefon.cekirdek.ayar.AyarDeposu
 import com.atasoy.eymentelefon.gorusme.GorusmeAsamasi
+import android.graphics.BitmapFactory
+import androidx.compose.ui.graphics.asImageBitmap
+import com.atasoy.eymentelefon.cekirdek.hata.HataKaydedici
+import com.atasoy.eymentelefon.veri.poster.PosterDeposu
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import com.atasoy.eymentelefon.gorusme.GorusmeDurumu
 import com.atasoy.eymentelefon.gorusme.GorusmeYoneticisi
 import com.atasoy.eymentelefon.gorusme.SesDurumu
@@ -64,6 +70,7 @@ private data class EkranDurumu(
 class GorusmeViewModel(
     private val rehber: RehberDeposu,
     private val ayarDeposu: AyarDeposu,
+    private val posterDeposu: PosterDeposu,
 ) : ViewModel() {
 
     private val ekran = MutableStateFlow(EkranDurumu())
@@ -78,6 +85,23 @@ class GorusmeViewModel(
             delay(SANIYE_MS)
         }
     }
+
+    /** V12-06: arayan kişinin posteri (fotoğraf IO'da çözülür) */
+    val poster: StateFlow<PosterGorunumu?> =
+        combine(kisi, posterDeposu.degisim) { k, _ -> k }
+            .map { k ->
+                posterDeposu.oku(k?.lookupKey)?.let { p ->
+                    val resim = p.dosya?.let { f ->
+                        withContext(Dispatchers.IO) {
+                            runCatching { BitmapFactory.decodeFile(f.path)?.asImageBitmap() }
+                                .onFailure { HataKaydedici.kaydet("GorusmeViewModel.poster", it) }
+                                .getOrNull()
+                        }
+                    }
+                    PosterGorunumu(resim, p.renkIndex, p.canli)
+                }
+            }
+            .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     val durum: StateFlow<GorusmeUiState> =
         combine(
@@ -157,7 +181,7 @@ class GorusmeViewModel(
         private const val AZAMI_DTMF = 24
 
         val Fabrika = viewModelFactory {
-            initializer { konteyner().let { GorusmeViewModel(it.rehberDeposu, it.ayarDeposu) } }
+            initializer { konteyner().let { GorusmeViewModel(it.rehberDeposu, it.ayarDeposu, it.posterDeposu) } }
         }
     }
 }

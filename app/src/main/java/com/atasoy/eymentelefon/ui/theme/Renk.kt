@@ -123,6 +123,10 @@ object AramaEkraniRenk {
     )
 
     fun palet(ad: String): List<Color> = paletler[Math.floorMod(ad.hashCode(), paletler.size)]
+
+    /** V12-08: kullanıcının seçtiği poster rengi */
+    fun paletSirayla(sira: Int): List<Color> = paletler[Math.floorMod(sira, paletler.size)]
+    val paletSayisi: Int get() = paletler.size
 }
 
 /** iOS monogram avatarı: gri gradyan. */

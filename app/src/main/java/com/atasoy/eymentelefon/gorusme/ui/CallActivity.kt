@@ -68,6 +68,7 @@ class CallActivity : ComponentActivity() {
         setContent {
             EymenTelefonTemasi(zorlaKoyu = true) {
                 val durum by vm.durum.collectAsStateWithLifecycle()
+                val poster by vm.poster.collectAsStateWithLifecycle()
                 val liste by GorusmeYoneticisi.gorusmeler.collectAsStateWithLifecycle()
                 val g = durum.gorusme
 
@@ -99,11 +100,11 @@ class CallActivity : ComponentActivity() {
                                     GorusmeAlicisi.hatirlatKur(this@CallActivity, it.numara, durum.kisi?.ad ?: it.sistemAdi)
                                     GorusmeYoneticisi.reddet(it.id)
                                 }
-                            })
+                            }, poster = poster)
                         } else {
                             GorusmeEkrani(durum, vm::olay, onEkle = {
                                 startActivity(MainActivity.sekmeIntenti(this@CallActivity, AnaSekme.TUSLAR))
-                            })
+                            }, poster = poster)
                         }
                     }
                 }

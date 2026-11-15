@@ -22,6 +22,8 @@ object EymenYazi {
     val numaraEkrani = TextStyle(fontSize = 38.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.5.sp)
     val tusRakam = TextStyle(fontSize = 34.sp, fontWeight = FontWeight.Normal)
     val tusHarf = TextStyle(fontSize = 9.5.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+    /** V12-06: gelen aramada dev canlı ad */
+    val posterIsim = TextStyle(fontSize = 64.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = (-1).sp, lineHeight = 68.sp)
     val aramaIsim = TextStyle(fontSize = 34.sp, fontWeight = FontWeight.Normal, letterSpacing = 0.2.sp)
     val aramaDurum = TextStyle(fontSize = 17.sp, fontWeight = FontWeight.Normal, fontFeatureSettings = "tnum")
     val kaydir = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal)
