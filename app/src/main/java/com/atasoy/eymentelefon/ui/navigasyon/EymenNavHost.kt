@@ -24,6 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.atasoy.eymentelefon.R
+import com.atasoy.eymentelefon.ui.ekranlar.anaekran.AnaEkran
 import com.atasoy.eymentelefon.ui.ekranlar.karsilama.KarsilamaEkrani
 import com.atasoy.eymentelefon.ui.ekranlar.izinler.IzinlerEkrani
 import com.atasoy.eymentelefon.ui.theme.EymenRenk
@@ -78,9 +79,15 @@ fun EymenNavHost(
                 navArgument(Rotalar.Arguman.SEKME) { type = NavType.StringType; defaultValue = baslangicSekme.name },
                 navArgument(Rotalar.Arguman.NUMARA) { type = NavType.StringType; defaultValue = baslangicNumara },
             ),
-        ) {
-            GeciciEkran("Ana ekran (Favoriler · Son · Rehber · Tuşlar)", "GOREV-04")
-            // GOREV-04: AnaEkran(baslangicSekme = ..., baslangicNumara = ..., nav = nav)
+        ) { giris ->
+            val sekmeAdi = giris.arguments?.getString(Rotalar.Arguman.SEKME)
+            val sekme = AnaSekme.entries.firstOrNull { it.name == sekmeAdi } ?: baslangicSekme
+            val numara = giris.arguments?.getString(Rotalar.Arguman.NUMARA) ?: baslangicNumara
+            AnaEkran(
+                baslangicSekme = sekme,
+                baslangicNumara = numara,
+                onAramaAc = { nav.navigate(Rotalar.ARAMA) },
+            )
         }
 
         composable(
