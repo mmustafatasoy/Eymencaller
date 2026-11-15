@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.atasoy.eymentelefon.konteyner
+import com.atasoy.eymentelefon.cekirdek.yardimci.NumaraBicimleyici
 import com.atasoy.eymentelefon.veri.engel.EngelDeposu
 import com.atasoy.eymentelefon.veri.gecmis.AramaGecmisiDeposu
 import com.atasoy.eymentelefon.veri.model.AramaGrubu
@@ -44,6 +45,7 @@ class SonAramalarViewModel(
     private val _durum = MutableStateFlow(SonAramalarUiState())
     val durum: StateFlow<SonAramalarUiState> = _durum.asStateFlow()
     private var tumKayitlar: List<AramaKaydi> = emptyList()
+    private var numaraFiltresi: String = ""
 
     init {
         viewModelScope.launch {
@@ -56,6 +58,14 @@ class SonAramalarViewModel(
             val ad = rehber.benimKartim()?.ad
             _durum.value = _durum.value.copy(profilAdi = ad)
         }
+    }
+
+    /** Kişi detayından Son aramalara geçildiğinde o numarayı göster. */
+    fun numaraFiltrele(numara: String) {
+        val hedef = NumaraBicimleyici.normalize(numara)
+        if (hedef == numaraFiltresi) return
+        numaraFiltresi = hedef
+        durumuYenile()
     }
 
     /** Ekran her görüntülendiğinde cevapsız kayıtların görüldü durumunu güncelle. */
@@ -83,15 +93,18 @@ class SonAramalarViewModel(
     }
 
     private fun durumuYenile() {
+        val gorunurKayitlar = if (numaraFiltresi.isBlank()) tumKayitlar else tumKayitlar.filter {
+            NumaraBicimleyici.normalize(it.numara) == numaraFiltresi
+        }
         val filtrelenmis = when (_durum.value.filtre) {
-            SonAramaFiltresi.TUMU -> tumKayitlar
-            SonAramaFiltresi.CEVAPSIZ -> tumKayitlar.filter { it.tur == AramaTuru.CEVAPSIZ }
-            SonAramaFiltresi.GELEN -> tumKayitlar.filter { it.tur == AramaTuru.GELEN }
-            SonAramaFiltresi.GIDEN -> tumKayitlar.filter { it.tur == AramaTuru.GIDEN }
+            SonAramaFiltresi.TUMU -> gorunurKayitlar
+            SonAramaFiltresi.CEVAPSIZ -> gorunurKayitlar.filter { it.tur == AramaTuru.CEVAPSIZ }
+            SonAramaFiltresi.GELEN -> gorunurKayitlar.filter { it.tur == AramaTuru.GELEN }
+            SonAramaFiltresi.GIDEN -> gorunurKayitlar.filter { it.tur == AramaTuru.GIDEN }
         }
         _durum.value = _durum.value.copy(
             gruplar = gecmis.grupla(filtrelenmis),
-            cevapsizSayisi = tumKayitlar.count { it.tur == AramaTuru.CEVAPSIZ },
+            cevapsizSayisi = gorunurKayitlar.count { it.tur == AramaTuru.CEVAPSIZ },
         )
     }
 

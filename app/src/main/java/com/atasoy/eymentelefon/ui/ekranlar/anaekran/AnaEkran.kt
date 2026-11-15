@@ -35,11 +35,12 @@ fun AnaEkran(
     onAramaAc: () -> Unit,
     onDetay: (AramaKaydi) -> Unit,
     onKisiDetay: (Kisi) -> Unit,
+    sonNumaraFiltresi: String = "",
 ) {
     val ayarlar = LocalContext.current.konteyner().ayarDeposu
     var secili by rememberSaveable { mutableStateOf(baslangicSekme) }
     LaunchedEffect(baslangicNumara) {
-        if (baslangicNumara.isNotBlank()) secili = AnaSekme.TUSLAR
+        if (baslangicNumara.isNotBlank() && baslangicSekme == AnaSekme.TUSLAR) secili = AnaSekme.TUSLAR
     }
     LaunchedEffect(secili) { ayarlar.sonSekme(secili.name) }
     AnaIcerik(
@@ -49,6 +50,7 @@ fun AnaEkran(
         onAramaAc = onAramaAc,
         onDetay = onDetay,
         onKisiDetay = onKisiDetay,
+        sonNumaraFiltresi = if (baslangicSekme == AnaSekme.SON) baslangicNumara else "",
     )
 }
 
@@ -60,6 +62,7 @@ fun AnaIcerik(
     onAramaAc: () -> Unit,
     onDetay: (AramaKaydi) -> Unit,
     onKisiDetay: (Kisi) -> Unit,
+    sonNumaraFiltresi: String = "",
 ) {
     Column(
         Modifier.fillMaxSize().background(EymenRenk.arkaPlan).safeDrawingPadding(),
@@ -71,6 +74,7 @@ fun AnaIcerik(
                     onAramaAc = onAramaAc,
                 )
                 AnaSekme.SON -> SonAramalarEkrani(
+                    numaraFiltresi = sonNumaraFiltresi,
                     onAramaEkrani = onAramaAc,
                     onDetay = onDetay,
                     onTuslar = { onSec(AnaSekme.TUSLAR) },

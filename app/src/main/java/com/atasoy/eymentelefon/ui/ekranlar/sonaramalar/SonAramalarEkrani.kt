@@ -71,12 +71,14 @@ fun SonAramalarEkrani(
     onAramaEkrani: () -> Unit,
     onDetay: (AramaKaydi) -> Unit,
     onTuslar: () -> Unit,
+    numaraFiltresi: String = "",
     vm: SonAramalarViewModel = viewModel(factory = SonAramalarViewModel.Fabrika),
 ) {
     val context = LocalContext.current
     val durum by vm.durum.collectAsStateWithLifecycle()
     val kopyaEtiketi = stringResource(R.string.kayit_kopyala)
     LaunchedEffect(Unit) { vm.gorulduYap() }
+    LaunchedEffect(numaraFiltresi) { vm.numaraFiltrele(numaraFiltresi) }
 
     fun etkinlikAc(intent: Intent, etiket: String) {
         try {
