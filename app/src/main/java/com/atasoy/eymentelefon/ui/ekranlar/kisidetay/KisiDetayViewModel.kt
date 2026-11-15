@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.atasoy.eymentelefon.konteyner
+import com.atasoy.eymentelefon.cekirdek.yardimci.NumaraBicimleyici
 import com.atasoy.eymentelefon.veri.engel.EngelDeposu
 import com.atasoy.eymentelefon.veri.gecmis.AramaGecmisiDeposu
 import com.atasoy.eymentelefon.veri.model.AramaKaydi
@@ -97,10 +98,16 @@ class KisiDetayViewModel(
                 aramalar = emptyList(), yukleniyor = false,
             )
             gecmisIsi?.cancel()
-            if (numara.isNotBlank()) {
+            val numaralar = (kisi?.numaralar?.map { it.numara }.orEmpty() + numara)
+                .map(NumaraBicimleyici::normalize).filter(String::isNotBlank).toSet()
+            if (numaralar.isNotEmpty()) {
                 gecmisIsi = viewModelScope.launch {
-                    gecmis.numaraKayitlari(numara).collect { kayitlar ->
-                        _durum.value = _durum.value.copy(aramalar = kayitlar.take(3))
+                    gecmis.kayitlar().collect { kayitlar ->
+                        _durum.value = _durum.value.copy(
+                            aramalar = kayitlar.filter {
+                                NumaraBicimleyici.normalize(it.numara) in numaralar
+                            }.take(3)
+                        )
                     }
                 }
             }
