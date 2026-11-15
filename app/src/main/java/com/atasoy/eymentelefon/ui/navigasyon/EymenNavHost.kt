@@ -106,7 +106,7 @@ fun EymenNavHost(
                 kisiId = kisiId,
                 baslangicNumara = numara,
                 onGeri = { nav.popBackStack() },
-                onTumAramalar = { nav.navigate(Rotalar.ana(AnaSekme.SON, numara)) },
+                onTumAramalar = { seciliNumara -> nav.navigate(Rotalar.ana(AnaSekme.SON, seciliNumara)) },
             )
         }
 
