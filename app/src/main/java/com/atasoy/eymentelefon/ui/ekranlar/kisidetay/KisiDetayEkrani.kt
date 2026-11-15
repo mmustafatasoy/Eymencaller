@@ -42,6 +42,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.atasoy.eymentelefon.R
@@ -82,6 +84,7 @@ fun KisiDetayEkrani(
     val paylasBaslik = stringResource(R.string.detay_paylas)
     val kopyaBaslik = stringResource(R.string.kayit_kopyala)
     LaunchedEffect(kisiId, baslangicNumara) { vm.yukle(kisiId, baslangicNumara) }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { vm.olay(KisiDetayOlay.Yenile) }
     LaunchedEffect(durum.silindi) { if (durum.silindi) onGeri() }
 
     fun ac(intent: Intent, etiket: String) {
