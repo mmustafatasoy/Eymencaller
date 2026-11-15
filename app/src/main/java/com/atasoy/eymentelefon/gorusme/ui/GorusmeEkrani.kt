@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -151,6 +152,10 @@ private fun GorusmeIcerik(
 
     Column(
         modifier = Modifier.fillMaxSize().background(renk.aramaZemini)
+            .background(Brush.verticalGradient(listOf(
+                AramaEkraniRenk.isikPembe, renk.aramaZemini,
+                AramaEkraniRenk.isikYesil.copy(alpha = .40f),
+            )))
             .padding(horizontal = EymenBosluk.kenar, vertical = EymenBosluk.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
