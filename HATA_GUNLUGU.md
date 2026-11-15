@@ -1,11 +1,27 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-002**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-004**
 
 ---
 
 ## 🔴 AÇIK HATALAR
+
+### HATA-004 · AÇIK
+- Tarih: 2026-11-15
+- Görev: GOREV-07
+- Yer: `app/src/main/java/com/atasoy/eymentelefon/ui/ekranlar/rehber/RehberEkrani.kt`
+- Belirti: `animateContentSize` için yanlış `androidx.compose.ui.draw` paketinden import yapılmış; Compose derlemesinde çözümlenemeyen import oluşur.
+- Neden (tahmin): Animasyon uzantısının ait olduğu `androidx.compose.animation` paketi yerine çizim paketi seçilmiş.
+- Durum: Düzeltme yapılacak; APK/lint kontrolü bekliyor.
+
+### HATA-003 · AÇIK
+- Tarih: 2026-11-15
+- Görev: GOREV-05 (GOREV-07 çalışması öncesi kontrol)
+- Yer: `app/src/main/java/com/atasoy/eymentelefon/veri/rehber/RehberDeposu.kt`
+- Belirti: `val phone = ContactsContract.CommonDataKinds.Phone` kullanımı Kotlin'de Java sabit sınıfını değer olarak kullanıyor; derlemeyi engelleyebilir.
+- Neden (tahmin): Android sağlayıcısının statik sabit sınıfı Kotlin nesnesi sanılmış.
+- Durum: Düzeltme uygulanacak; APK ve lint henüz doğrulanmadı.
 
 ### HATA-002 · AÇIK
 - Tarih: 2026-11-15

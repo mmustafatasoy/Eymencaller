@@ -1,5 +1,6 @@
 package com.atasoy.eymentelefon.ui.bilesenler
 
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,9 +21,9 @@ import com.atasoy.eymentelefon.ui.theme.EymenTelefonTemasi
 import com.atasoy.eymentelefon.ui.theme.EymenYazi
 
 @Composable
-fun KisiSatiri(ad: String, numara: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun KisiSatiri(ad: String, numara: String, onClick: () -> Unit, modifier: Modifier = Modifier, fotoUri: Uri? = null) {
     Row(modifier = modifier.fillMaxWidth().heightIn(min = EymenBoyut.dokunmaMin).clickable(onClick = onClick), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(EymenBosluk.m)) {
-        KisiAvatari(ad, boyut = EymenBoyut.avatarListe)
+        KisiAvatari(ad, boyut = EymenBoyut.avatarListe, fotoUri = fotoUri)
         Column(verticalArrangement = Arrangement.spacedBy(EymenBosluk.xs)) {
             Text(ad, color = EymenRenk.metin1, style = EymenYazi.isim, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Text(numara, color = EymenRenk.metin3, style = EymenYazi.kucuk, maxLines = 1, overflow = TextOverflow.Ellipsis)
