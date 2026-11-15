@@ -4,6 +4,7 @@
 > Tasarım, mimari **ve kodun tamamı** Claude tarafından yazılmıştır (15 Kasım 2026).
 > Senin görevin: **derlemek, test etmek, çıkan hataları kayıt kurallarıyla düzeltmek.**
 > Yeni özellik, yeni ekran, yeni dosya, yeniden yazma (refactor) **YOK.** Böyle bir ihtiyaç → `HATA_GUNLUGU.md › SORULAR`.
+> **Tek istisna:** `docs/07_V12_PLANI.md` içindeki V12-xx görevleri (kullanıcı onaylı, Claude tanımlı). Sadece orada yazanlar, orada yazdığı gibi.
 
 ---
 
@@ -13,7 +14,7 @@
 2. `HATA_GUNLUGU.md` → açık hata var mı? Varsa **önce onu çöz.**
 3. `docs/05_GOREV_PLANI.md` → sıradaki görev hangisi?
 4. Görevin ilgili dokümanı: `docs/01_TASARIM_SISTEMI.md`, `docs/02_EKRANLAR.md`, `docs/03_MIMARI.md`, `docs/04_IZINLER.md`
-5. İlgili tasarım görseli: `docs/mockups/NN_*.png`
+5. **v1.2:** `docs/07_V12_PLANI.md` (onaylı görev listesi) + `docs/mockups/v12/` (tek geçerli tasarım; `arsiv_v11/` eskidir)
 
 ---
 

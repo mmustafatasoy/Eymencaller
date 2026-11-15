@@ -1,5 +1,9 @@
 # DEVAM NOTLARI — Claude'dan Codex'e devir (15 Kasım 2026)
 
+> **GÜNCEL (v1.2):** Kullanıcı iOS tarzı v1.2 tasarımını onayladı. Sıradaki iş **`docs/07_V12_PLANI.md`** görevleri
+> (V12-01 … V12-13). Claude'un yaptıkları `[x]`. Codex ilk `[ ]` görevden devam eder; her görev sonrası Actions yeşil olmalı,
+> commit `V12-NN: …`. Aşağıdaki v1.1 bölümü (GOREV-02/03/04) v1.2 bitince yapılır.
+
 > Claude'un günlük kullanım sınırı dolmak üzere. Bundan sonra işi **Codex** sürdürecek.
 > Bu dosya **AGENTS.md ile birlikte** her oturumun başında okunur. Buradaki sıra ve sınırlar dışına çıkılmaz.
 
@@ -85,10 +89,10 @@ Claude'a dönünce bu dosyayı ve `HATA_GUNLUGU.md`'yi göster yeter.
 Bu depoda önce AGENTS.md ve DEVAM_NOTLARI.md dosyalarını baştan sona oku, sonra HATA_GUNLUGU.md
 ve docs/05_GOREV_PLANI.md'yi oku. Kodun tamamı Claude tarafından yazıldı; tasarımı, dosya yapısını,
 renkleri, metinleri ve sürümleri DEĞİŞTİRME, yeni özellik ekleme. Sadece sıradaki tek görevi
-(GOREV-02) yap. Her hata için önce HATA_GUNLUGU.md'ye HATA-021'den başlayarak AÇIK kayıt aç,
+(docs/07_V12_PLANI.md içindeki ilk [ ] V12 görevi) yap. Her hata için önce HATA_GUNLUGU.md'ye HATA-021'den başlayarak AÇIK kayıt aç,
 sadece o satırı düzelt (izin verilen düzeltmeler DEVAM_NOTLARI.md §4), sonra DÜZELTİLDİ yaz.
 Derlemeyi GitHub Actions "APK Derle" ile doğrula. Görev bitince kutuyu [x] yap,
-"GOREV-02: ..." diye commit at ve dur; bana kısa özet ver.
+"V12-NN: ..." diye commit at ve dur; bana kısa özet ver.
 ```
 
 Sonraki görevlerde sadece `GOREV-02` → `GOREV-03`, `GOREV-04` değişir.
