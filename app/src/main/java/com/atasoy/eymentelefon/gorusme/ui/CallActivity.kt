@@ -63,11 +63,11 @@ class CallActivity : ComponentActivity() {
                 } else {
                     when (gorusme.asama) {
                         GorusmeAsamasi.ARANIYOR, GorusmeAsamasi.BAGLANIYOR ->
-                            GeciciAramaEkrani("08 Giden arama · ${gorusme.numara}") { GorusmeYoneticisi.kapat(gorusme.id) } // GOREV-11: GidenAramaEkrani(gorusme)
+                            GidenAramaEkrani()
                         GorusmeAsamasi.CALIYOR ->
-                            GeciciAramaEkrani("09 Gelen arama · ${gorusme.numara}") { GorusmeYoneticisi.reddet(gorusme.id) } // GOREV-11: GelenAramaEkrani(gorusme)
+                            GelenAramaEkrani()
                         GorusmeAsamasi.AKTIF, GorusmeAsamasi.BEKLEMEDE, GorusmeAsamasi.BITTI ->
-                            GeciciAramaEkrani("10 Görüşme · ${gorusme.numara}") { GorusmeYoneticisi.kapat(gorusme.id) } // GOREV-11: GorusmeEkrani(gorusme)
+                            GorusmeEkrani()
                     }
                 }
             }
