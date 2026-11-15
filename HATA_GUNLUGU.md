@@ -1,11 +1,19 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-005**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-006**
 
 ---
 
 ## 🔴 AÇIK HATALAR
+
+### HATA-006 · AÇIK
+- Tarih: 2026-11-15
+- Görev: GOREV-11
+- Yer: `gorusme/ui/GidenAramaEkrani.kt`
+- Belirti: Giden arama ekranında Tuşlar kontrolü durum değiştiriyor fakat DTMF tuş takımını göstermiyor.
+- Neden: Görsel kontrolde `durum.tuslarAcik` dalı henüz çizilmemişti.
+- Durum: Kod düzeltmesi hazırlanıyor; `assembleDebug` ve `lint` doğrulaması yapılmadı.
 
 ### HATA-005 · AÇIK
 - Tarih: 2026-11-15
