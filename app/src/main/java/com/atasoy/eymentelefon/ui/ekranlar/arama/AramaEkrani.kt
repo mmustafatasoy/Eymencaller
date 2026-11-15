@@ -256,7 +256,7 @@ private fun AramaIcerik(
                     val notEslesmesi = !kisi.not.isNullOrBlank() &&
                         TurkceMetin.iceriyorMu(kisi.not, sorgu)
                     val alt = if (notEslesmesi) {
-                        stringResource(R.string.arama_not_etiket) + kisi.not.orEmpty()
+                        stringResource(R.string.arama_not_etiket, kisi.not.orEmpty())
                     } else {
                         val etiket = when (varsayilan?.tur) {
                             NumaraTuru.MOBIL -> R.string.numara_mobil
