@@ -77,16 +77,14 @@ fun AramaEkrani(
                     item(key = "kh") { IosBolumBasligi(stringResource(R.string.arama_kisiler).uppercase(TurkceMetin.TR)) }
                     items(sonuc.kisiler, key = { "k${it.id}" }) { k ->
                         val n = k.varsayilanNumara
+                        val numaraMetni = n?.let { numaraTuruMetni(it) + " " + NumaraBicimleyici.bicimle(it.numara) }
                         IosSatir(
                             baslik = vurgula(k.ad, sonuc.sorgu),
                             modifier = Modifier.padding(start = EymenBosluk.kenar),
                             minYukseklik = EymenBoyut.satirAvatarli,
                             ayirici = k != sonuc.kisiler.last(),
                             sol = { IosAvatar(k.basHarfler, EymenBoyut.avatarListe, fotoUri = k.fotoUri) },
-                            altBaslik = n?.let { num ->
-                                val metin = numaraTuruMetni(num) + " " + NumaraBicimleyici.bicimle(num.numara)
-                                @Composable { Text(metin, style = EymenYazi.altBaslik, color = r.ikincilEtiket, maxLines = 1) }
-                            },
+                            altBaslik = numaraMetni?.let { m -> @Composable { Text(m, style = EymenYazi.altBaslik, color = r.ikincilEtiket, maxLines = 1) } },
                             sag = { IosBilgiButonu(stringResource(R.string.ae_bilgi)) { onKisiDetay(k.id, null) } },
                             onTikla = { n?.let { vm.ara(it.numara) } },
                         )

@@ -16,20 +16,24 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import com.atasoy.eymentelefon.ui.theme.EymenRenk
 
 /** Üst (durum çubuğu + kamera) ve yanlar (yatayda kamera / kenar kesiği). */
-fun Modifier.ustGuvenli(): Modifier =
+fun Modifier.ustGuvenli(): Modifier = composed {
     windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal))
+}
 
 /** Alt (gezinme tuşları / hareket çubuğu + açıksa klavye). */
-fun Modifier.altGuvenli(): Modifier =
+fun Modifier.altGuvenli(): Modifier = composed {
     windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
+}
 
 /** Sadece yanlar (sekme çubuğu gibi zemini alta kadar uzanan öğeler için). */
-fun Modifier.yatayGuvenli(): Modifier =
+fun Modifier.yatayGuvenli(): Modifier = composed {
     windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
+}
 
 /**
  * Tüm ekranların kökü. Zemin rengi kenardan kenara (kameranın arkası ve gezinme çubuğu dahil) boyanır,

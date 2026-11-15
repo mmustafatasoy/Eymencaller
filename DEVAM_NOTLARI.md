@@ -24,7 +24,7 @@ v1.0 iskeleti 14 Kasım'da GitHub Actions'ta derlendi (HATA-001). Sürümler (AG
 ## 2. Codex'in yapacakları (sırayla, tek tek)
 
 1. **GOREV-01 · Derleme:** GitHub Actions › **APK Derle** (her `main` push'unda kendiliğinden çalışır) ya da `./gradlew assembleDebug lintDebug`.
-   Her hata → `HATA_GUNLUGU.md`'ye **önce AÇIK** (sıradaki numara **HATA-018**) → sadece o satırı düzelt → **DÜZELTİLDİ** yaz → commit `HATA-018: …`.
+   Her hata → `HATA_GUNLUGU.md`'ye **önce AÇIK** (sıradaki numara **HATA-021**) → sadece o satırı düzelt → **DÜZELTİLDİ** yaz → commit `HATA-021: …`.
 2. **GOREV-02 · Görsel karşılaştırma:** APK'yı kur, her ekranı `docs/mockups/01…20` ile karşılaştır. Fark = HATA kaydı.
 3. **GOREV-03 · Cihaz testi:** `docs/05_GOREV_PLANI.md` içindeki 20+ maddelik liste (Samsung Android 14 + Tecno Android 16). Güvenli alan maddeleri **ilk** test edilir.
 4. **GOREV-04 · Sürüm APK'sı:** `assembleRelease` (R8) ile açılış ve arama denenir.
@@ -86,7 +86,7 @@ Claude'a dönünce bu dosyayı ve `HATA_GUNLUGU.md`'yi göster yeter.
 Bu depoda önce AGENTS.md ve DEVAM_NOTLARI.md dosyalarını baştan sona oku, sonra HATA_GUNLUGU.md
 ve docs/05_GOREV_PLANI.md'yi oku. Kodun tamamı Claude tarafından yazıldı; tasarımı, dosya yapısını,
 renkleri, metinleri ve sürümleri DEĞİŞTİRME, yeni özellik ekleme. Sadece sıradaki tek görevi
-(GOREV-01) yap. Her hata için önce HATA_GUNLUGU.md'ye HATA-018'den başlayarak AÇIK kayıt aç,
+(GOREV-01) yap. Her hata için önce HATA_GUNLUGU.md'ye HATA-021'den başlayarak AÇIK kayıt aç,
 sadece o satırı düzelt (izin verilen düzeltmeler DEVAM_NOTLARI.md §4), sonra DÜZELTİLDİ yaz.
 Derlemeyi GitHub Actions "APK Derle" ile doğrula. Görev bitince kutuyu [x] yap,
 "GOREV-01: ..." diye commit at ve dur; bana kısa özet ver.

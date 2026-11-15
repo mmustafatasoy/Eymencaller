@@ -2,9 +2,7 @@ package com.atasoy.eymentelefon.ui.ekranlar.tuslar
 
 import android.media.AudioManager
 import android.media.ToneGenerator
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -27,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
@@ -125,10 +124,9 @@ fun TusTakimiEkrani(
             ) {
                 EymenIkonu(EymenIkon.Telefon, stringResource(R.string.ara), AramaEkraniRenk.beyaz, boyut = EymenBoyut.cagriIkonu + EymenBosluk.xs)
             }
-            Box(Modifier.size(EymenBoyut.tus), contentAlignment = Alignment.Center) {
-                AnimatedVisibility(!bos, enter = fadeIn(), exit = fadeOut()) {
-                    SilButonu({ vm.olay(TusTakimiOlay.Sil) }, { vm.olay(TusTakimiOlay.HepsiniSil) })
-                }
+            val silGorunur by animateFloatAsState(if (bos) 0f else 1f, label = "sil")
+            Box(Modifier.size(EymenBoyut.tus).alpha(silGorunur), contentAlignment = Alignment.Center) {
+                if (!bos) SilButonu({ vm.olay(TusTakimiOlay.Sil) }, { vm.olay(TusTakimiOlay.HepsiniSil) })
             }
         }
         Spacer(Modifier.height(EymenBosluk.xl))

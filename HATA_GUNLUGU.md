@@ -1,7 +1,7 @@
 # HATA GÜNLÜĞÜ — Eymen Telefon
 
 > Kurallar: `AGENTS.md` › Bölüm 3. Önce **not et**, sonra **düzelt**, sonra **düzelttiğini yaz**.
-> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-017**
+> Kayıtlar silinmez. Numaralar tekrar kullanılmaz. Son kullanılan numara: **HATA-020**
 
 ---
 
@@ -23,6 +23,31 @@ _(Şu an açık hata yok.)_
 ## ✅ DÜZELTİLEN HATALAR
 
 _(En yeni en üstte. HATA-001: Codex (v1.0 iskelet derlemesi) · HATA-002…013: Claude'un eksik taraması · HATA-014…017: v1.1 iOS yeniden tasarımı, 15 Kasım 2026.)_
+
+### HATA-020 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 10:57 → Düzeltme: 2026-11-15 11:05 (Claude)
+- Görev: GOREV-01
+- Yer: app/src/main/java/.../ui/ekranlar/tuslar/TusTakimiEkrani.kt:129
+- Belirti: `RowScope.AnimatedVisibility … cannot be called in this context with an implicit receiver`
+- Gerçek neden: `AnimatedVisibility`, Row içindeki Box'ta çağrıldı; derleyici Row'un sürümünü seçti.
+- Yapılan düzeltme: Sil butonu `animateFloatAsState` + `alpha` ile beliriyor (görünüm aynı).
+- Doğrulama: GitHub Actions (aşağıdaki commit) · Commit: HATA-018/019/020: CI derleme hataları
+
+### HATA-019 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 10:57 → Düzeltme: 2026-11-15 11:05 (Claude)
+- Görev: GOREV-01
+- Yer: app/src/main/java/.../ui/ekranlar/arama/AramaEkrani.kt:80-90
+- Belirti: `Too many arguments for 'fun bicimle(numara: String)'` · `Unresolved reference 'metin'`
+- Gerçek neden: Bir satırdan sonra gelen `@Composable { … }` bloğu, önceki satırdaki `bicimle(...)` çağrısının son-lambda'sı sanıldı.
+- Yapılan düzeltme: Alt metin önce `numaraMetni` değişkeninde hesaplanıyor, lambda tek ifade.
+
+### HATA-018 · ✅ DÜZELTİLDİ
+- Tarih: 2026-11-15 10:57 → Düzeltme: 2026-11-15 11:05 (Claude)
+- Görev: GOREV-01
+- Yer: app/src/main/java/.../ui/bilesenler/GuvenliAlan.kt:23-32
+- Belirti: `Functions which invoke @Composable functions must be marked with the @Composable annotation`
+- Gerçek neden: `WindowInsets.safeDrawing` bir @Composable özellik; normal Modifier fonksiyonundan okunamaz.
+- Yapılan düzeltme: `ustGuvenli/altGuvenli/yatayGuvenli` → `Modifier.composed { … }` (davranış aynı).
 
 ### HATA-017 · ✅ DÜZELTİLDİ
 - Tarih: 2026-11-15 → Düzeltme: 2026-11-15 (Claude)
